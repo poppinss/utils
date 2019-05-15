@@ -1,3 +1,7 @@
+/**
+ * @module @poppinss/utils
+ */
+
 /*
 * @poppinss/utils
 *
@@ -13,6 +17,6 @@ import { esmResolver } from './esmResolver'
  * Handles ESM `default` exports and common js vanilla exports. The `default`
  * exports are only entertained, when `esmEnabled` is set to true.
  */
-export function tsRequire (filePath: string) {
+export function esmRequire (filePath: string) {
   return esmResolver(require(filePath))
 }
