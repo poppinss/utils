@@ -10,3 +10,4 @@
 export { Exception } from './src/Exception'
 export { requireAll } from './src/requireAll'
 export { esmRequire } from './src/esmRequire'
+export { parseIocReference } from './src/parseIocReference'
