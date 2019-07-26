@@ -1,8 +1,12 @@
-[@poppinss/utils](../README.md) > [@poppinss/utils](../modules/_poppinss_utils.md) > [Exception](../classes/_poppinss_utils.exception.md)
+> **[@poppinss/utils](../README.md)**
+
+[Globals](../README.md) / [@poppinss/utils](../modules/_poppinss_utils.md) / [Exception](_poppinss_utils.exception.md) /
 
 # Class: Exception
 
-Extended Error object with the option to set error `status` and `code`. At AdonisJs, we prefer exceptions with proper error codes to handle them without relying on message pattern matching.
+Extended Error object with the option to set error `status` and `code`.
+At AdonisJs, we prefer exceptions with proper error codes to handle
+them without relying on message pattern matching.
 
 ```js
 new Exception('message', 500, 'E_RUNTIME_EXCEPTION')
@@ -10,9 +14,9 @@ new Exception('message', 500, 'E_RUNTIME_EXCEPTION')
 
 ## Hierarchy
 
- `Error`
+* `Error`
 
-**↳ Exception**
+  * **Exception**
 
 ## Index
 
@@ -22,77 +26,69 @@ new Exception('message', 500, 'E_RUNTIME_EXCEPTION')
 
 ### Properties
 
-* [code](_poppinss_utils.exception.md#code)
+* [code](_poppinss_utils.exception.md#optional-code)
 * [message](_poppinss_utils.exception.md#message)
 * [name](_poppinss_utils.exception.md#name)
-* [stack](_poppinss_utils.exception.md#stack)
+* [stack](_poppinss_utils.exception.md#optional-stack)
 * [status](_poppinss_utils.exception.md#status)
-* [Error](_poppinss_utils.exception.md#error)
-
----
+* [Error](_poppinss_utils.exception.md#static-error)
 
 ## Constructors
 
-<a id="constructor"></a>
-
 ###  constructor
 
-⊕ **new Exception**(message: *`string`*, status?: *`number`*, code?: *`undefined` \| `string`*): [Exception](_poppinss_utils.exception.md)
+\+ **new Exception**(`message`: string, `status`: number, `code?`: undefined | string): *[Exception](_poppinss_utils.exception.md)*
 
 **Parameters:**
 
-| Name | Type | Default value |
-| ------ | ------ | ------ |
-| message | `string` | - |
-| `Default value` status | `number` | 500 |
-| `Optional` code | `undefined` \| `string` | - |
+Name | Type | Default |
+------ | ------ | ------ |
+`message` | string | - |
+`status` | number | 500 |
+`code?` | undefined \| string | - |
 
-**Returns:** [Exception](_poppinss_utils.exception.md)
-
-___
+**Returns:** *[Exception](_poppinss_utils.exception.md)*
 
 ## Properties
 
-<a id="code"></a>
+### `Optional` code
 
-### `<Optional>` code
-
-**● code**: *`undefined` \| `string`*
+• **code**? : *undefined | string*
 
 ___
-<a id="message"></a>
 
 ###  message
 
-**● message**: *`string`*
+• **message**: *string*
+
+*Overrides void*
 
 ___
-<a id="name"></a>
 
 ###  name
 
-**● name**: *`string`*
+• **name**: *string*
+
+*Overrides void*
 
 ___
-<a id="stack"></a>
 
-### `<Optional>` stack
+### `Optional` stack
 
-**● stack**: *`undefined` \| `string`*
+• **stack**? : *undefined | string*
+
+*Inherited from void*
+
+*Overrides void*
 
 ___
-<a id="status"></a>
 
 ###  status
 
-**● status**: *`number`*
-
-___
-<a id="error"></a>
-
-### `<Static>` Error
-
-**● Error**: *`ErrorConstructor`*
+• **status**: *number*
 
 ___
 
+### `Static` Error
+
+▪ **Error**: *`ErrorConstructor`*
