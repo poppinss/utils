@@ -13,8 +13,8 @@
 
 import { Exception } from './Exception'
 
-type IocReference = { type: 'iocReference', namespace: string, method: string }
-type IocObject = { type: 'iocObject', value: any, method: string }
+export type IocReference = { type: 'iocReference', namespace: string, method: string }
+export type IocObject = { type: 'iocObject', value: any, method: string }
 
 export function parseIocReference (
   reference: string,
