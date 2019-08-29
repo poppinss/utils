@@ -12,7 +12,7 @@
 */
 
 import { extname } from 'path'
-import * as rAll from 'require-all'
+import rAll from 'require-all'
 import { esmResolver } from './esmResolver'
 
 /**

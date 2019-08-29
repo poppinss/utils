@@ -7,7 +7,7 @@
 * file that was distributed with this source code.
 */
 
-import * as test from 'japa'
+import test from 'japa'
 import { callIocReference } from '../src/callIocReference'
 import { parseIocReference } from '../src/parseIocReference'
 
@@ -17,7 +17,7 @@ test.group('callIocReference', () => {
     class UserController {}
 
     const parsed = parseIocReference('UserController.store')
-    global[Symbol.for('ioc.make')] = function make (namespace) {
+    global[Symbol.for('ioc.make')] = function make (namespace: string) {
       assert.equal(namespace, 'UserController')
       return new UserController()
     }

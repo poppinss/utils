@@ -1,6 +1,6 @@
-> **[@poppinss/utils](../README.md)**
+**[@poppinss/utils](../README.md)**
 
-[Globals](../README.md) / [@poppinss/utils](../modules/_poppinss_utils.md) / [Exception](_poppinss_utils.exception.md) /
+[Globals](../README.md) › [@poppinss/utils](../modules/_poppinss_utils.md) › [Exception](_poppinss_utils.exception.md)
 
 # Class: Exception
 
@@ -14,7 +14,7 @@ new Exception('message', 500, 'E_RUNTIME_EXCEPTION')
 
 ## Hierarchy
 
-* `Error`
+* Error
 
   * **Exception**
 
@@ -91,4 +91,4 @@ ___
 
 ### `Static` Error
 
-▪ **Error**: *`ErrorConstructor`*
+▪ **Error**: *ErrorConstructor*

@@ -1,6 +1,6 @@
-> **[@poppinss/utils](../README.md)**
+**[@poppinss/utils](../README.md)**
 
-[Globals](../README.md) / ["callIocReference"](_calliocreference_.md) /
+[Globals](../README.md) › ["callIocReference"](_calliocreference_.md)
 
 # External module: "callIocReference"
 
@@ -14,7 +14,7 @@
 
 ###  callIocReference
 
-▸ **callIocReference**<**T**>(`reference`: [IocObject](_parseiocreference_.md#iocobject) | [IocReference](_parseiocreference_.md#iocreference), `args`: any[]): *`T`*
+▸ **callIocReference**<**T**>(`reference`: [IocObject](_parseiocreference_.md#iocobject) | [IocReference](_parseiocreference_.md#iocreference), `args`: any[]): *T*
 
 Invokes the ioc reference parsed using [parseIocReference](_parseiocreference_.md#parseiocreference) using `ioc.make`
 and `ioc.call` and both methods supports automatic dependency injection
@@ -30,4 +30,4 @@ Name | Type |
 `reference` | [IocObject](_parseiocreference_.md#iocobject) \| [IocReference](_parseiocreference_.md#iocreference) |
 `args` | any[] |
 
-**Returns:** *`T`*
+**Returns:** *T*

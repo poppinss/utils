@@ -1,6 +1,6 @@
-> **[@poppinss/utils](../README.md)**
+**[@poppinss/utils](../README.md)**
 
-[Globals](../README.md) / ["parseIocReference"](_parseiocreference_.md) /
+[Globals](../README.md) › ["parseIocReference"](_parseiocreference_.md)
 
 # External module: "parseIocReference"
 
