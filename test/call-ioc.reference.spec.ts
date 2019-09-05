@@ -8,8 +8,8 @@
 */
 
 import test from 'japa'
-import { callIocReference } from '../src/callIocReference'
-import { parseIocReference } from '../src/parseIocReference'
+import { callIocReference } from '../src/depreciated/callIocReference'
+import { parseIocReference } from '../src/depreciated/parseIocReference'
 
 test.group('callIocReference', () => {
   test('call parsed ioc container binding', (assert) => {

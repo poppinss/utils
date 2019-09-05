@@ -8,7 +8,7 @@
 */
 
 import test from 'japa'
-import { parseIocReference } from '../src/parseIocReference'
+import { parseIocReference } from '../src/depreciated/parseIocReference'
 
 test.group('parseIocReference', () => {
   test('raise error when reference is empty string', (assert) => {

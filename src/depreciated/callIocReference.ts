@@ -12,12 +12,13 @@
 */
 
 import { IocObject, IocReference } from './parseIocReference'
+import { deprecate } from 'util'
 
 /**
  * Invokes the ioc reference parsed using [[parseIocReference]] using `ioc.make`
  * and `ioc.call` and both methods supports automatic dependency injection
  */
-export function callIocReference<T extends any = any> (
+const callIocReference = deprecate(function callIocReference<T extends any = any> (
   reference: IocObject | IocReference,
   args: any[],
 ): T {
@@ -29,4 +30,6 @@ export function callIocReference<T extends any = any> (
   }
 
   return global[Symbol.for('ioc.call')](resolvedInstance, reference.method, args)
-}
+}, 'callIocReference() is depreciated, use IocResolver instead')
+
+export { callIocReference }

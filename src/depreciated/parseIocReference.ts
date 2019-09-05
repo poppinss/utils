@@ -11,7 +11,7 @@
 * file that was distributed with this source code.
 */
 
-import { Exception } from './Exception'
+import { Exception } from '../Exception'
 
 export type IocReference = { type: 'iocReference', namespace: string, method: string }
 export type IocObject = { type: 'iocObject', value: any, method: string }
