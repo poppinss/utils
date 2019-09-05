@@ -1,19 +1,19 @@
 **[@poppinss/utils](../README.md)**
 
-[Globals](../README.md) › ["parseIocReference"](_parseiocreference_.md)
+[Globals](../README.md) › ["depreciated/parseIocReference"](_depreciated_parseiocreference_.md)
 
-# External module: "parseIocReference"
+# External module: "depreciated/parseIocReference"
 
 ## Index
 
 ### Type aliases
 
-* [IocObject](_parseiocreference_.md#iocobject)
-* [IocReference](_parseiocreference_.md#iocreference)
+* [IocObject](_depreciated_parseiocreference_.md#iocobject)
+* [IocReference](_depreciated_parseiocreference_.md#iocreference)
 
 ### Functions
 
-* [parseIocReference](_parseiocreference_.md#parseiocreference)
+* [parseIocReference](_depreciated_parseiocreference_.md#parseiocreference)
 
 ## Type aliases
 
@@ -35,7 +35,7 @@ ___
 
 ###  parseIocReference
 
-▸ **parseIocReference**(`reference`: string, `prefixNamespace`: string | undefined, `fallbackHandler`: string | undefined, `eagerLoad`: true): *[IocObject](_parseiocreference_.md#iocobject)*
+▸ **parseIocReference**(`reference`: string, `prefixNamespace`: string | undefined, `fallbackHandler`: string | undefined, `eagerLoad`: true): *[IocObject](_depreciated_parseiocreference_.md#iocobject)*
 
 Parses a string reference to make a Ioc container binding reference. In case
 of `eagerLoad`, it will attempt to resolve the binding and returns the
@@ -50,9 +50,9 @@ Name | Type |
 `fallbackHandler` | string \| undefined |
 `eagerLoad` | true |
 
-**Returns:** *[IocObject](_parseiocreference_.md#iocobject)*
+**Returns:** *[IocObject](_depreciated_parseiocreference_.md#iocobject)*
 
-▸ **parseIocReference**(`reference`: string, `prefixNamespace?`: undefined | string, `fallbackHandler?`: undefined | string): *[IocReference](_parseiocreference_.md#iocreference)*
+▸ **parseIocReference**(`reference`: string, `prefixNamespace?`: undefined | string, `fallbackHandler?`: undefined | string): *[IocReference](_depreciated_parseiocreference_.md#iocreference)*
 
 Parses a string reference to make a Ioc container binding reference. In case
 of `eagerLoad`, it will attempt to resolve the binding and returns the
@@ -66,4 +66,4 @@ Name | Type |
 `prefixNamespace?` | undefined \| string |
 `fallbackHandler?` | undefined \| string |
 
-**Returns:** *[IocReference](_parseiocreference_.md#iocreference)*
+**Returns:** *[IocReference](_depreciated_parseiocreference_.md#iocreference)*
