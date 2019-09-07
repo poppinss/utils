@@ -21,6 +21,12 @@ export class IoCResolver {
     method: string,
   } } = {}
 
+  /**
+   * The namespace that will be used a prefix when resolving
+   * bindings
+   */
+  private _prefixNamespace = this._getPrefixNamespace()
+
   constructor (
     private _container: IocContract,
     private _rcNamespaceKey?: string,
@@ -47,11 +53,13 @@ export class IoCResolver {
   /**
    * Resolves the namespace and returns it's lookup node
    */
-  public resolve (namespace: string) {
+  public resolve (namespace: string, prefixNamespace: string | undefined = this._prefixNamespace) {
+    const cacheKey = prefixNamespace ? `${prefixNamespace}/${namespace}` : namespace
+
     /**
      * Return from cache, when the node exists
      */
-    const cacheNode = this._lookupCache[namespace]
+    const cacheNode = this._lookupCache[cacheKey]
     if (cacheNode) {
       return cacheNode
     }
@@ -67,7 +75,7 @@ export class IoCResolver {
       method = tokens.pop()!
     }
 
-    const lookupNode = this._container.lookup(tokens.join('.'), this._getPrefixNamespace())
+    const lookupNode = this._container.lookup(tokens.join('.'), prefixNamespace)
 
     /**
      * Raise exception when unable to resolve the binding from the container.
@@ -80,16 +88,16 @@ export class IoCResolver {
       throw new Exception(`Unable to resolve ${tokens.join('.')} namespace from IoC container`)
     }
 
-    this._lookupCache[namespace] = { ...lookupNode, method }
-    return this._lookupCache[namespace]
+    this._lookupCache[cacheKey] = { ...lookupNode, method }
+    return this._lookupCache[cacheKey]
   }
 
   /**
    * Calls the namespace.method expression with any arguments that needs to
    * be passed. Also supports type-hinting dependencies.
    */
-  public call<T extends any> (namespace: string, args: any[]): T {
-    const lookupNode = this.resolve(namespace)
-    return this._container.call(this._container.make(lookupNode.namespace), lookupNode.method, args)
+  public call<T extends any> (namespace: string, prefixNamespace?: string, args?: any[]): T {
+    const lookupNode = this.resolve(namespace, prefixNamespace)
+    return this._container.call(this._container.make(lookupNode.namespace), lookupNode.method, args || [])
   }
 }

@@ -23,7 +23,7 @@ test.group('Ioc Resolver', () => {
     ioc.bind('App/UserController', () => new UserController())
 
     const resolver = new IoCResolver(ioc)
-    assert.equal(resolver.call('App/UserController', []), 'foo')
+    assert.equal(resolver.call('App/UserController'), 'foo')
   })
 
   test('call namespace expression with method', (assert) => {
@@ -37,7 +37,7 @@ test.group('Ioc Resolver', () => {
     ioc.bind('App/UserController', () => new UserController())
 
     const resolver = new IoCResolver(ioc)
-    assert.equal(resolver.call('App/UserController.getUser', []), 'foo')
+    assert.equal(resolver.call('App/UserController.getUser'), 'foo')
   })
 
   test('call async namespace expression', async (assert) => {
@@ -51,7 +51,7 @@ test.group('Ioc Resolver', () => {
     ioc.bind('App/UserController', () => new UserController())
 
     const resolver = new IoCResolver(ioc)
-    const value = await resolver.call('App/UserController.getUser', [])
+    const value = await resolver.call('App/UserController.getUser')
     assert.equal(value, 'foo')
   })
 
@@ -59,7 +59,65 @@ test.group('Ioc Resolver', () => {
     const ioc = new Ioc()
     const resolver = new IoCResolver(ioc)
 
-    const fn = () => resolver.call('App/UserController.getUser', [])
+    const fn = () => resolver.call('App/UserController.getUser')
     assert.throw(fn, 'Unable to resolve App/UserController namespace from IoC container')
+  })
+
+  test('allow runtime prefix namespace', (assert) => {
+    class UserController {
+      public handle () {
+        return 'foo'
+      }
+    }
+
+    const ioc = new Ioc()
+    ioc.bind('App/UserController', () => new UserController())
+
+    const resolver = new IoCResolver(ioc)
+    assert.equal(resolver.call('UserController', 'App'), 'foo')
+  })
+
+  test('handle use case where namespace is same but prefix namespace is different', (assert) => {
+    class UserController {
+      public handle () {
+        return 'user'
+      }
+    }
+
+    class AdminController {
+      public handle () {
+        return 'admin'
+      }
+    }
+
+    const ioc = new Ioc()
+    ioc.bind('App/UserController', () => new UserController())
+    ioc.bind('Admin/UserController', () => new AdminController())
+
+    const resolver = new IoCResolver(ioc)
+    assert.equal(resolver.call('UserController', 'App'), 'user')
+    assert.equal(resolver.call('UserController', 'Admin'), 'admin')
+  })
+
+  test('handle use case where namespace is same but defined a different runtime prefix namespace', (assert) => {
+    class UserController {
+      public handle () {
+        return 'user'
+      }
+    }
+
+    class AdminController {
+      public handle () {
+        return 'admin'
+      }
+    }
+
+    const ioc = new Ioc()
+    ioc.bind('App/UserController', () => new UserController())
+    ioc.bind('Admin/UserController', () => new AdminController())
+
+    const resolver = new IoCResolver(ioc, undefined, 'App')
+    assert.equal(resolver.call('UserController'), 'user')
+    assert.equal(resolver.call('UserController', 'Admin'), 'admin')
   })
 })
