@@ -42,7 +42,7 @@ Name | Type |
 
 ###  call
 
-▸ **call**<**T**>(`namespace`: string, `args`: any[]): *T*
+▸ **call**<**T**>(`namespace`: string, `prefixNamespace?`: undefined | string, `args?`: any[]): *T*
 
 Calls the namespace.method expression with any arguments that needs to
 be passed. Also supports type-hinting dependencies.
@@ -56,7 +56,8 @@ be passed. Also supports type-hinting dependencies.
 Name | Type |
 ------ | ------ |
 `namespace` | string |
-`args` | any[] |
+`prefixNamespace?` | undefined \| string |
+`args?` | any[] |
 
 **Returns:** *T*
 
@@ -64,14 +65,15 @@ ___
 
 ###  resolve
 
-▸ **resolve**(`namespace`: string): *object*
+▸ **resolve**(`namespace`: string, `prefixNamespace`: string | undefined): *object*
 
 Resolves the namespace and returns it's lookup node
 
 **Parameters:**
 
-Name | Type |
------- | ------ |
-`namespace` | string |
+Name | Type | Default |
+------ | ------ | ------ |
+`namespace` | string | - |
+`prefixNamespace` | string \| undefined |  this._prefixNamespace |
 
 **Returns:** *object*

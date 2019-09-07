@@ -1,6 +1,6 @@
 {
   "name": "@poppinss/utils",
-  "version": "1.0.6",
+  "version": "1.0.7",
   "description": "Handy utilities for repetitive work",
   "scripts": {
     "mrm": "mrm --preset=@adonisjs/mrm-preset",
