@@ -120,4 +120,19 @@ test.group('Ioc Resolver', () => {
     assert.equal(resolver.call('UserController'), 'user')
     assert.equal(resolver.call('UserController', 'Admin'), 'admin')
   })
+
+  test('pass resolve result to the call method', (assert) => {
+    class UserController {
+      public getUser () {
+        return 'foo'
+      }
+    }
+
+    const ioc = new Ioc()
+    ioc.bind('App/UserController', () => new UserController())
+
+    const resolver = new IoCResolver(ioc)
+    const lookupNode = resolver.resolve('App/UserController.getUser')
+    assert.equal(resolver.call(lookupNode), 'foo')
+  })
 })

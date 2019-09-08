@@ -11,15 +11,20 @@ import { IocContract } from '@adonisjs/fold'
 import { Exception } from './Exception'
 
 /**
+ * Shape of IoC resolver lookup node
+ */
+export type IocResolverLookupNode = {
+  namespace: string,
+  type: 'binding' | 'autoload',
+  method: string,
+}
+
+/**
  * Exposes the API to resolve and call bindings from the IoC container. The resolver
  * internally caches the IoC container lookup nodes to boost performance.
  */
 export class IoCResolver {
-  private _lookupCache: { [key: string]: {
-    namespace: string,
-    type: 'binding' | 'autoload',
-    method: string,
-  } } = {}
+  private _lookupCache: { [key: string]: IocResolverLookupNode } = {}
 
   /**
    * The namespace that will be used a prefix when resolving
@@ -53,7 +58,10 @@ export class IoCResolver {
   /**
    * Resolves the namespace and returns it's lookup node
    */
-  public resolve (namespace: string, prefixNamespace: string | undefined = this._prefixNamespace) {
+  public resolve (
+    namespace: string,
+    prefixNamespace: string | undefined = this._prefixNamespace,
+  ): IocResolverLookupNode {
     const cacheKey = prefixNamespace ? `${prefixNamespace}/${namespace}` : namespace
 
     /**
@@ -96,8 +104,15 @@ export class IoCResolver {
    * Calls the namespace.method expression with any arguments that needs to
    * be passed. Also supports type-hinting dependencies.
    */
-  public call<T extends any> (namespace: string, prefixNamespace?: string, args?: any[]): T {
-    const lookupNode = this.resolve(namespace, prefixNamespace)
+  public call<T extends any> (
+    namespace: string | IocResolverLookupNode,
+    prefixNamespace?: string,
+    args?: any[],
+  ): T {
+    const lookupNode = typeof (namespace) === 'string'
+      ? this.resolve(namespace, prefixNamespace)
+      : namespace
+
     return this._container.call(this._container.make(lookupNode.namespace), lookupNode.method, args || [])
   }
 }
