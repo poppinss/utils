@@ -42,7 +42,7 @@ Name | Type |
 
 ###  call
 
-▸ **call**<**T**>(`namespace`: string, `prefixNamespace?`: undefined | string, `args?`: any[]): *T*
+▸ **call**<**T**>(`namespace`: string | [IocResolverLookupNode](../modules/_iocresolver_.md#iocresolverlookupnode), `prefixNamespace?`: undefined | string, `args?`: any[]): *T*
 
 Calls the namespace.method expression with any arguments that needs to
 be passed. Also supports type-hinting dependencies.
@@ -55,7 +55,7 @@ be passed. Also supports type-hinting dependencies.
 
 Name | Type |
 ------ | ------ |
-`namespace` | string |
+`namespace` | string \| [IocResolverLookupNode](../modules/_iocresolver_.md#iocresolverlookupnode) |
 `prefixNamespace?` | undefined \| string |
 `args?` | any[] |
 
@@ -65,7 +65,7 @@ ___
 
 ###  resolve
 
-▸ **resolve**(`namespace`: string, `prefixNamespace`: string | undefined): *object*
+▸ **resolve**(`namespace`: string, `prefixNamespace`: string | undefined): *[IocResolverLookupNode](../modules/_iocresolver_.md#iocresolverlookupnode)*
 
 Resolves the namespace and returns it's lookup node
 
@@ -76,4 +76,4 @@ Name | Type | Default |
 `namespace` | string | - |
 `prefixNamespace` | string \| undefined |  this._prefixNamespace |
 
-**Returns:** *object*
+**Returns:** *[IocResolverLookupNode](../modules/_iocresolver_.md#iocresolverlookupnode)*
