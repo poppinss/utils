@@ -1,6 +1,6 @@
 {
   "name": "@poppinss/utils",
-  "version": "1.0.7",
+  "version": "1.0.8",
   "description": "Handy utilities for repetitive work",
   "scripts": {
     "mrm": "mrm --preset=@adonisjs/mrm-preset",
@@ -9,7 +9,7 @@
     "lint": "tslint --project tsconfig.json",
     "clean": "del build",
     "compile": "npm run lint && npm run clean && tsc",
-    "build": "npm run compile && typedoc --theme markdown --mdHideSources --excludePrivate && git add docs",
+    "build": "npm run compile && typedoc --theme markdown --HideSources --excludePrivate && git add docs",
     "commit": "git-cz",
     "release": "np",
     "version": "npm run build"
