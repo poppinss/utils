@@ -70,7 +70,8 @@
     "anyBranch": false
   },
   "dependencies": {
-    "require-all": "^3.0.0"
+    "require-all": "^3.0.0",
+    "resolve-from": "^5.0.0"
   },
   "directories": {
     "doc": "docs",
