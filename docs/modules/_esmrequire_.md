@@ -1,6 +1,4 @@
-**[@poppinss/utils](../README.md)**
-
-[Globals](../README.md) › ["esmRequire"](_esmrequire_.md)
+[@poppinss/utils](../README.md) › ["esmRequire"](_esmrequire_.md)
 
 # External module: "esmRequire"
 

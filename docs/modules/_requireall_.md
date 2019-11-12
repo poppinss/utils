@@ -1,6 +1,4 @@
-**[@poppinss/utils](../README.md)**
-
-[Globals](../README.md) › ["requireAll"](_requireall_.md)
+[@poppinss/utils](../README.md) › ["requireAll"](_requireall_.md)
 
 # External module: "requireAll"
 

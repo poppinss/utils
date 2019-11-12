@@ -1,6 +1,4 @@
-**[@poppinss/utils](../README.md)**
-
-[Globals](../README.md) › [@poppinss/utils](_poppinss_utils.md)
+[@poppinss/utils](../README.md) › [@poppinss/utils](_poppinss_utils.md)
 
 # External module: @poppinss/utils
 

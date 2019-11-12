@@ -1,6 +1,4 @@
-**[@poppinss/utils](../README.md)**
-
-[Globals](../README.md) › [@poppinss/utils](../modules/_poppinss_utils.md) › [Exception](_poppinss_utils.exception.md)
+[@poppinss/utils](../README.md) › [@poppinss/utils](../modules/_poppinss_utils.md) › [Exception](_poppinss_utils.exception.md)
 
 # Class: Exception
 
@@ -16,7 +14,7 @@ new Exception('message', 500, 'E_RUNTIME_EXCEPTION')
 
 * Error
 
-  * **Exception**
+  ↳ **Exception**
 
 ## Index
 
@@ -45,7 +43,7 @@ Name | Type | Default |
 ------ | ------ | ------ |
 `message` | string | - |
 `status` | number | 500 |
-`code?` | undefined \| string | - |
+`code?` | undefined &#124; string | - |
 
 **Returns:** *[Exception](_poppinss_utils.exception.md)*
 
