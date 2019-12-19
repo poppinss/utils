@@ -24,9 +24,9 @@ test.group('require all', (group) => {
       loaded: true
     }`)
 
-    await fs.add('server.ts', `export const loaded = true`)
-    await fs.add('config.js', `module.exports = { loaded: true }`)
-    await fs.add('main.json', `{ "loaded": true }`)
+    await fs.add('server.ts', 'export const loaded = true')
+    await fs.add('config.js', 'module.exports = { loaded: true }')
+    await fs.add('main.json', '{ "loaded": true }')
 
     const output = requireAll(fs.basePath)
     assert.deepEqual(output, {
@@ -42,9 +42,9 @@ test.group('require all', (group) => {
       loaded: true
     }`)
 
-    await fs.add('ts/server.ts', `export const loaded = true`)
-    await fs.add('js/config.js', `module.exports = { loaded: true }`)
-    await fs.add('json/main.json', `{ "loaded": true }`)
+    await fs.add('ts/server.ts', 'export const loaded = true')
+    await fs.add('js/config.js', 'module.exports = { loaded: true }')
+    await fs.add('json/main.json', '{ "loaded": true }')
 
     const output = requireAll(fs.basePath)
     assert.deepEqual(output, {
@@ -66,9 +66,9 @@ test.group('require all', (group) => {
       loaded: true
     }`)
 
-    await fs.add('ts/server.ts', `export const loaded = true`)
-    await fs.add('js/config.js', `module.exports = { loaded: true }`)
-    await fs.add('json/main.json', `{ "loaded": true }`)
+    await fs.add('ts/server.ts', 'export const loaded = true')
+    await fs.add('js/config.js', 'module.exports = { loaded: true }')
+    await fs.add('json/main.json', '{ "loaded": true }')
 
     const output = requireAll(fs.basePath, false)
     assert.deepEqual(output, {})
@@ -79,9 +79,9 @@ test.group('require all', (group) => {
       loaded: true
     }`)
 
-    await fs.add('ts/server.d.ts', `export const loaded = true`)
-    await fs.add('js/config.js', `module.exports = { loaded: true }`)
-    await fs.add('json/main.json', `{ "loaded": true }`)
+    await fs.add('ts/server.d.ts', 'export const loaded = true')
+    await fs.add('js/config.js', 'module.exports = { loaded: true }')
+    await fs.add('json/main.json', '{ "loaded": true }')
 
     const output = requireAll(fs.basePath)
     assert.deepEqual(output, {
