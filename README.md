@@ -1,28 +1,28 @@
-<div align="center">
-  <img src="https://res.cloudinary.com/adonisjs/image/upload/q_100/v1557762307/poppinss_iftxlt.jpg" width="600px">
-</div>
-
 # Utils
-[![circleci-image]][circleci-url] [![npm-image]][npm-url] ![][typescript-image] [![license-image]][license-url]
+> Collection of reusable scripts used by AdonisJS core team
 
-This module exports a collection of re-usable utilties to avoid re-writing the same code in every other package. Do make sure to check the [API](docs/README.md) docs as well.
+[![circleci-image]][circleci-url] [![typescript-image]][typescript-url] [![npm-image]][npm-url] [![license-image]][license-url]
+
+This module exports a collection of re-usable utilties to avoid re-writing the same code in every other package.
+
 
 <!-- START doctoc generated TOC please keep comment here to allow auto update -->
 <!-- DON'T EDIT THIS SECTION, INSTEAD RE-RUN doctoc TO UPDATE -->
 ## Table of contents
 
-- [Usage](#usage)
-    - [Exception](#exception)
-    - [esmRequire](#esmrequire)
-    - [requireAll](#requireall)
-    - [resolveFrom](#resolvefrom)
-- [API](#api)
-- [Maintainers](#maintainers)
+- [Installation](#installation)
+- [Exception](#exception)
+- [fsReadAll](#fsreadall)
+- [requireAll](#requireall)
+- [esmRequire](#esmrequire)
+- [esmResolver](#esmresolver)
+- [resolveFrom](#resolvefrom)
 
 <!-- END doctoc generated TOC please keep comment here to allow auto update -->
 
-## Usage
-Install the package from npm as follows:
+## Installation
+
+Install the package from npm registry as follows:
 
 ```sh
 npm i @poppinss/utils
@@ -31,76 +31,120 @@ npm i @poppinss/utils
 yarn add @poppinss/utils
 ```
 
-and then use it as follows
+and then use it as follows:
 
 ```ts
-import { Exception, requireAll, esmRequire } from '@poppinss/utils'
+import { requireAll } from '@poppinss/utils'
+requireAll(__dirname)
 ```
 
-The module exports the following methods/classes.
-
-#### Exception
-Raise an exception with custom status code and error code.
+## Exception
+A custom exception class that extends the `Error` class to add support for defining `status` and `error codes`.
 
 ```ts
 import { Exception } from '@poppinss/utils'
-new Exception('Route not found', 404, 'E_ROUTE_NOT_FOUND')
+
+throw new Error('Something went wrong', 500, 'E_RUNTIME_EXCEPTION')
+throw new Error('Route not found', 404, 'E_ROUTE_NOT_FOUND')
 ```
 
-#### esmRequire
-Require a module and returns the `default` export if module is an `esModule` or returns the actual value in case of CommonJs.
+## fsReadAll
+A utility to recursively read all script files for a given directory. This method is equivalent to
+`readdir + recursive + filter (.js, .json, .ts)`.
 
-The method is helpful when you don't know that you are requiring a CommonJs module or a ESM module.
+```ts
+import { fsReadAll } from '@poppinss/utils'
 
-**TS module (user.ts)**
+const files = fsReadAll(__dirname) // array of strings
+```
+
+## requireAll
+Same as `fsReadAll`, but instead require the files. Helpful when you want to load all the config files inside a directory on app boot.
+
+```ts
+import { requireAll } from '@poppinss/utils'
+const config = requireAll(join(__dirname, 'config'))
+
+{
+  file1: {}, // exported object
+  file2: {} // exported object
+}
+```
+
+## esmRequire
+Utility to require script files wihtout worrying about `CommonJs` and `ESM` exports. This is how it works.
+
+- Returns the exported value for `module.exports`.
+- Returns the default value is an ESM module has `export default`.
+- Returns all exports if is an ESM module and doesn't have `export default`.
+
+**foo.js**
+```ts
+module.exports = {
+  greeting: 'Hello world'
+}
+```
+
+**foo.default.js**
 ```ts
 export default {
-  username: 'foo'
+  greeting: 'Hello world'
+}
+```
+
+**foo.esm.js**
+```ts
+export const greeting = {
+  greeting: 'hello world'
 }
 ```
 
 ```ts
 import { esmRequire } from '@poppinss/utils'
-esmRequire('./user') // returns { username: 'foo' }
+
+esmRequire('./foo.js') // { greeting: 'hello world' }
+esmRequire('./foo.default.js') // { greeting: 'hello world' }
+esmRequire('./foo.esm.js') // { greeting: { greeting: 'hello world' } }
 ```
 
-#### requireAll
-Require all `.js` and `.json` and `.ts` files from a given directory.
+## esmResolver
+The `esmResolver` method works similar to `esmRequire`. However, instead of requiring the file, it accepts the object and returns the exported as per the same logic defined above.
 
 ```ts
-import { join } from 'path'
-import { requireAll } from '@poppinss/utils'
+import { esmRequire } from '@poppinss/utils'
 
-requireAll(join(__dirname, 'config'))
+esmResolver({ greeting: 'hello world' }) // { greeting: 'hello world' }
 
-// Disable recursive
-requireAll(join(__dirname, 'config'), false)
+esmResolver({
+  default: { greeting: 'hello world' },
+  __esModule: true,
+}) // { greeting: 'hello world' }
 
-// Ignore error when directory is missing
-requireAll(join(__dirname, 'config'), true, true)
+esmResolver({
+  greeting: { greeting: 'hello world' },
+  __esModule: true,
+}) // { greeting: { greeting: 'hello world' } }
 ```
 
-#### resolveFrom
-Resolves a module from a given location. It is like `require.resolve` but handles couple of extra
-edge cases.
+## resolveFrom
+Works similar to `require.resolve`, however it handles the absolute paths properly.
 
-- Absolute paths are returned as it is, whereas `require.resolve` raises an exception.
-- This method use [resolve-from](https://github.com/sindresorhus/resolve-from) package, which handles the `require.resolve` bug, defined in this [issue](https://github.com/sindresorhus/resolve-from/issues/8#issuecomment-341262629).
+```ts
+import { resolveFrom } from '@poppinss/utils'
 
-## API
-Following are the autogenerated files via Typedoc
-
-* [API](docs/README.md)
-
-## Maintainers
-[Harminder virk](https://github.com/thetutlage)
+resolveFrom(__dirname, 'npm-package') // returns path to package "main" file
+resolveFrom(__dirname, './foo.js') // returns path to `foo.js` (if exists)
+resolveFrom(__dirname, join(__dirname, './foo.js')) // returns path to `foo.js` (if exists)
+```
 
 [circleci-image]: https://img.shields.io/circleci/project/github/poppinss/utils/master.svg?style=for-the-badge&logo=circleci
 [circleci-url]: https://circleci.com/gh/poppinss/utils "circleci"
 
+[typescript-image]: https://img.shields.io/badge/Typescript-294E80.svg?style=for-the-badge&logo=typescript
+[typescript-url]:  "typescript"
+
 [npm-image]: https://img.shields.io/npm/v/@poppinss/utils.svg?style=for-the-badge&logo=npm
 [npm-url]: https://npmjs.org/package/@poppinss/utils "npm"
-[typescript-image]: https://img.shields.io/badge/Typescript-294E80.svg?style=for-the-badge&logo=typescript
 
-[license-url]: LICENSE.md
-[license-image]: https://img.shields.io/aur/license/pac.svg?style=for-the-badge
+[license-image]: https://img.shields.io/npm/l/@poppinss/utils?color=blueviolet&style=for-the-badge
+[license-url]: LICENSE.md "license"
