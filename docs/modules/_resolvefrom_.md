@@ -14,8 +14,8 @@
 
 ▸ **resolveFrom**(`fromLocation`: string, `modulePath`: string): *string*
 
-Resolves module from a given and handles absolute paths
-as well
+Resolves module from a given directory. It is similar to `require.resolve`
+but carefull handles the absolute paths.
 
 **Parameters:**
 

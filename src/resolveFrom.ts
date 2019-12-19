@@ -11,8 +11,8 @@ import { isAbsolute } from 'path'
 import resolveFromMain from 'resolve-from'
 
 /**
- * Resolves module from a given and handles absolute paths
- * as well
+ * Resolves module from a given directory. It is similar to `require.resolve`
+ * but carefull handles the absolute paths.
  */
 export function resolveFrom (fromLocation: string, modulePath: string) {
   if (isAbsolute(modulePath)) {
