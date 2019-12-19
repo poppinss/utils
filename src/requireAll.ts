@@ -13,23 +13,20 @@
 
 import { extname } from 'path'
 import rAll from 'require-all'
+
 import { esmResolver } from './esmResolver'
+import { isScriptFile } from './isScriptFile'
 
 /**
  * Function to filter selected files only
  */
 function fileFilter (file: string) {
   const ext = extname(file)
-
-  if (ext === '.ts' && !file.endsWith('.d.ts')) {
-    return file.replace(new RegExp(`${ext}$`), '')
+  if (!isScriptFile(file)) {
+    return false
   }
 
-  if (['.js', '.json'].includes(ext)) {
-    return file.replace(new RegExp(`${ext}$`), '')
-  }
-
-  return false
+  return file.replace(new RegExp(`${ext}$`), '')
 }
 
 /**

@@ -8,6 +8,7 @@
 */
 
 export { Exception } from './src/Exception'
+export { fsReadAll } from './src/fsReadAll'
 export { requireAll } from './src/requireAll'
 export { esmRequire } from './src/esmRequire'
 export { esmResolver } from './src/esmResolver'
