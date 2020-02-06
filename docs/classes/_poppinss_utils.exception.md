@@ -12,7 +12,7 @@ new Exception('message', 500, 'E_RUNTIME_EXCEPTION')
 
 ## Hierarchy
 
-* Error
+* [Error](_poppinss_utils.exception.md#static-error)
 
   ↳ **Exception**
 
@@ -75,9 +75,7 @@ ___
 
 • **stack**? : *undefined | string*
 
-*Inherited from void*
-
-*Overrides void*
+*Inherited from [Exception](_poppinss_utils.exception.md).[stack](_poppinss_utils.exception.md#optional-stack)*
 
 ___
 
