@@ -18,6 +18,13 @@ This module exports a collection of re-usable utilties to avoid re-writing the s
 - [resolveFrom](#resolvefrom)
 - [Lodash utilities](#lodash-utilities)
   - [Exported methods](#exported-methods)
+- [Base 64 Encode/Decode](#base-64-encodedecode)
+    - [encode](#encode)
+    - [decode](#decode)
+    - [urlEncode](#urlencode)
+    - [urlDecode](#urldecode)
+- [Random String](#random-string)
+- [Safe equal](#safe-equal)
 
 <!-- END doctoc generated TOC please keep comment here to allow auto update -->
 
@@ -175,6 +182,48 @@ Following is the list of exported helpers.
 - [camelCase](https://lodash.com/docs/latest#camelCase)
 - [startCase](https://lodash.com/docs/latest#startCase)
 
+## Base 64 Encode/Decode
+Following helpers for base64 encoding/decoding also exists.
+
+#### encode
+
+```ts
+import { base64 } from '@poppinss/utils'
+base64.encode('hello world')
+base64.encode(Buffer.from('hello world', 'binary'))
+```
+
+#### decode
+
+```ts
+import { base64 } from '@poppinss/utils'
+base64.decode(base64.encode('hello world'))
+base64.decode(base64.encode(Buffer.from('hello world', 'binary')), 'binary')
+```
+
+#### urlEncode
+Same as `encode`, but safe for URLS and Filenames
+
+#### urlDecode
+Same as `decode`, but decodes the `urlEncode` output values
+
+## Random String
+A helper to generate random strings of a given length. Uses `crypto` under the hood.
+
+```ts
+import { randomString } from '@poppinss/utils'
+randomString(32)
+randomString(128)
+```
+
+## Safe equal
+Compares two values by avoid [timing attack](https://en.wikipedia.org/wiki/Timing_attack). Accepts any input that can be passed to `Buffer.from`
+
+```ts
+import { safeValue } from '@poppinss/utils'
+if (safeValue('foo', 'foo')) {
+}
+```
 
 [circleci-image]: https://img.shields.io/circleci/project/github/poppinss/utils/master.svg?style=for-the-badge&logo=circleci
 [circleci-url]: https://circleci.com/gh/poppinss/utils "circleci"
