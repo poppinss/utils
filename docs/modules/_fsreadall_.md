@@ -12,7 +12,7 @@
 
 ###  fsReadAll
 
-▸ **fsReadAll**(`location`: string): *string[]*
+▸ **fsReadAll**(`location`: string, `callback?`: undefined | function): *string[]*
 
 Returns an array of file paths from the given location.
 
@@ -21,5 +21,6 @@ Returns an array of file paths from the given location.
 Name | Type |
 ------ | ------ |
 `location` | string |
+`callback?` | undefined &#124; function |
 
 **Returns:** *string[]*
