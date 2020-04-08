@@ -1,6 +1,6 @@
 [@poppinss/utils](../README.md) › ["esmRequire"](_esmrequire_.md)
 
-# External module: "esmRequire"
+# Module: "esmRequire"
 
 ## Index
 

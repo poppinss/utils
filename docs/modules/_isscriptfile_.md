@@ -1,6 +1,6 @@
 [@poppinss/utils](../README.md) › ["isScriptFile"](_isscriptfile_.md)
 
-# External module: "isScriptFile"
+# Module: "isScriptFile"
 
 ## Index
 

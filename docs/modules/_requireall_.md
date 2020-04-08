@@ -1,6 +1,6 @@
 [@poppinss/utils](../README.md) › ["requireAll"](_requireall_.md)
 
-# External module: "requireAll"
+# Module: "requireAll"
 
 ## Index
 

@@ -1,6 +1,6 @@
 [@poppinss/utils](../README.md) › ["fsReadAll"](_fsreadall_.md)
 
-# External module: "fsReadAll"
+# Module: "fsReadAll"
 
 ## Index
 

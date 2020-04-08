@@ -4,7 +4,7 @@
 
 ## Index
 
-### External modules
+### Modules
 
 * ["esmRequire"](modules/_esmrequire_.md)
 * ["fsReadAll"](modules/_fsreadall_.md)

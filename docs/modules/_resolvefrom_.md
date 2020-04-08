@@ -1,6 +1,6 @@
 [@poppinss/utils](../README.md) › ["resolveFrom"](_resolvefrom_.md)
 
-# External module: "resolveFrom"
+# Module: "resolveFrom"
 
 ## Index
 

@@ -1,6 +1,6 @@
 [@poppinss/utils](../README.md) › [@poppinss/utils](_poppinss_utils.md)
 
-# External module: @poppinss/utils
+# Module: @poppinss/utils
 
 ## Index
 
