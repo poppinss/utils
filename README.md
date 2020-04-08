@@ -3,8 +3,7 @@
 
 [![circleci-image]][circleci-url] [![typescript-image]][typescript-url] [![npm-image]][npm-url] [![license-image]][license-url]
 
-This module exports a collection of re-usable utilties to avoid re-writing the same code in every other package.
-
+This module exports a collection of re-usable utilties to avoid re-writing the same code in every other package. We also include a handful of Lodash utilities, which are used across the AdonisJS packages eco-system.
 
 <!-- START doctoc generated TOC please keep comment here to allow auto update -->
 <!-- DON'T EDIT THIS SECTION, INSTEAD RE-RUN doctoc TO UPDATE -->
@@ -17,6 +16,8 @@ This module exports a collection of re-usable utilties to avoid re-writing the s
 - [esmRequire](#esmrequire)
 - [esmResolver](#esmresolver)
 - [resolveFrom](#resolvefrom)
+- [Lodash utilities](#lodash-utilities)
+  - [Exported methods](#exported-methods)
 
 <!-- END doctoc generated TOC please keep comment here to allow auto update -->
 
@@ -56,6 +57,14 @@ A utility to recursively read all script files for a given directory. This metho
 import { fsReadAll } from '@poppinss/utils'
 
 const files = fsReadAll(__dirname) // array of strings
+```
+
+You can also define your custom filter function. The filter function must return `true` for files to be included.
+
+```ts
+const files = fsReadAll(__dirname, (file) => {
+  return file.endsWith('.foo.js')
+})
 ```
 
 ## requireAll
@@ -136,6 +145,36 @@ resolveFrom(__dirname, 'npm-package') // returns path to package "main" file
 resolveFrom(__dirname, './foo.js') // returns path to `foo.js` (if exists)
 resolveFrom(__dirname, join(__dirname, './foo.js')) // returns path to `foo.js` (if exists)
 ```
+
+## Lodash utilities
+Lodash itself is a bulky library and most of the times, we don't need all the functions from it. For this purpose, the lodash team decided to publish individual methods to npm as packages. However, most of those individual packages are outdated.
+
+At this point, whether we should use the complete lodash build or use outdated individual packages. Both are not acceptable.
+
+Instead, we make use of `lodash-cli` to create a custom build of all the utilities we ever need inside the AdonisJS eco-system and export it as part of this package. Why part of this package?
+
+Well, creating custom builds in multiple packages will cause friction, so it's better to keep it at a single place.
+
+> **Do note: There are no Typescript types for the lodash methods, since their CLI doesn't generate one and the one published on `@types/lodash` package are again maintained by community and not the lodash core team, so at times, they can also be outdated.**
+
+```ts
+import { lodash } from '@poppinss/utils'
+lodash.snakeCase('HelloWorld') // hello_world
+```
+
+### Exported methods
+Following is the list of exported helpers.
+
+- [pick](https://lodash.com/docs/latest#pick)
+- [omit](https://lodash.com/docs/latest#omit)
+- [get](https://lodash.com/docs/latest#get)
+- [set](https://lodash.com/docs/latest#set)
+- [mergeWith](https://lodash.com/docs/latest#mergeWith)
+- [merge](https://lodash.com/docs/latest#merge)
+- [snakeCase](https://lodash.com/docs/latest#snakeCase)
+- [camelCase](https://lodash.com/docs/latest#camelCase)
+- [startCase](https://lodash.com/docs/latest#startCase)
+
 
 [circleci-image]: https://img.shields.io/circleci/project/github/poppinss/utils/master.svg?style=for-the-badge&logo=circleci
 [circleci-url]: https://circleci.com/gh/poppinss/utils "circleci"
