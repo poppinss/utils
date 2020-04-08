@@ -7,6 +7,7 @@
 * file that was distributed with this source code.
 */
 
+export { base64 } from './src/base64'
 export * as lodash from './src/lodash'
 export { Exception } from './src/Exception'
 export { fsReadAll } from './src/fsReadAll'
