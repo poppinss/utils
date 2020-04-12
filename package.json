@@ -28,7 +28,7 @@
   "license": "MIT",
   "devDependencies": {
     "@adonisjs/mrm-preset": "^2.3.0",
-    "@poppinss/dev-utils": "^1.0.5",
+    "@poppinss/dev-utils": "^1.0.6",
     "@types/ms": "^0.7.31",
     "@types/node": "^13.11.1",
     "commitizen": "^4.0.4",
