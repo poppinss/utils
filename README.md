@@ -177,6 +177,7 @@ Following is the list of exported helpers.
 - [omit](https://lodash.com/docs/latest#omit)
 - [get](https://lodash.com/docs/latest#get)
 - [set](https://lodash.com/docs/latest#set)
+- [unset](https://lodash.com/docs/latest#unset)
 - [mergeWith](https://lodash.com/docs/latest#mergeWith)
 - [merge](https://lodash.com/docs/latest#merge)
 - [snakeCase](https://lodash.com/docs/latest#snakeCase)
