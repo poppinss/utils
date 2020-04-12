@@ -25,6 +25,7 @@ This module exports a collection of re-usable utilties to avoid re-writing the s
     - [urlDecode](#urldecode)
 - [Random String](#random-string)
 - [Safe equal](#safe-equal)
+- [Message Builder](#message-builder)
 
 <!-- END doctoc generated TOC please keep comment here to allow auto update -->
 
@@ -223,6 +224,32 @@ Compares two values by avoid [timing attack](https://en.wikipedia.org/wiki/Timin
 import { safeValue } from '@poppinss/utils'
 if (safeValue('foo', 'foo')) {
 }
+```
+
+## Message Builder
+Message builder provides a sane API for stringifying objects similar to `JSON.stringify` but has a few advantages.
+
+- It is safe from JSON poisoning vulnerability. 
+- You can define expiry and purpose for the encoding. The `verify` method will respect these values.
+
+The message builder alone may seem useless, since anyone can decode the object and change its expiry or purpose. However, you can generate an hash of the stringified object and verify for tampering by validating the hash. This is what AdonisJS does for cookies.
+
+```ts
+import { MessageBuilder } from '@poppinss/utils'
+const builder = new MessageBuilder()
+const encoded = builder.build(
+  { username: 'virk' },
+  '1 hour',
+  'login',
+)
+```
+
+Now verify it
+
+```ts
+builder.verify(encoded) // returns null, no purpose defined
+builder.verify(encoded, 'register') // returns null, purpose mismatch.
+builder.verify(encoded, 'login') // return { username: 'virk' }
 ```
 
 [circleci-image]: https://img.shields.io/circleci/project/github/poppinss/utils/master.svg?style=for-the-badge&logo=circleci
