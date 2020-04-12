@@ -30,10 +30,25 @@ class Base64 {
   /**
    * Base64 decode a previously encoded string or Buffer.
    */
-  public decode (encoded: string | Buffer, encoding: BufferEncoding = 'utf-8'): string {
-    return Buffer.isBuffer(encoded)
-      ? encoded.toString(encoding)
-      : Buffer.from(encoded, 'base64').toString(encoding)
+  public decode (encode: string, encoding: BufferEncoding, strict: true): string | null
+  public decode (encode: string, encoding: undefined, strict: true): string | null
+  public decode (encode: string, encoding?: BufferEncoding, strict?: false): string
+  public decode (encode: Buffer, encoding?: BufferEncoding): string
+  public decode (
+    encoded: string | Buffer,
+    encoding: BufferEncoding = 'utf-8',
+    strict: boolean = false,
+  ): string | null {
+    if (Buffer.isBuffer(encoded)) {
+      return encoded.toString(encoding)
+    }
+
+    const decoded = Buffer.from(encoded, 'base64').toString(encoding)
+    if (strict && this.encode(decoded, encoding) !== encoded) {
+      return null
+    }
+
+    return decoded
   }
 
   /**
@@ -52,8 +67,25 @@ class Base64 {
   /**
    * Base64 URL decode a previously encoded string or Buffer. (RFC 4648)
    */
-  public urlDecode (encoded: string | Buffer, encoding: BufferEncoding = 'utf-8'): string {
-    return this.decode(encoded, encoding)
+  public urlDecode (encode: string, encoding: BufferEncoding, strict: true): string | null
+  public urlDecode (encode: string, encoding: undefined, strict: true): string | null
+  public urlDecode (encode: string, encoding?: BufferEncoding, strict?: false): string
+  public urlDecode (encode: Buffer, encoding?: BufferEncoding): string
+  public urlDecode (
+    encoded: string | Buffer,
+    encoding: BufferEncoding = 'utf-8',
+    strict: boolean = false,
+  ): string | null {
+    if (Buffer.isBuffer(encoded)) {
+      return encoded.toString(encoding)
+    }
+
+    const decoded = Buffer.from(encoded, 'base64').toString(encoding)
+    if (strict && this.urlEncode(decoded, encoding) !== encoded) {
+      return null
+    }
+
+    return decoded
   }
 }
 

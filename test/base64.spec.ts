@@ -49,4 +49,14 @@ test.group('Base 64 | urlDecode', () => {
     const value = 'hello+world'
     assert.equal(base64.urlDecode(base64.urlEncode(value)), value)
   })
+
+  test('return corrupt value when unable to decode value and strict mode is off', (assert) => {
+    const value = 'hello+world'
+    assert.isNotNull(base64.urlDecode(value, 'utf-8'))
+  })
+
+  test('return null when unable to decode value and strict mode is on', (assert) => {
+    const value = 'hello+world'
+    assert.isNull(base64.urlDecode(value, 'utf-8', true))
+  })
 })
