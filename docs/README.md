@@ -6,6 +6,7 @@
 
 ### Modules
 
+* ["StateJar"](modules/_statejar_.md)
 * ["base64"](modules/_base64_.md)
 * ["esmRequire"](modules/_esmrequire_.md)
 * ["fsReadAll"](modules/_fsreadall_.md)
