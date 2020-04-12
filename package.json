@@ -31,6 +31,7 @@
     "@adonisjs/fold": "^6.2.3",
     "@adonisjs/mrm-preset": "^2.3.0",
     "@poppinss/dev-utils": "^1.0.5",
+    "@types/ms": "^0.7.31",
     "@types/node": "^13.11.1",
     "commitizen": "^4.0.4",
     "cz-conventional-changelog": "^3.1.0",
@@ -75,6 +76,7 @@
   "dependencies": {
     "@hapi/bourne": "^2.0.0",
     "fs-readdir-recursive": "^1.1.0",
+    "ms": "^2.1.2",
     "require-all": "^3.0.0",
     "resolve-from": "^5.0.0"
   },
