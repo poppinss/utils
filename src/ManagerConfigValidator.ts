@@ -46,9 +46,10 @@ export class ManagerConfigValidator {
       ].join(' '))
     }
 
-    if (!this.config[listName][keyName]) {
+    const defaultValue = this.config[keyName]
+    if (!this.config[listName][defaultValue]) {
       throw new Exception([
-        `Invalid "${this.serviceName}" config. "${keyName}" is not defined inside "${listName}".`,
+        `Invalid "${this.serviceName}" config. "${defaultValue}" is not defined inside "${listName}".`,
         `Make sure set it inside "${this.configLocation}"`,
       ].join(' '))
     }
