@@ -8,6 +8,7 @@
 */
 
 export { base64 } from './src/base64'
+// @ts-ignore
 export * as lodash from './src/lodash'
 export { Exception } from './src/Exception'
 export { safeEqual } from './src/safeEqual'
