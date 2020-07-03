@@ -1,11 +1,11 @@
 /*
-* @adonisjs/encryption
-*
-* (c) Harminder Virk <virk@adonisjs.com>
-*
-* For the full copyright and license information, please view the LICENSE
-* file that was distributed with this source code.
-*/
+ * @adonisjs/encryption
+ *
+ * (c) Harminder Virk <virk@adonisjs.com>
+ *
+ * For the full copyright and license information, please view the LICENSE
+ * file that was distributed with this source code.
+ */
 
 import ms from 'ms'
 import Bourne from '@hapi/bourne'
@@ -24,73 +24,73 @@ import Bourne from '@hapi/bourne'
  * - Allows encoding purpose. Again, useful for distribution.
  */
 export class MessageBuilder {
-  private getExpiryDate (expiresIn?: string | number): undefined | Date {
-    if (!expiresIn) {
-      return undefined
-    }
+	private getExpiryDate(expiresIn?: string | number): undefined | Date {
+		if (!expiresIn) {
+			return undefined
+		}
 
-    const expiryMs = typeof (expiresIn) === 'string' ? ms(expiresIn) : expiresIn
-    if (expiryMs === undefined || expiryMs === null) {
-      throw new Error(`Invalid value for expiresIn "${expiresIn}"`)
-    }
+		const expiryMs = typeof expiresIn === 'string' ? ms(expiresIn) : expiresIn
+		if (expiryMs === undefined || expiryMs === null) {
+			throw new Error(`Invalid value for expiresIn "${expiresIn}"`)
+		}
 
-    return new Date(Date.now() + expiryMs)
-  }
+		return new Date(Date.now() + expiryMs)
+	}
 
-  /**
-   * Returns a boolean telling, if message has been expired or not
-   */
-  private isExpired (message: any) {
-    if (!message.expiryDate) {
-      return false
-    }
+	/**
+	 * Returns a boolean telling, if message has been expired or not
+	 */
+	private isExpired(message: any) {
+		if (!message.expiryDate) {
+			return false
+		}
 
-    try {
-      const expiryDate = new Date(message.expiryDate)
-      return isNaN(expiryDate.getTime()) ||expiryDate < new Date()
-    } catch (error) {
-      return true
-    }
-  }
+		try {
+			const expiryDate = new Date(message.expiryDate)
+			return isNaN(expiryDate.getTime()) || expiryDate < new Date()
+		} catch (error) {
+			return true
+		}
+	}
 
-  /**
-   * Builds a message by encoding expiry and purpose inside it
-   */
-  public build (message: any, expiresIn?: string | number, purpose?: string) {
-    const expiryDate = this.getExpiryDate(expiresIn)
-    return JSON.stringify({ message, purpose, expiryDate })
-  }
+	/**
+	 * Builds a message by encoding expiry and purpose inside it
+	 */
+	public build(message: any, expiresIn?: string | number, purpose?: string) {
+		const expiryDate = this.getExpiryDate(expiresIn)
+		return JSON.stringify({ message, purpose, expiryDate })
+	}
 
-  /**
-   * Verifies the message for expiry and purpose
-   */
-  public verify<T extends any> (message: any, purpose?: string): null | T {
-    try {
-      const parsed = Bourne.parse(message, {
-        protoAction: 'remove',
-      })
+	/**
+	 * Verifies the message for expiry and purpose
+	 */
+	public verify<T extends any>(message: any, purpose?: string): null | T {
+		try {
+			const parsed = Bourne.parse(message, {
+				protoAction: 'remove',
+			})
 
-      if (!parsed.message) {
-        return null
-      }
+			if (!parsed.message) {
+				return null
+			}
 
-      /**
-       * Ensure purposes are same
-       */
-      if (parsed.purpose !== purpose) {
-        return null
-      }
+			/**
+			 * Ensure purposes are same
+			 */
+			if (parsed.purpose !== purpose) {
+				return null
+			}
 
-      /**
-       * Ensure isn't expired
-       */
-      if (this.isExpired(parsed)) {
-        return null
-      }
+			/**
+			 * Ensure isn't expired
+			 */
+			if (this.isExpired(parsed)) {
+				return null
+			}
 
-      return parsed.message
-    } catch (error) {
-      return null
-    }
-  }
+			return parsed.message
+		} catch (error) {
+			return null
+		}
+	}
 }
