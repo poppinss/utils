@@ -7,8 +7,8 @@
  * file that was distributed with this source code.
  */
 
-import { timingSafeEqual } from 'crypto'
 import alloc from 'buffer-alloc'
+import { timingSafeEqual } from 'crypto'
 
 type BufferSafeValue =
 	| ArrayBuffer
