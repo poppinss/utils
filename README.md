@@ -26,6 +26,7 @@ This module exports a collection of re-usable utilties to avoid re-writing the s
 - [Random String](#random-string)
 - [Safe equal](#safe-equal)
 - [Message Builder](#message-builder)
+- [Audit report](#audit-report)
 
 <!-- END doctoc generated TOC please keep comment here to allow auto update -->
 
@@ -252,6 +253,9 @@ builder.verify(encoded) // returns null, no purpose defined
 builder.verify(encoded, 'register') // returns null, purpose mismatch.
 builder.verify(encoded, 'login') // return { username: 'virk' }
 ```
+
+## Audit report
+[Click here](https://htmlpreview.github.io/?https://github.com/poppinss/utils/blob/develop/npm-audit.html) to see the latest npm audit report.
 
 [circleci-image]: https://img.shields.io/circleci/project/github/poppinss/utils/master.svg?style=for-the-badge&logo=circleci
 [circleci-url]: https://circleci.com/gh/poppinss/utils "circleci"
