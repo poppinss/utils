@@ -8,7 +8,7 @@
  */
 
 import ms from 'ms'
-import Bourne from '@hapi/bourne'
+import destr from 'destr'
 
 /**
  * Message builder exposes an API to JSON.stringify values by encoding purpose
@@ -66,9 +66,7 @@ export class MessageBuilder {
 	 */
 	public verify<T extends any>(message: any, purpose?: string): null | T {
 		try {
-			const parsed = Bourne.parse(message, {
-				protoAction: 'remove',
-			})
+			const parsed = destr(message)
 
 			if (!parsed.message) {
 				return null
