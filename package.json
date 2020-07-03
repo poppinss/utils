@@ -28,7 +28,7 @@
 	"author": "virk,poppinss",
 	"license": "MIT",
 	"devDependencies": {
-		"@adonisjs/mrm-preset": "^2.3.4",
+		"@adonisjs/mrm-preset": "^2.3.6",
 		"@poppinss/dev-utils": "^1.0.6",
 		"@types/ms": "^0.7.31",
 		"@types/node": "^14.0.14",
@@ -60,7 +60,7 @@
 	},
 	"husky": {
 		"hooks": {
-			"pre-commit": "doctoc README.md --title='## Table of contents' && git add README.md",
+			"pre-commit": "doctoc README.md --title='## Table of contents' && git add README.md && npm audit --production --json | ./node_modules/.bin/npm-audit-html && git add npm-audit.html",
 			"commit-msg": "node ./node_modules/@adonisjs/mrm-preset/validateCommit/conventional/validate.js"
 		}
 	},
