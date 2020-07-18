@@ -25,6 +25,8 @@ This module exports a collection of re-usable utilties to avoid re-writing the s
     - [urlDecode](#urldecode)
 - [Random String](#random-string)
 - [Safe equal](#safe-equal)
+- [Safe stringify](#safe-stringify)
+- [Safe parse](#safe-parse)
 - [Message Builder](#message-builder)
 
 <!-- END doctoc generated TOC please keep comment here to allow auto update -->
@@ -225,6 +227,37 @@ Compares two values by avoid [timing attack](https://en.wikipedia.org/wiki/Timin
 import { safeValue } from '@poppinss/utils'
 if (safeValue('foo', 'foo')) {
 }
+```
+
+## Safe stringify
+Similar to `JSON.stringify`, but also handles Circular references by removing them.
+
+```ts
+import { safeStringify } from '@poppinss/utils'
+
+const o = { b: 1, a: 0 }
+o.o = o
+
+console.log(safeStringify(o))
+// { "b":1,"a":0 }
+
+console.log(JSON.stringify(o))
+// TypeError: Converting circular structure to JSON
+```
+
+## Safe parse
+Similar to `JSON.parse`, but protects against [Prototype Poisoning](https://medium.com/intrinsic/javascript-prototype-poisoning-vulnerabilities-in-the-wild-7bc15347c96)
+
+```ts
+import { safeParse } from '@poppinss/utils'
+
+const input = '{ "user": { "__proto__": { "isAdmin": true } } }'
+
+JSON.parse(input)
+// { user: { __proto__: { isAdmin: true } } }
+
+safeParse(input)
+// { user: {} }
 ```
 
 ## Message Builder
