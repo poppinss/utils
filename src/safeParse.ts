@@ -7,6 +7,5 @@
  * file that was distributed with this source code.
  */
 
-export function esmResolver(output: any) {
-	return output && output.__esModule && output.default ? output.default : output
-}
+import destr from 'destr'
+export { destr as safeParse }

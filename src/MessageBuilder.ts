@@ -8,7 +8,8 @@
  */
 
 import ms from 'ms'
-import destr from 'destr'
+import { safeParse } from './safeParse'
+import { safeStringify } from './safeStringify'
 
 /**
  * Message builder exposes an API to JSON.stringify values by encoding purpose
@@ -58,37 +59,44 @@ export class MessageBuilder {
 	 */
 	public build(message: any, expiresIn?: string | number, purpose?: string) {
 		const expiryDate = this.getExpiryDate(expiresIn)
-		return JSON.stringify({ message, purpose, expiryDate })
+		return safeStringify({ message, purpose, expiryDate })
 	}
 
 	/**
 	 * Verifies the message for expiry and purpose
 	 */
 	public verify<T extends any>(message: any, purpose?: string): null | T {
-		try {
-			const parsed = destr(message)
+		const parsed = safeParse(message)
 
-			if (!parsed.message) {
-				return null
-			}
-
-			/**
-			 * Ensure purposes are same
-			 */
-			if (parsed.purpose !== purpose) {
-				return null
-			}
-
-			/**
-			 * Ensure isn't expired
-			 */
-			if (this.isExpired(parsed)) {
-				return null
-			}
-
-			return parsed.message
-		} catch (error) {
+		/**
+		 * Safe parse returns the value as it is when unable to JSON.parse it. However, in
+		 * our case if value was correctly parsed, it should never match the input
+		 */
+		if (parsed === message) {
 			return null
 		}
+
+		/**
+		 * Missing ".message" property
+		 */
+		if (!parsed.message) {
+			return null
+		}
+
+		/**
+		 * Ensure purposes are same.
+		 */
+		if (parsed.purpose !== purpose) {
+			return null
+		}
+
+		/**
+		 * Ensure isn't expired
+		 */
+		if (this.isExpired(parsed)) {
+			return null
+		}
+
+		return parsed.message
 	}
 }

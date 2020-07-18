@@ -109,12 +109,12 @@ test.group('require all', (group) => {
 		})
 	})
 
-	test('raise error when files are missing', async (assert) => {
+	test('raise error when root directory is missing', async (assert) => {
 		const fn = () => requireAll(fs.basePath)
 		assert.throw(fn, /ENOENT: no such file or directory, scandir/)
 	})
 
-	test('ignore when optional is true and files are missing', async (assert) => {
+	test('ignore when optional is true and root directory is missing', async (assert) => {
 		const fn = () => requireAll(fs.basePath, true, true)
 		assert.doesNotThrow(fn)
 	})

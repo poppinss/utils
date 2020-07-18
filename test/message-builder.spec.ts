@@ -10,7 +10,7 @@
 import test from 'japa'
 import { MessageBuilder } from '../src/MessageBuilder'
 
-test.group('MessageBuilder', () => {
+test.group('MessageBuilder | build', () => {
 	test('build a number as a message', (assert) => {
 		const message = new MessageBuilder()
 		assert.equal(message.build(22), '{"message":22}')
@@ -32,6 +32,21 @@ test.group('MessageBuilder', () => {
 		assert.equal(message.build(date), `{"message":"${date.toISOString()}"}`)
 	})
 
+	test('build circular references', (assert) => {
+		const message = new MessageBuilder()
+		const profile: any = {}
+
+		const user = {
+			name: 'virk',
+			profile,
+		}
+
+		profile.user = user
+		assert.equal(message.build(user), `{"message":{"name":"virk","profile":{"user":"[Circular]"}}}`)
+	})
+})
+
+test.group('MessageBuilder | verify', () => {
 	test('return message value after verification', (assert) => {
 		const message = new MessageBuilder()
 		assert.equal(message.verify(message.build(22)), 22)

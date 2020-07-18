@@ -25,7 +25,10 @@ test.group('Base 64 | urlEncode', () => {
 	})
 
 	test('base64 URL-safe a hex value', (assert) => {
-		assert.equal(base64.urlEncode(Buffer.from(binaryData, 'binary').toString('hex'), 'hex'), base64String)
+		assert.equal(
+			base64.urlEncode(Buffer.from(binaryData, 'binary').toString('hex'), 'hex'),
+			base64String
+		)
 	})
 
 	test('base64 URL-safe a buffer', (assert) => {
@@ -39,7 +42,10 @@ test.group('Base 64 | urlDecode', () => {
 	})
 
 	test('decode url safe into hex', (assert) => {
-		assert.equal(base64.urlDecode(base64String, 'hex'), Buffer.from(binaryData, 'binary').toString('hex'))
+		assert.equal(
+			base64.urlDecode(base64String, 'hex'),
+			Buffer.from(binaryData, 'binary').toString('hex')
+		)
 	})
 
 	test('encode/decode value', (assert) => {

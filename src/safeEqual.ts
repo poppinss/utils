@@ -44,7 +44,10 @@ export function safeEqual<T extends BufferSafeValue>(value: T, comparisonValue: 
 		/**
 		 * Ensure values are same and also have same length
 		 */
-		return timingSafeEqual(valueBuffer, comparisonValueBuffer) && expectedLength === Buffer.byteLength(comparisonValue)
+		return (
+			timingSafeEqual(valueBuffer, comparisonValueBuffer) &&
+			expectedLength === Buffer.byteLength(comparisonValue)
+		)
 	}
 
 	return timingSafeEqual(Buffer.from(value), Buffer.from(comparisonValue))

@@ -31,7 +31,11 @@ class Base64 {
 	public decode(encode: string, encoding: undefined, strict: true): string | null
 	public decode(encode: string, encoding?: BufferEncoding, strict?: false): string
 	public decode(encode: Buffer, encoding?: BufferEncoding): string
-	public decode(encoded: string | Buffer, encoding: BufferEncoding = 'utf-8', strict: boolean = false): string | null {
+	public decode(
+		encoded: string | Buffer,
+		encoding: BufferEncoding = 'utf-8',
+		strict: boolean = false
+	): string | null {
 		if (Buffer.isBuffer(encoded)) {
 			return encoded.toString(encoding)
 		}
@@ -49,7 +53,10 @@ class Base64 {
 	 */
 	public urlEncode(arrayBuffer: ArrayBuffer | SharedArrayBuffer): string
 	public urlEncode(data: string, encoding?: BufferEncoding): string
-	public urlEncode(data: ArrayBuffer | SharedArrayBuffer | string, encoding?: BufferEncoding): string {
+	public urlEncode(
+		data: ArrayBuffer | SharedArrayBuffer | string,
+		encoding?: BufferEncoding
+	): string {
 		const encoded = typeof data === 'string' ? this.encode(data, encoding) : this.encode(data)
 		return encoded.replace(/\+/g, '-').replace(/\//g, '_').replace(/\=/g, '')
 	}
