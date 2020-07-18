@@ -42,7 +42,7 @@ test.group('MessageBuilder | build', () => {
 		}
 
 		profile.user = user
-		assert.equal(message.build(user), `{"message":{"name":"virk","profile":{"user":"[Circular]"}}}`)
+		assert.equal(message.build(user), `{"message":{"name":"virk","profile":{}}}`)
 	})
 })
 

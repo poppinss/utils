@@ -10,12 +10,23 @@
 import stringify from 'fast-safe-stringify'
 
 /**
+ * Replacer to remove Circular values all together
+ */
+function replacer(_: any, value: any) {
+	if (value === '[Circular]') {
+		return
+	}
+
+	return value
+}
+
+/**
  * Safely stringifies a Javascript native value
  */
 export function safeStringify(value: any): string {
 	try {
 		return JSON.stringify(value)
 	} catch {
-		return stringify(value)
+		return stringify(value, replacer)
 	}
 }
