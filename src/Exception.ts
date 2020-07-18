@@ -19,7 +19,7 @@
 export class Exception extends Error {
 	public name: string
 	public message: string
-	public description?: string
+	public help?: string
 	public code?: string
 	public status: number
 
