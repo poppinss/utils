@@ -1,7 +1,7 @@
 # Utils
 > Collection of reusable scripts used by AdonisJS core team
 
-[![circleci-image]][circleci-url] [![typescript-image]][typescript-url] [![npm-image]][npm-url] [![license-image]][license-url]
+[![circleci-image]][circleci-url] [![typescript-image]][typescript-url] [![npm-image]][npm-url] [![license-image]][license-url] [![audit-report-image]][audit-report-url]
 
 This module exports a collection of re-usable utilties to avoid re-writing the same code in every other package. We also include a handful of Lodash utilities, which are used across the AdonisJS packages eco-system.
 
@@ -26,7 +26,6 @@ This module exports a collection of re-usable utilties to avoid re-writing the s
 - [Random String](#random-string)
 - [Safe equal](#safe-equal)
 - [Message Builder](#message-builder)
-- [Audit report](#audit-report)
 
 <!-- END doctoc generated TOC please keep comment here to allow auto update -->
 
@@ -254,9 +253,6 @@ builder.verify(encoded, 'register') // returns null, purpose mismatch.
 builder.verify(encoded, 'login') // return { username: 'virk' }
 ```
 
-## Audit report
-[Click here](https://htmlpreview.github.io/?https://github.com/poppinss/utils/blob/develop/npm-audit.html) to see the latest npm audit report.
-
 [circleci-image]: https://img.shields.io/circleci/project/github/poppinss/utils/master.svg?style=for-the-badge&logo=circleci
 [circleci-url]: https://circleci.com/gh/poppinss/utils "circleci"
 
@@ -268,3 +264,6 @@ builder.verify(encoded, 'login') // return { username: 'virk' }
 
 [license-image]: https://img.shields.io/npm/l/@poppinss/utils?color=blueviolet&style=for-the-badge
 [license-url]: LICENSE.md "license"
+
+[audit-report-image]: https://img.shields.io/badge/-Audit%20Report-blueviolet?style=for-the-badge
+[audit-report-url]: https://htmlpreview.github.io/?https://github.com/poppinss/utils/blob/develop/npm-audit.html "audit-report"
