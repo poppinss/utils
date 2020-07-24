@@ -18,6 +18,7 @@ This module exports a collection of re-usable utilties to avoid re-writing the s
 - [esmRequire](#esmrequire)
 - [esmResolver](#esmresolver)
 - [resolveFrom](#resolvefrom)
+- [interpolate](#interpolate)
 - [Lodash utilities](#lodash-utilities)
   - [Exported methods](#exported-methods)
 - [Base 64 Encode/Decode](#base-64-encodedecode)
@@ -157,6 +158,18 @@ resolveFrom(__dirname, 'npm-package') // returns path to package "main" file
 resolveFrom(__dirname, './foo.js') // returns path to `foo.js` (if exists)
 resolveFrom(__dirname, join(__dirname, './foo.js')) // returns path to `foo.js` (if exists)
 ```
+
+## interpolate
+A small utility function to interpolate values inside a string.
+
+```
+import { interpolate } from '@poppinss/utils'
+
+interpolate('hello {username}', { username: 'virk' })
+interpolate('hello {users.0.username}', { users: [{ username: 'virk' }] })
+```
+
+If value is missing, it will be replaced with an `undefined` string.
 
 ## Lodash utilities
 Lodash itself is a bulky library and most of the times, we don't need all the functions from it. For this purpose, the lodash team decided to publish individual methods to npm as packages. However, most of those individual packages are outdated.
