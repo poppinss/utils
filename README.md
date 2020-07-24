@@ -165,8 +165,8 @@ A small utility function to interpolate values inside a string.
 ```
 import { interpolate } from '@poppinss/utils'
 
-interpolate('hello {username}', { username: 'virk' })
-interpolate('hello {users.0.username}', { users: [{ username: 'virk' }] })
+interpolate('hello {{ username }}', { username: 'virk' })
+interpolate('hello {{ users.0.username }}', { users: [{ username: 'virk' }] })
 ```
 
 If value is missing, it will be replaced with an `undefined` string.
