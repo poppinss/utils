@@ -25,7 +25,7 @@ export class ManagerConfigValidator {
 			throw new Exception(
 				[
 					`Invalid "${this.serviceName}" config. Missing value for "${keyName}".`,
-					`Make sure set it inside "${this.configLocation}"`,
+					`Make sure to set it inside the "${this.configLocation}" file`,
 				].join(' ')
 			)
 		}
@@ -40,7 +40,7 @@ export class ManagerConfigValidator {
 			throw new Exception(
 				[
 					`Invalid "${this.serviceName}" config. Missing value for "${listName}".`,
-					`Make sure set it inside "${this.configLocation}"`,
+					`Make sure to set it inside the "${this.configLocation}" file`,
 				].join(' ')
 			)
 		}
@@ -50,7 +50,7 @@ export class ManagerConfigValidator {
 			throw new Exception(
 				[
 					`Invalid "${this.serviceName}" config. "${defaultValue}" is not defined inside "${listName}".`,
-					`Make sure set it inside "${this.configLocation}"`,
+					`Make sure to set it inside the "${this.configLocation}" file`,
 				].join(' ')
 			)
 		}
