@@ -30,4 +30,9 @@ test.group('resolve from', () => {
 	test('return absolute paths as it is', (assert) => {
 		assert.equal(resolveFrom(__dirname, __dirname), join(__dirname))
 	})
+
+	test('raise error when package is missing', (assert) => {
+		const fn = () => resolveFrom(__dirname, 'foo')
+		assert.throw(fn, `Cannot find module 'foo'`)
+	})
 })

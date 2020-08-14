@@ -18,6 +18,7 @@ This module exports a collection of re-usable utilties to avoid re-writing the s
 - [esmRequire](#esmrequire)
 - [esmResolver](#esmresolver)
 - [resolveFrom](#resolvefrom)
+- [resolveDir](#resolvedir)
 - [interpolate](#interpolate)
 - [Lodash utilities](#lodash-utilities)
   - [Exported methods](#exported-methods)
@@ -157,6 +158,30 @@ import { resolveFrom } from '@poppinss/utils'
 resolveFrom(__dirname, 'npm-package') // returns path to package "main" file
 resolveFrom(__dirname, './foo.js') // returns path to `foo.js` (if exists)
 resolveFrom(__dirname, join(__dirname, './foo.js')) // returns path to `foo.js` (if exists)
+```
+
+## resolveDir
+The `require.resolve` or `resolveFrom` method can only resolve paths to a given file and not the directory. For example: If you pass path to a directory, then it will search for `index.js` inside it and in case of a package, it will be search for `main` entry point.
+
+On the other hand, the `resolveDir` method can also resolve path to directories using following resolution.
+
+- Absolute paths are returned as it is.
+- Relative paths starting with `./` or `.\` are resolved using `path.join`.
+- Path to packages inside `node_modules` are resolved as follows:
+	- Uses `require.resolve` to resolve the `package.json` file.
+	- Then replace the `package-name` with the absolute resolved package path.
+
+```ts
+import { resolveDir } from '@poppinss/utils'
+
+resolveDir(__dirname, './database/migrations')
+// __dirname + /database/migrations
+
+resolveDir(__dirname, 'some-package/database/migrations')
+// {path-to-package}/database/migrations
+
+resolveDir(__dirname, '@some/package/database/migrations')
+// {path-to-package}/database/migrations
 ```
 
 ## interpolate
