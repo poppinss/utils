@@ -12,16 +12,16 @@ import { klona } from 'klona'
 /**
  * Define static properties on a class with inheritance in play.
  */
-export function defineStaticProperty(
+export function defineStaticProperty<Base extends Function, Prop extends keyof Base>(
 	self: any,
-	BaseClass: any,
+	BaseClass: Base,
 	{
 		propertyName,
 		defaultValue,
 		strategy,
 	}: {
-		propertyName: string
-		defaultValue: any
+		propertyName: Prop
+		defaultValue: Base[Prop]
 		strategy: 'inherit' | 'define'
 	}
 ) {
