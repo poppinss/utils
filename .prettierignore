@@ -1,7 +1,5 @@
 build
-README.md
 docs
-*.md
 config.json
 .eslintrc.json
 package.json
