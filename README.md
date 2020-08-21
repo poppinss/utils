@@ -32,6 +32,7 @@ This module exports a collection of re-usable utilties to avoid re-writing the s
 - [Safe stringify](#safe-stringify)
 - [Safe parse](#safe-parse)
 - [Message Builder](#message-builder)
+- [defineStaticProperty](#definestaticproperty)
 
 <!-- END doctoc generated TOC please keep comment here to allow auto update -->
 
@@ -303,7 +304,7 @@ safeParse(input)
 ## Message Builder
 Message builder provides a sane API for stringifying objects similar to `JSON.stringify` but has a few advantages.
 
-- It is safe from JSON poisoning vulnerability. 
+- It is safe from JSON poisoning vulnerability.
 - You can define expiry and purpose for the encoding. The `verify` method will respect these values.
 
 The message builder alone may seem useless, since anyone can decode the object and change its expiry or purpose. However, you can generate an hash of the stringified object and verify for tampering by validating the hash. This is what AdonisJS does for cookies.
@@ -325,6 +326,58 @@ builder.verify(encoded) // returns null, no purpose defined
 builder.verify(encoded, 'register') // returns null, purpose mismatch.
 builder.verify(encoded, 'login') // return { username: 'virk' }
 ```
+
+## defineStaticProperty
+Define static properties on a class by disjoining the prototype chain. We use it in AdonisJS for various purposes. For example: Lucid models
+
+You create an application wide base model
+
+```ts
+class AppModel extends BaseModel {
+	@column.datetime()
+	public createdAt: DateTime
+}
+```
+
+AdonisJS will create the `$columnDefinitions` property on the `AppModel` class, that holds all the columns
+
+```ts
+AppModel.$columnDefinitions // { createdAt: { columName: created_at } }
+```
+
+Now, lets create another model inheriting the `AppModel`
+
+```ts
+class User extends AppModel {
+	@column()
+	public id: number
+}
+```
+
+As per the Javascript prototype inheritance. The `User` model will not contain the columns from the `AppModel`, because we just re-defined the `$columnDefinitions` property. However, we don't want this behavior and instead want to copy the columns from the `AppModel` and then add new columns to it.
+
+Voila! Use the `defineStaticProperty` helper from this class.
+
+```ts
+class LucidBaseModel {
+	static boot () {
+		defineStaticProperty(this, LucidBaseModel, {
+			propertyName: '$columnDefinitions',
+			defaultValue: {},
+			strategy: 'inherit',
+		})
+	}
+}
+```
+
+The `defineStaticProperty` takes a total of three arguments.
+
+- The first argument is always `this`.
+- The second argument is the root level base class. This will usually be the class exported by your package or module.
+- The third argument takes the `propertyName`, `defaultValue (in case, there is nothing to copy)`, and the `strategy`.
+- The `inherit` strategy will copy the properties from the base class.
+- The `define` strategy will always use the `defaultValue` to define the property on the class. In other words, there is no copy behavior, but prototypal inheritance chain is also breaked by explicitly re-defining the property.
+
 
 [circleci-image]: https://img.shields.io/circleci/project/github/poppinss/utils/master.svg?style=for-the-badge&logo=circleci
 [circleci-url]: https://circleci.com/gh/poppinss/utils "circleci"
