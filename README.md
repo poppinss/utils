@@ -62,8 +62,8 @@ A custom exception class that extends the `Error` class to add support for defin
 ```ts
 import { Exception } from '@poppinss/utils'
 
-throw new Error('Something went wrong', 500, 'E_RUNTIME_EXCEPTION')
-throw new Error('Route not found', 404, 'E_ROUTE_NOT_FOUND')
+throw new Exception('Something went wrong', 500, 'E_RUNTIME_EXCEPTION')
+throw new Exception('Route not found', 404, 'E_ROUTE_NOT_FOUND')
 ```
 
 ## fsReadAll
@@ -344,7 +344,7 @@ builder.verify(encoded, 'login') // return { username: 'virk' }
 ```
 
 ## defineStaticProperty
-Explicitly define static properties on a class by checking for `hasOwnProperty`. In case of inheritance, the properties from the parent class the cloned vs following the prototypal inheritance.
+Explicitly define static properties on a class by checking for `hasOwnProperty`. In case of inheritance, the properties from the parent class are cloned vs following the prototypal inheritance.
 
 We use/need this copy from parent class behavior a lot in AdonisJS. Here's an example of Lucid models
 
