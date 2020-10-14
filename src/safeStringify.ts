@@ -9,24 +9,34 @@
 
 import stringify from 'fast-safe-stringify'
 
-/**
- * Replacer to remove Circular values all together
- */
-function replacer(_: any, value: any) {
-	if (value === '[Circular]') {
-		return
-	}
+type ReplacerFn = (this: any, key: string, value: any) => any
 
-	return value
+/**
+ * Replacer to handle bigints and remove Circular values all together
+ */
+function jsonStringifyReplacer(replacer?: ReplacerFn, removeCircular?: boolean): ReplacerFn {
+	return function (key, value) {
+		if (removeCircular && value === '[Circular]') {
+			return
+		}
+
+		const val = replacer ? replacer.call(this, key, value) : value
+
+		if (typeof val === 'bigint') {
+			return val.toString()
+		}
+
+		return val
+	}
 }
 
 /**
  * Safely stringifies a Javascript native value
  */
-export function safeStringify(value: any): string {
+export function safeStringify(value: any, replacer?: ReplacerFn, space?: string | number): string {
 	try {
-		return JSON.stringify(value)
+		return JSON.stringify(value, jsonStringifyReplacer(replacer, false), space)
 	} catch {
-		return stringify(value, replacer)
+		return stringify(value, jsonStringifyReplacer(replacer, true), space)
 	}
 }
