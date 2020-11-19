@@ -174,4 +174,35 @@ test.group('Define static property', () => {
 		assert.deepEqual(Main.hooks, { run: false, jump: true })
 		assert.deepEqual(MyBase.hooks, { run: true })
 	})
+
+	test('define a custom strategy function for defining the merge value', (assert) => {
+		class Base {
+			public static hooks: {
+				before: Set<string>
+				after: Set<string>
+			}
+
+			public static boot() {
+				defineStaticProperty(this, Base, {
+					propertyName: 'hooks',
+					defaultValue: {
+						before: new Set<string>(),
+						after: new Set<string>(),
+					},
+					strategy: (value) => {
+						return {
+							before: value.before,
+							after: value.after,
+						}
+					},
+				})
+			}
+		}
+
+		class Main extends Base {}
+		Main.boot()
+
+		assert.deepEqual(Main.hooks.before, new Set())
+		assert.deepEqual(Main.hooks.after, new Set())
+	})
 })

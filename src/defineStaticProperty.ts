@@ -22,7 +22,7 @@ export function defineStaticProperty<Base extends Function, Prop extends keyof B
 	}: {
 		propertyName: Prop
 		defaultValue: Base[Prop]
-		strategy: 'inherit' | 'define'
+		strategy: 'inherit' | 'define' | ((value: Base[Prop]) => Base[Prop])
 	}
 ) {
 	if (!self.hasOwnProperty(propertyName)) {
@@ -57,7 +57,7 @@ export function defineStaticProperty<Base extends Function, Prop extends keyof B
 		}
 
 		Object.defineProperty(self, propertyName, {
-			value: klona(value),
+			value: typeof strategy === 'function' ? strategy(value) : klona(value),
 			configurable: true,
 			enumerable: true,
 			writable: true,
