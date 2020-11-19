@@ -31,7 +31,12 @@ export function defineStaticProperty<Base extends Function, Prop extends keyof B
 		 * copy any properties
 		 */
 		if (Object.getPrototypeOf(self.prototype) === BaseClass.prototype || strategy === 'define') {
-			Object.defineProperty(self, propertyName, { value: defaultValue })
+			Object.defineProperty(self, propertyName, {
+				value: defaultValue,
+				configurable: true,
+				enumerable: true,
+				writable: true,
+			})
 			return
 		}
 
@@ -42,10 +47,20 @@ export function defineStaticProperty<Base extends Function, Prop extends keyof B
 		 */
 		const value = self[propertyName]
 		if (value === undefined) {
-			Object.defineProperty(self, propertyName, { value: defaultValue })
+			Object.defineProperty(self, propertyName, {
+				value: defaultValue,
+				configurable: true,
+				enumerable: true,
+				writable: true,
+			})
 			return
 		}
 
-		Object.defineProperty(self, propertyName, { value: klona(value) })
+		Object.defineProperty(self, propertyName, {
+			value: klona(value),
+			configurable: true,
+			enumerable: true,
+			writable: true,
+		})
 	}
 }

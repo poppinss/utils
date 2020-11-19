@@ -149,4 +149,29 @@ test.group('Define static property', () => {
 		assert.deepEqual(MySuperBase.hooks, { run: true, crawl: true })
 		assert.deepEqual(MyBase.hooks, { run: true })
 	})
+
+	test('allow overwriting the defined property', (assert) => {
+		class Base {
+			public static hooks: any
+
+			public static boot() {
+				defineStaticProperty(this, Base, {
+					propertyName: 'hooks',
+					defaultValue: {},
+					strategy: 'inherit',
+				})
+			}
+		}
+
+		class MyBase extends Base {}
+		MyBase.boot()
+		MyBase.hooks.run = true
+
+		class Main extends MyBase {}
+		Main.boot()
+		Main.hooks = { run: false, jump: true }
+
+		assert.deepEqual(Main.hooks, { run: false, jump: true })
+		assert.deepEqual(MyBase.hooks, { run: true })
+	})
 })
