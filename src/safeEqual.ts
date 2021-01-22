@@ -50,5 +50,8 @@ export function safeEqual<T extends BufferSafeValue>(value: T, comparisonValue: 
 		)
 	}
 
-	return timingSafeEqual(Buffer.from(value), Buffer.from(comparisonValue))
+	return timingSafeEqual(
+		Buffer.from(value as ArrayBuffer | SharedArrayBuffer),
+		Buffer.from(comparisonValue as ArrayBuffer | SharedArrayBuffer)
+	)
 }
