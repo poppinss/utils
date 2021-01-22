@@ -8,6 +8,8 @@
  */
 
 export { base64 } from './src/base64'
+export { compose, NormalizeConstructor } from './src/compose'
+
 // @ts-ignore
 export * as lodash from './src/lodash'
 export { Exception } from './src/Exception'

@@ -34,6 +34,8 @@ This module exports a collection of re-usable utilties to avoid re-writing the s
 - [Safe parse](#safe-parse)
 - [Message Builder](#message-builder)
 - [defineStaticProperty](#definestaticproperty)
+- [compose](#compose)
+  - [Mixins gotchas](#mixins-gotchas)
 
 <!-- END doctoc generated TOC please keep comment here to allow auto update -->
 
@@ -344,6 +346,7 @@ builder.verify(encoded, 'login') // return { username: 'virk' }
 ```
 
 ## defineStaticProperty
+
 Explicitly define static properties on a class by checking for `hasOwnProperty`. In case of inheritance, the properties from the parent class are cloned vs following the prototypal inheritance.
 
 We use/need this copy from parent class behavior a lot in AdonisJS. Here's an example of Lucid models
@@ -395,6 +398,86 @@ The `defineStaticProperty` takes a total of three arguments.
 - The third argument takes the `propertyName`, `defaultValue (in case, there is nothing to copy)`, and the `strategy`.
 - The `inherit` strategy will copy the properties from the base class.
 - The `define` strategy will always use the `defaultValue` to define the property on the class. In other words, there is no copy behavior, but prototypal inheritance chain is also breaked by explicitly re-defining the property.
+
+## compose
+
+Javascript doesn't have a concept of inherting multiple classes together and neither does Typescript. However, the [official documentation](https://www.typescriptlang.org/docs/handbook/mixins.html) of Typescript does talks about the concept of mixins.
+
+As per the Typescript docs, you can create and apply mixins as follows.
+
+```ts
+type Constructor = new (...args: any[]) => any
+
+const UserWithEmail = <T extends Constructor>(superclass: T) => {
+  return class extends superclass {
+    public email: string
+  }
+}
+
+const UserWithPassword = <T extends Constructor>(superclass: T) => {
+  return class extends superclass {
+    public password: string
+  }
+}
+
+class BaseModel {}
+class User extends UserWithPassword(UserWithEmail(BaseModel)) {}
+```
+
+Mixins are close to perfect way of inherting multiple classes. I recommend reading [this article](https://justinfagnani.com/2015/12/21/real-mixins-with-javascript-classes/) for same.
+
+However, the syntax of applying multiple mixins is kind of ugly, as you have apply mixins over mixins creating a nested hierarchy as shown below.
+
+```ts
+UserWithAttributes(UserWithAge(UserWithPassword(UserWithEmail(BaseModel))))
+```
+
+The `compose` method is a small utility to improve the syntax a bit.
+
+```ts
+import { compose } from '@poppinss/utils'
+
+class User extends compose(
+  BaseModel,
+  UserWithPassword,
+  UserWithEmail,
+  UserWithAge,
+  UserWithAttributes
+) {}
+```
+
+### Mixins gotchas
+
+Typescript has an [open issue](https://github.com/microsoft/TypeScript/issues/37142) related to the constructor arguments of the mixin class or the base class.
+
+Typescript expects all classes used in the mixin chain to have a constructor with only one argument of `...args: any[]`. For example: The following code will work fine at runtime, but the **typescript compiler complains about it**.
+
+```ts
+class BaseModel {
+  constructor(name: string) {}
+}
+
+const UserWithEmail = <T extends typeof BaseModel>(superclass: T) => {
+  return class extends superclass {
+    // ERROR: A mixin class must have a constructor with a single rest parameter of type 'any[]'.ts(2545)
+    public email: string
+  }
+}
+
+class User extends compose(BaseModel, UserWithEmail) {}
+```
+
+You can work around this by overriding the constructor of the base class.
+
+```ts
+import { NormalizeConstructor, compose } from '@poppinss/utils'
+
+const UserWithEmail = <T extends NormalizeConstructor<typeof BaseModel>>(superclass: T) => {
+  return class extends superclass {
+    public email: string
+  }
+}
+```
 
 [circleci-image]: https://img.shields.io/circleci/project/github/poppinss/utils/master.svg?style=for-the-badge&logo=circleci
 [circleci-url]: https://circleci.com/gh/poppinss/utils 'circleci'
