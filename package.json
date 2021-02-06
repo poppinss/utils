@@ -15,7 +15,7 @@
 		"clean": "del build",
 		"compile": "npm run lint && npm run clean && tsc",
 		"build:lodash": "lodash exports=node include=pick,omit,get,set,unset,mergeWith,merge,snakeCase,camelCase,startCase -o build/src/lodash/index.js --production",
-		"build": "npm run compile && npm run build:lodash",
+		"build": "npm run compile",
 		"commit": "git-cz",
 		"release": "np",
 		"version": "npm run build",

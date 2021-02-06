@@ -11,7 +11,7 @@ import test from 'japa'
 import { randomString } from '../src/randomString'
 
 test.group('randomString', () => {
-	test('generate random string of given length', (assert) => {
-		assert.lengthOf(randomString(32), 32)
-	})
+  test('generate random string of given length', (assert) => {
+    assert.lengthOf(randomString(32), 32)
+  })
 })

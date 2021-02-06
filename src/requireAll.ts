@@ -21,12 +21,12 @@ import { isScriptFile } from './isScriptFile'
  * Function to filter selected files only
  */
 function fileFilter(file: string) {
-	const ext = extname(file)
-	if (!isScriptFile(file)) {
-		return false
-	}
+  const ext = extname(file)
+  if (!isScriptFile(file)) {
+    return false
+  }
 
-	return file.replace(new RegExp(`${ext}$`), '')
+  return file.replace(new RegExp(`${ext}$`), '')
 }
 
 /**
@@ -35,18 +35,18 @@ function fileFilter(file: string) {
  * `.d.ts` are ignored.
  */
 export function requireAll(location: string, recursive = true, optional = false) {
-	try {
-		return rAll({
-			dirname: location,
-			recursive,
-			filter: fileFilter,
-			resolve: esmResolver,
-		})
-	} catch (error) {
-		if (error.code === 'ENOENT' && optional) {
-			return
-		} else {
-			throw error
-		}
-	}
+  try {
+    return rAll({
+      dirname: location,
+      recursive,
+      filter: fileFilter,
+      resolve: esmResolver,
+    })
+  } catch (error) {
+    if (error.code === 'ENOENT' && optional) {
+      return
+    } else {
+      throw error
+    }
+  }
 }

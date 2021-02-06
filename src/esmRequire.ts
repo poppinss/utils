@@ -14,5 +14,5 @@ import { esmResolver } from './esmResolver'
  * exports are only entertained, when `esmEnabled` is set to true.
  */
 export function esmRequire(filePath: string) {
-	return esmResolver(require(filePath))
+  return esmResolver(require(filePath))
 }

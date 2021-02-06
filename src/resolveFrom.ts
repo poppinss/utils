@@ -15,9 +15,9 @@ import resolveFromMain from 'resolve-from'
  * but carefull handles the absolute paths.
  */
 export function resolveFrom(fromLocation: string, modulePath: string) {
-	if (isAbsolute(modulePath)) {
-		return modulePath
-	}
+  if (isAbsolute(modulePath)) {
+    return modulePath
+  }
 
-	return resolveFromMain(fromLocation, modulePath)
+  return resolveFromMain(fromLocation, modulePath)
 }

@@ -13,8 +13,8 @@ type Constructor = new (...args: any[]) => any
  * Converting unions to intersection
  */
 type UnionToIntersection<T> = (T extends any ? (x: T) => any : never) extends (x: infer R) => any
-	? R
-	: never
+  ? R
+  : never
 
 /**
  * Normalizes constructor to work with mixins. There is an open bug for mixins
@@ -23,7 +23,7 @@ type UnionToIntersection<T> = (T extends any ? (x: T) => any : never) extends (x
  * https://github.com/microsoft/TypeScript/issues/37142
  */
 export type NormalizeConstructor<T extends Constructor> = {
-	new (...args: any[]): InstanceType<T>
+  new (...args: any[]): InstanceType<T>
 } & Omit<T, 'constructor'>
 
 /**
@@ -32,12 +32,12 @@ export type NormalizeConstructor<T extends Constructor> = {
  * just that I have added the support for static types too.
  */
 export const compose = <
-	SuperClass extends Constructor,
-	M extends ((superclass: SuperClass) => Constructor)[]
+  SuperClass extends Constructor,
+  M extends ((superclass: SuperClass) => Constructor)[]
 >(
-	superclass: SuperClass,
-	...mixins: M
+  superclass: SuperClass,
+  ...mixins: M
 ): SuperClass & UnionToIntersection<ReturnType<M[number]>> => {
-	return mixins.reduce((c, mixin) => mixin(c), superclass) as SuperClass &
-		UnionToIntersection<ReturnType<M[number]>>
+  return mixins.reduce((c, mixin) => mixin(c), superclass) as SuperClass &
+    UnionToIntersection<ReturnType<M[number]>>
 }

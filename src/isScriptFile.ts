@@ -15,15 +15,15 @@ const JS_MODULES = ['.js', '.json']
  * `.ts` but not `.d.ts`.
  */
 export function isScriptFile(file: string) {
-	const ext = extname(file)
+  const ext = extname(file)
 
-	if (JS_MODULES.includes(ext)) {
-		return true
-	}
+  if (JS_MODULES.includes(ext)) {
+    return true
+  }
 
-	if (ext === '.ts' && !file.endsWith('.d.ts')) {
-		return true
-	}
+  if (ext === '.ts' && !file.endsWith('.d.ts')) {
+    return true
+  }
 
-	return false
+  return false
 }

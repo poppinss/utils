@@ -14,5 +14,5 @@ import { isScriptFile } from './isScriptFile'
  * Returns an array of file paths from the given location.
  */
 export function fsReadAll(location: string, callback?: (file: string) => boolean): string[] {
-	return read(location).filter(typeof callback === 'function' ? callback : isScriptFile)
+  return read(location).filter(typeof callback === 'function' ? callback : isScriptFile)
 }

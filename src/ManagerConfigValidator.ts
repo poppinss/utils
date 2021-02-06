@@ -14,45 +14,45 @@ import { Exception } from './Exception'
  * for driver based implementations.
  */
 export class ManagerConfigValidator {
-	constructor(private config: any, private serviceName: string, private configLocation: string) {}
+  constructor(private config: any, private serviceName: string, private configLocation: string) {}
 
-	/**
-	 * Validates that the default key name is defined inside the config
-	 * for a given module/service
-	 */
-	public validateDefault(keyName: string) {
-		if (!this.config[keyName]) {
-			throw new Exception(
-				[
-					`Invalid "${this.serviceName}" config. Missing value for "${keyName}".`,
-					`Make sure to set it inside the "${this.configLocation}" file`,
-				].join(' ')
-			)
-		}
-	}
+  /**
+   * Validates that the default key name is defined inside the config
+   * for a given module/service
+   */
+  public validateDefault(keyName: string) {
+    if (!this.config[keyName]) {
+      throw new Exception(
+        [
+          `Invalid "${this.serviceName}" config. Missing value for "${keyName}".`,
+          `Make sure to set it inside the "${this.configLocation}" file`,
+        ].join(' ')
+      )
+    }
+  }
 
-	/**
-	 * Validates that the list to ensure that is is defined and the default
-	 * key name is also part of the list.
-	 */
-	public validateList(listName: string, keyName: string) {
-		if (!this.config[listName]) {
-			throw new Exception(
-				[
-					`Invalid "${this.serviceName}" config. Missing value for "${listName}".`,
-					`Make sure to set it inside the "${this.configLocation}" file`,
-				].join(' ')
-			)
-		}
+  /**
+   * Validates that the list to ensure that is is defined and the default
+   * key name is also part of the list.
+   */
+  public validateList(listName: string, keyName: string) {
+    if (!this.config[listName]) {
+      throw new Exception(
+        [
+          `Invalid "${this.serviceName}" config. Missing value for "${listName}".`,
+          `Make sure to set it inside the "${this.configLocation}" file`,
+        ].join(' ')
+      )
+    }
 
-		const defaultValue = this.config[keyName]
-		if (!this.config[listName][defaultValue]) {
-			throw new Exception(
-				[
-					`Invalid "${this.serviceName}" config. "${defaultValue}" is not defined inside "${listName}".`,
-					`Make sure to set it inside the "${this.configLocation}" file`,
-				].join(' ')
-			)
-		}
-	}
+    const defaultValue = this.config[keyName]
+    if (!this.config[listName][defaultValue]) {
+      throw new Exception(
+        [
+          `Invalid "${this.serviceName}" config. "${defaultValue}" is not defined inside "${listName}".`,
+          `Make sure to set it inside the "${this.configLocation}" file`,
+        ].join(' ')
+      )
+    }
+  }
 }

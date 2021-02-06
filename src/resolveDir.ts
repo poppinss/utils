@@ -15,33 +15,33 @@ import { isAbsolute, sep, join, dirname } from 'path'
  * but also works for directories with no `index.js` file.
  */
 export function resolveDir(fromLocation: string, dirPath: string) {
-	if (isAbsolute(dirPath)) {
-		return dirPath
-	}
+  if (isAbsolute(dirPath)) {
+    return dirPath
+  }
 
-	/**
-	 * Relative paths are made by joining the baseDir
-	 */
-	if (dirPath.startsWith('./') || dirPath.startsWith(`.${sep}`)) {
-		return join(fromLocation, dirPath)
-	}
+  /**
+   * Relative paths are made by joining the baseDir
+   */
+  if (dirPath.startsWith('./') || dirPath.startsWith(`.${sep}`)) {
+    return join(fromLocation, dirPath)
+  }
 
-	/**
-	 * From here on, we are dealing with a package inside node module.
-	 */
-	let packageName: string = ''
-	const tokens = dirPath.replace(/\\/g, '/').split('/')
+  /**
+   * From here on, we are dealing with a package inside node module.
+   */
+  let packageName: string = ''
+  const tokens = dirPath.replace(/\\/g, '/').split('/')
 
-	if (tokens.length && tokens[0].startsWith('@')) {
-		packageName = `${tokens.shift()}/`
-	}
+  if (tokens.length && tokens[0].startsWith('@')) {
+    packageName = `${tokens.shift()}/`
+  }
 
-	packageName += tokens.shift()
-	const resolved = resolveFromMain.silent(fromLocation, join(packageName, 'package.json'))
+  packageName += tokens.shift()
+  const resolved = resolveFromMain.silent(fromLocation, join(packageName, 'package.json'))
 
-	if (!resolved) {
-		throw new Error(`Cannot locate directory "${dirPath}"`)
-	}
+  if (!resolved) {
+    throw new Error(`Cannot locate directory "${dirPath}"`)
+  }
 
-	return join(dirname(resolved), tokens.join('/'))
+  return join(dirname(resolved), tokens.join('/'))
 }

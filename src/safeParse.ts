@@ -15,14 +15,14 @@ const suspectConstructorRx = /"(?:c|\\u0063)(?:o|\\u006[Ff])(?:n|\\u006[Ee])(?:s
 const JsonSigRx = /^["{[]|^-?[0-9][0-9.]*$/
 
 function jsonParseTransform(
-	key: string,
-	value: any,
-	reviver?: (this: any, key: string, value: any) => any
+  key: string,
+  value: any,
+  reviver?: (this: any, key: string, value: any) => any
 ): any {
-	if (key === '__proto__' || key === 'constructor') {
-		return
-	}
-	return reviver ? reviver(key, value) : value
+  if (key === '__proto__' || key === 'constructor') {
+    return
+  }
+  return reviver ? reviver(key, value) : value
 }
 
 /**
@@ -30,20 +30,20 @@ function jsonParseTransform(
  * instead raises the malformed JSON exceptions over swallowing them
  */
 export function safeParse(val: string, reviver?: (this: any, key: string, value: any) => any): any {
-	if (typeof val !== 'string') {
-		return val
-	}
+  if (typeof val !== 'string') {
+    return val
+  }
 
-	if (val === 'null') {
-		return null
-	}
+  if (val === 'null') {
+    return null
+  }
 
-	if (!JsonSigRx.test(val)) {
-		return val
-	}
+  if (!JsonSigRx.test(val)) {
+    return val
+  }
 
-	if (suspectProtoRx.test(val) || suspectConstructorRx.test(val)) {
-		return JSON.parse(val, (key, value) => jsonParseTransform(key, value, reviver))
-	}
-	return JSON.parse(val, reviver)
+  if (suspectProtoRx.test(val) || suspectConstructorRx.test(val)) {
+    return JSON.parse(val, (key, value) => jsonParseTransform(key, value, reviver))
+  }
+  return JSON.parse(val, reviver)
 }

@@ -11,47 +11,47 @@ import alloc from 'buffer-alloc'
 import { timingSafeEqual } from 'crypto'
 
 type BufferSafeValue =
-	| ArrayBuffer
-	| SharedArrayBuffer
-	| number[]
-	| string
-	| { valueOf(): string | object }
-	| { [Symbol.toPrimitive](hint: 'string'): string }
+  | ArrayBuffer
+  | SharedArrayBuffer
+  | number[]
+  | string
+  | { valueOf(): string | object }
+  | { [Symbol.toPrimitive](hint: 'string'): string }
 
 /**
  * Generates a random string for a given size
  */
 export function safeEqual<T extends BufferSafeValue>(value: T, comparisonValue: T) {
-	if (typeof value === 'string' && typeof comparisonValue === 'string') {
-		/**
-		 * The length of the main value to ensure that we compare equal strings
-		 * against each other to get a constant time.
-		 */
-		const expectedLength = Buffer.byteLength(value)
+  if (typeof value === 'string' && typeof comparisonValue === 'string') {
+    /**
+     * The length of the main value to ensure that we compare equal strings
+     * against each other to get a constant time.
+     */
+    const expectedLength = Buffer.byteLength(value)
 
-		/**
-		 * Value A
-		 */
-		const valueBuffer = alloc(expectedLength, 0, 'utf-8')
-		valueBuffer.write(value)
+    /**
+     * Value A
+     */
+    const valueBuffer = alloc(expectedLength, 0, 'utf-8')
+    valueBuffer.write(value)
 
-		/**
-		 * Value B
-		 */
-		const comparisonValueBuffer = alloc(expectedLength, 0, 'utf-8')
-		comparisonValueBuffer.write(comparisonValue)
+    /**
+     * Value B
+     */
+    const comparisonValueBuffer = alloc(expectedLength, 0, 'utf-8')
+    comparisonValueBuffer.write(comparisonValue)
 
-		/**
-		 * Ensure values are same and also have same length
-		 */
-		return (
-			timingSafeEqual(valueBuffer, comparisonValueBuffer) &&
-			expectedLength === Buffer.byteLength(comparisonValue)
-		)
-	}
+    /**
+     * Ensure values are same and also have same length
+     */
+    return (
+      timingSafeEqual(valueBuffer, comparisonValueBuffer) &&
+      expectedLength === Buffer.byteLength(comparisonValue)
+    )
+  }
 
-	return timingSafeEqual(
-		Buffer.from(value as ArrayBuffer | SharedArrayBuffer),
-		Buffer.from(comparisonValue as ArrayBuffer | SharedArrayBuffer)
-	)
+  return timingSafeEqual(
+    Buffer.from(value as ArrayBuffer | SharedArrayBuffer),
+    Buffer.from(comparisonValue as ArrayBuffer | SharedArrayBuffer)
+  )
 }
