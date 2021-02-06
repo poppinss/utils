@@ -17,7 +17,7 @@ const JsonSigRx = /^["{[]|^-?[0-9][0-9.]*$/
 function jsonParseTransform(
   key: string,
   value: any,
-  reviver?: (this: any, key: string, value: any) => any
+  reviver?: (this: any, jsonKey: string, jsonValue: any) => any
 ): any {
   if (key === '__proto__' || key === 'constructor') {
     return
@@ -29,7 +29,10 @@ function jsonParseTransform(
  * Copied directly from https://github.com/nuxt-contrib/destr/blob/master/src/index.ts but
  * instead raises the malformed JSON exceptions over swallowing them
  */
-export function safeParse(val: string, reviver?: (this: any, key: string, value: any) => any): any {
+export function safeParse(
+  val: string,
+  reviver?: (this: any, jsonKey: string, jsonValue: any) => any
+): any {
   if (typeof val !== 'string') {
     return val
   }
