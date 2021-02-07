@@ -47,15 +47,15 @@ import {
 
 // After version 3.0
 import {
-MessageBuilder,
-base64,
-compose,
-fsReadAll,
-interpolate,
-requireAll,
-resolveDir,
-resolveFrom,
-safeEqual
+  MessageBuilder,
+  base64,
+  compose,
+  fsReadAll,
+  interpolate,
+  requireAll,
+  resolveDir,
+  resolveFrom,
+  safeEqual
 } from '@poppinss/utils/build/helpers'
 
 ````
@@ -124,7 +124,6 @@ string.titleCase()
     - [decode](#decode)
     - [urlEncode](#urlencode)
     - [urlDecode](#urldecode)
-  - [Random String](#random-string)
   - [Safe equal](#safe-equal)
   - [Message Builder](#message-builder)
   - [compose](#compose)
@@ -268,9 +267,9 @@ esmResolver({
 
 Lodash itself is a bulky library and most of the times, we don't need all the functions from it.
 
-Also, all of the lodash functions are published as individual modules on npm. However, most of those individual packages are outdated and using them is not option.
+Also, all of the lodash functions are published as individual modules on npm. However, most of those individual packages are outdated and using them is not an option.
 
-Instead, we decided to use the `lodash-cli` to create a custom build for all the utilities we need inside AdonisJS ecosystem export it as part of this package.
+Instead, we decided to use the `lodash-cli` to create a custom build for all the utilities we need inside AdonisJS ecosystem and export it as part of this package.
 
 ```ts
 import { lodash } from '@poppinss/utils'
@@ -487,7 +486,7 @@ import { interpolate } from '@poppinss/utils/build/helpers'
 interpolate('\\{{ username }} expression evaluates to {{ username }}', {
   username: 'virk'
 })
-// Output {{username}} expression evaluates to virk
+// Output: {{ username }} expression evaluates to virk
 ```
 
 ### Base 64 Encode/Decode
@@ -498,6 +497,7 @@ Following helpers for base64 encoding/decoding also exists.
 
 ```ts
 import { base64 } from '@poppinss/utils/build/helpers'
+
 base64.encode('hello world')
 base64.encode(Buffer.from('hello world', 'binary'))
 ```
@@ -506,6 +506,7 @@ base64.encode(Buffer.from('hello world', 'binary'))
 
 ```ts
 import { base64 } from '@poppinss/utils/build/helpers'
+
 base64.decode(base64.encode('hello world'))
 base64.decode(base64.encode(Buffer.from('hello world', 'binary')), 'binary')
 ```
@@ -518,22 +519,13 @@ Same as `encode`, but safe for URLS and Filenames
 
 Same as `decode`, but decodes the `urlEncode` output values
 
-### Random String
-
-A helper to generate random strings of a given length. Uses `crypto` under the hood.
-
-```ts
-import { randomString } from '@poppinss/utils/build/helpers'
-randomString(32)
-randomString(128)
-```
-
 ### Safe equal
 
 Compares two values by avoid [timing attack](https://en.wikipedia.org/wiki/Timing_attack). Accepts any input that can be passed to `Buffer.from`
 
 ```ts
 import { safeValue } from '@poppinss/utils/build/helpers'
+
 if (safeValue('foo', 'foo')) {
 }
 ```
@@ -545,10 +537,11 @@ Message builder provides a sane API for stringifying objects similar to `JSON.st
 - It is safe from JSON poisoning vulnerability.
 - You can define expiry and purpose for the encoding. The `verify` method will respect these values.
 
-The message builder alone may seem useless, since anyone can decode the object and change its expiry or purpose. However, you can generate an hash of the stringified object and verify for tampering by validating the hash. This is what AdonisJS does for cookies.
+The message builder alone may seem useless, since anyone can decode the object and change its expiry or purpose. However, you can generate an hash of the stringified object and verify the tampering by validating the hash. This is what AdonisJS does for cookies.
 
 ```ts
 import { MessageBuilder } from '@poppinss/utils/build/helpers'
+
 const builder = new MessageBuilder()
 const encoded = builder.build({ username: 'virk' }, '1 hour', 'login')
 ```
@@ -586,9 +579,9 @@ class BaseModel {}
 class User extends UserWithPassword(UserWithEmail(BaseModel)) {}
 ```
 
-Mixins are close to perfect way of inherting multiple classes. I recommend reading [this article](https://justinfagnani.com/2015/12/21/real-mixins-with-javascript-classes/) for same.
+Mixins are close to a perfect way of inherting multiple classes. I recommend reading [this article](https://justinfagnani.com/2015/12/21/real-mixins-with-javascript-classes/) for same.
 
-However, the syntax of applying multiple mixins is kind of ugly, as you have apply mixins over mixins creating a nested hierarchy as shown below.
+However, the syntax of applying multiple mixins is kind of ugly, as you have to apply **mixins over mixins**, creating a nested hierarchy as shown below.
 
 ```ts
 UserWithAttributes(UserWithAge(UserWithPassword(UserWithEmail(BaseModel))))
@@ -725,7 +718,7 @@ Convert a sentence to title case
 ```ts
 import { string } from '@poppinss/utils/build/helpers'
 
-string.titleBase('Here is a fox') // Here Is a fox
+string.titleCase('Here is a fox') // Here Is a fox
 ```
 
 #### pluralize
