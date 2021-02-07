@@ -8,8 +8,8 @@
  */
 
 import ms from 'ms'
-import { safeParse } from './safeParse'
-import { safeStringify } from './safeStringify'
+import { safeParse } from '../safeParse'
+import { safeStringify } from '../safeStringify'
 
 /**
  * Message builder exposes an API to JSON.stringify values by encoding purpose

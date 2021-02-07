@@ -8,7 +8,7 @@
  */
 
 import read from 'fs-readdir-recursive'
-import { isScriptFile } from './isScriptFile'
+import { isScriptFile } from '../isScriptFile'
 
 /**
  * Returns an array of file paths from the given location.

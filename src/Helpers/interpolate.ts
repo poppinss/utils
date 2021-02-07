@@ -36,5 +36,11 @@ function parseProp(data: any, key: string) {
  * `interpolate('hello {{ username }}', { username: 'virk' })`
  */
 export function interpolate(input: string, data: any) {
-  return input.replace(/{{(.*?)}}/g, (_, key) => parseProp(data, key.trim()))
+  return input.replace(/(\\)?{{(.*?)}}/g, (_, escapeChar, key) => {
+    if (escapeChar) {
+      return `{{${key}}}`
+    }
+
+    return parseProp(data, key.trim())
+  })
 }

@@ -7,7 +7,7 @@
  * file that was distributed with this source code.
  */
 
-import { klona } from 'klona'
+import { cloneDeep } from './lodash'
 
 /**
  * Define static properties on a class with inheritance in play.
@@ -57,7 +57,7 @@ export function defineStaticProperty<Base extends Function, Prop extends keyof B
     }
 
     Object.defineProperty(self, propertyName, {
-      value: typeof strategy === 'function' ? strategy(value) : klona(value),
+      value: typeof strategy === 'function' ? strategy(value) : cloneDeep(value),
       configurable: true,
       enumerable: true,
       writable: true,

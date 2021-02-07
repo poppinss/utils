@@ -10,7 +10,7 @@
 import test from 'japa'
 import { join } from 'path'
 
-import { resolveDir } from '../src/resolveDir'
+import { resolveDir } from '../src/Helpers'
 
 test.group('resolve dir', () => {
   test('resolve relative path from the base directory', (assert) => {

@@ -8,34 +8,170 @@
 
 This module exports a collection of re-usable utilties to avoid re-writing the same code in every other package. We also include a handful of Lodash utilities, which are used across the AdonisJS packages eco-system.
 
+<details>
+  <summary>
+    <strong>Version 3.0 breaking changes</strong>
+  </summary>
+  
+  The version 3.0 re-format the exports to expose an "helpers" subpath to be used within the AdonisJS apps as well.
+  
+  The idea is to separate helpers that we need to share with AdonisJS core inside its own module, accessible as `‌@poppinss/utils/build/helpers`.
+ 
+ 
+ ### Inside helpers subpath
+  
+  Following modules are now moved to a subpath.
+  
+  - `MessageBuilder`
+  - `base64`
+  - `compose`
+  - `fsReadAll`
+  - `interpolate`
+  - `requireAll`
+  - `resolveDir`
+  - `resolveFrom`
+      
+```ts
+// Earlier
+import {
+  MessageBuilder,
+  base64,
+  compose,
+  fsReadAll,
+  interpolate,
+  requireAll,
+  resolveDir,
+  resolveFrom,
+  safeEqual
+} from '@poppinss/utils'
+
+// After version 3.0
+import {
+MessageBuilder,
+base64,
+compose,
+fsReadAll,
+interpolate,
+requireAll,
+resolveDir,
+resolveFrom,
+safeEqual
+} from '@poppinss/utils/build/helpers'
+
+````
+
+### randomString
+
+The `randomString` is now part of the `string` helpers.
+
+```ts
+// Earlier
+import { randomString } from '@poppinss/utils'
+randomString(32)
+
+// After version 3.0
+import { string } from '@poppinss/utils/build/helpers'
+string.generateRandom(32)
+````
+
+### lodash
+
+The following lodash functions have been removed with new alternatives.
+
+- `snakeCase`
+- `camelCase`
+- `startCase`
+
+```ts
+// Earlier
+import { lodash } from '@poppinss/utils'
+
+lodash.snakeCase()
+lodash.camelCase()
+lodash.startCase()
+
+// After version 3.0
+import { string } from '@poppinss/utils/build/helpers'
+
+string.snakeCase()
+string.camelCase()
+string.titleCase()
+```
+
+</details>
+
 <!-- START doctoc generated TOC please keep comment here to allow auto update -->
 <!-- DON'T EDIT THIS SECTION, INSTEAD RE-RUN doctoc TO UPDATE -->
 ## Table of contents
 
 - [Installation](#installation)
 - [Exception](#exception)
-- [fsReadAll](#fsreadall)
-- [requireAll](#requireall)
 - [esmRequire](#esmrequire)
 - [esmResolver](#esmresolver)
-- [resolveFrom](#resolvefrom)
-- [resolveDir](#resolvedir)
-- [interpolate](#interpolate)
 - [Lodash utilities](#lodash-utilities)
   - [Exported methods](#exported-methods)
-- [Base 64 Encode/Decode](#base-64-encodedecode)
+- [Safe stringify](#safe-stringify)
+- [Safe parse](#safe-parse)
+- [defineStaticProperty](#definestaticproperty)
+- [Helpers](#helpers)
+  - [fsReadAll](#fsreadall)
+  - [requireAll](#requireall)
+  - [resolveFrom](#resolvefrom)
+  - [resolveDir](#resolvedir)
+  - [interpolate](#interpolate)
+  - [Base 64 Encode/Decode](#base-64-encodedecode)
     - [encode](#encode)
     - [decode](#decode)
     - [urlEncode](#urlencode)
     - [urlDecode](#urldecode)
-- [Random String](#random-string)
-- [Safe equal](#safe-equal)
-- [Safe stringify](#safe-stringify)
-- [Safe parse](#safe-parse)
-- [Message Builder](#message-builder)
-- [defineStaticProperty](#definestaticproperty)
-- [compose](#compose)
-  - [Mixins gotchas](#mixins-gotchas)
+  - [Random String](#random-string)
+  - [Safe equal](#safe-equal)
+  - [Message Builder](#message-builder)
+  - [compose](#compose)
+    - [Mixins gotchas](#mixins-gotchas)
+  - [string](#string)
+    - [camelCase](#camelcase)
+    - [snakeCase](#snakecase)
+    - [dashCase](#dashcase)
+    - [pascalCase](#pascalcase)
+    - [capitalCase](#capitalcase)
+    - [sentenceCase](#sentencecase)
+    - [dotCase](#dotcase)
+    - [noCase](#nocase)
+    - [titleCase](#titlecase)
+    - [pluralize](#pluralize)
+    - [truncate](#truncate)
+    - [excerpt](#excerpt)
+    - [condenseWhitespace](#condensewhitespace)
+    - [escapeHTML](#escapehtml)
+    - [encodeSymbols](#encodesymbols)
+    - [toSentence](#tosentence)
+    - [prettyBytes](#prettybytes)
+    - [toBytes](#tobytes)
+    - [prettyMs](#prettyms)
+    - [toMs](#toms)
+    - [ordinalize](#ordinalize)
+    - [generateRandom](#generaterandom)
+    - [isEmpty](#isempty)
+  - [Types](#types)
+    - [lookup](#lookup)
+    - [isNull](#isnull)
+    - [isBoolean](#isboolean)
+    - [isBuffer](#isbuffer)
+    - [isNumber](#isnumber)
+    - [isString](#isstring)
+    - [isArguments](#isarguments)
+    - [isObject](#isobject)
+    - [isDate](#isdate)
+    - [isArray](#isarray)
+    - [isRegexp](#isregexp)
+    - [isError](#iserror)
+    - [isFunction](#isfunction)
+    - [isClass](#isclass)
+    - [isInteger](#isinteger)
+    - [isFloat](#isfloat)
+    - [isDecimal](#isdecimal)
+  - [ObjectBuilder](#objectbuilder)
 
 <!-- END doctoc generated TOC please keep comment here to allow auto update -->
 
@@ -66,39 +202,6 @@ import { Exception } from '@poppinss/utils'
 
 throw new Exception('Something went wrong', 500, 'E_RUNTIME_EXCEPTION')
 throw new Exception('Route not found', 404, 'E_ROUTE_NOT_FOUND')
-```
-
-## fsReadAll
-
-A utility to recursively read all script files for a given directory. This method is equivalent to
-`readdir + recursive + filter (.js, .json, .ts)`.
-
-```ts
-import { fsReadAll } from '@poppinss/utils'
-
-const files = fsReadAll(__dirname) // array of strings
-```
-
-You can also define your custom filter function. The filter function must return `true` for files to be included.
-
-```ts
-const files = fsReadAll(__dirname, (file) => {
-  return file.endsWith('.foo.js')
-})
-```
-
-## requireAll
-
-Same as `fsReadAll`, but instead require the files. Helpful when you want to load all the config files inside a directory on app boot.
-
-```ts
-import { requireAll } from '@poppinss/utils'
-const config = requireAll(join(__dirname, 'config'))
-
-{
-  file1: {}, // exported object
-  file2: {} // exported object
-}
 ```
 
 ## esmRequire
@@ -161,69 +264,17 @@ esmResolver({
 }) // { greeting: { greeting: 'hello world' } }
 ```
 
-## resolveFrom
-
-Works similar to `require.resolve`, however it handles the absolute paths properly.
-
-```ts
-import { resolveFrom } from '@poppinss/utils'
-
-resolveFrom(__dirname, 'npm-package') // returns path to package "main" file
-resolveFrom(__dirname, './foo.js') // returns path to `foo.js` (if exists)
-resolveFrom(__dirname, join(__dirname, './foo.js')) // returns path to `foo.js` (if exists)
-```
-
-## resolveDir
-
-The `require.resolve` or `resolveFrom` method can only resolve paths to a given file and not the directory. For example: If you pass path to a directory, then it will search for `index.js` inside it and in case of a package, it will be search for `main` entry point.
-
-On the other hand, the `resolveDir` method can also resolve path to directories using following resolution.
-
-- Absolute paths are returned as it is.
-- Relative paths starting with `./` or `.\` are resolved using `path.join`.
-- Path to packages inside `node_modules` are resolved as follows: - Uses `require.resolve` to resolve the `package.json` file. - Then replace the `package-name` with the absolute resolved package path.
-
-```ts
-import { resolveDir } from '@poppinss/utils'
-
-resolveDir(__dirname, './database/migrations')
-// __dirname + /database/migrations
-
-resolveDir(__dirname, 'some-package/database/migrations')
-// {path-to-package}/database/migrations
-
-resolveDir(__dirname, '@some/package/database/migrations')
-// {path-to-package}/database/migrations
-```
-
-## interpolate
-
-A small utility function to interpolate values inside a string.
-
-```
-import { interpolate } from '@poppinss/utils'
-
-interpolate('hello {{ username }}', { username: 'virk' })
-interpolate('hello {{ users.0.username }}', { users: [{ username: 'virk' }] })
-```
-
-If value is missing, it will be replaced with an `undefined` string.
-
 ## Lodash utilities
 
-Lodash itself is a bulky library and most of the times, we don't need all the functions from it. For this purpose, the lodash team decided to publish individual methods to npm as packages. However, most of those individual packages are outdated.
+Lodash itself is a bulky library and most of the times, we don't need all the functions from it.
 
-At this point, whether we should use the complete lodash build or use outdated individual packages. Both are not acceptable.
+Also, all of the lodash functions are published as individual modules on npm. However, most of those individual packages are outdated and using them is not option.
 
-Instead, we make use of `lodash-cli` to create a custom build of all the utilities we ever need inside the AdonisJS eco-system and export it as part of this package. Why part of this package?
-
-Well, creating custom builds in multiple packages will cause friction, so it's better to keep it at a single place.
-
-> **Do note: There are no Typescript types for the lodash methods, since their CLI doesn't generate one and the one published on `@types/lodash` package are again maintained by community and not the lodash core team, so at times, they can also be outdated.**
+Instead, we decided to use the `lodash-cli` to create a custom build for all the utilities we need inside AdonisJS ecosystem export it as part of this package.
 
 ```ts
 import { lodash } from '@poppinss/utils'
-lodash.snakeCase('HelloWorld') // hello_world
+lodash.get({ name: 'virk' }, 'name') // virk
 ```
 
 ### Exported methods
@@ -233,61 +284,14 @@ Following is the list of exported helpers.
 - [pick](https://lodash.com/docs/latest#pick)
 - [omit](https://lodash.com/docs/latest#omit)
 - [get](https://lodash.com/docs/latest#get)
+- [has](https://lodash.com/docs/latest#has)
+- [size](https://lodash.com/docs/latest#size)
 - [set](https://lodash.com/docs/latest#set)
 - [unset](https://lodash.com/docs/latest#unset)
 - [mergeWith](https://lodash.com/docs/latest#mergeWith)
 - [merge](https://lodash.com/docs/latest#merge)
-- [snakeCase](https://lodash.com/docs/latest#snakeCase)
-- [camelCase](https://lodash.com/docs/latest#camelCase)
-- [startCase](https://lodash.com/docs/latest#startCase)
-
-## Base 64 Encode/Decode
-
-Following helpers for base64 encoding/decoding also exists.
-
-#### encode
-
-```ts
-import { base64 } from '@poppinss/utils'
-base64.encode('hello world')
-base64.encode(Buffer.from('hello world', 'binary'))
-```
-
-#### decode
-
-```ts
-import { base64 } from '@poppinss/utils'
-base64.decode(base64.encode('hello world'))
-base64.decode(base64.encode(Buffer.from('hello world', 'binary')), 'binary')
-```
-
-#### urlEncode
-
-Same as `encode`, but safe for URLS and Filenames
-
-#### urlDecode
-
-Same as `decode`, but decodes the `urlEncode` output values
-
-## Random String
-
-A helper to generate random strings of a given length. Uses `crypto` under the hood.
-
-```ts
-import { randomString } from '@poppinss/utils'
-randomString(32)
-randomString(128)
-```
-
-## Safe equal
-
-Compares two values by avoid [timing attack](https://en.wikipedia.org/wiki/Timing_attack). Accepts any input that can be passed to `Buffer.from`
-
-```ts
-import { safeValue } from '@poppinss/utils'
-if (safeValue('foo', 'foo')) {
-}
-```
+- [clone](https://lodash.com/docs/latest#clone)
+- [cloneDeep](https://lodash.com/docs/latest#cloneDeep)
 
 ## Safe stringify
 
@@ -320,29 +324,6 @@ JSON.parse(input)
 
 safeParse(input)
 // { user: {} }
-```
-
-## Message Builder
-
-Message builder provides a sane API for stringifying objects similar to `JSON.stringify` but has a few advantages.
-
-- It is safe from JSON poisoning vulnerability.
-- You can define expiry and purpose for the encoding. The `verify` method will respect these values.
-
-The message builder alone may seem useless, since anyone can decode the object and change its expiry or purpose. However, you can generate an hash of the stringified object and verify for tampering by validating the hash. This is what AdonisJS does for cookies.
-
-```ts
-import { MessageBuilder } from '@poppinss/utils'
-const builder = new MessageBuilder()
-const encoded = builder.build({ username: 'virk' }, '1 hour', 'login')
-```
-
-Now verify it
-
-```ts
-builder.verify(encoded) // returns null, no purpose defined
-builder.verify(encoded, 'register') // returns null, purpose mismatch.
-builder.verify(encoded, 'login') // return { username: 'virk' }
 ```
 
 ## defineStaticProperty
@@ -399,7 +380,188 @@ The `defineStaticProperty` takes a total of three arguments.
 - The `inherit` strategy will copy the properties from the base class.
 - The `define` strategy will always use the `defaultValue` to define the property on the class. In other words, there is no copy behavior, but prototypal inheritance chain is also breaked by explicitly re-defining the property.
 
-## compose
+## Helpers
+The helpers module is also available in AdonisJS applications as follows:
+
+```ts
+import { fsReadAll, string, types } from '@ioc:Adonis/Core/Helpers'
+```
+
+The `@poppinss/utils` exposes this module as follows
+
+```ts
+import { fsReadAll, string, types } from '@poppinss/utils/build/helpers'
+```
+
+### fsReadAll
+
+A utility to recursively read all script files for a given directory. This method is equivalent to
+`readdir + recursive + filter (.js, .json, .ts)`.
+
+```ts
+import { fsReadAll } from '@poppinss/utils/build/helpers'
+
+const files = fsReadAll(__dirname) // array of strings
+```
+
+You can also define your custom filter function. The filter function must return `true` for files to be included.
+
+```ts
+const files = fsReadAll(__dirname, (file) => {
+  return file.endsWith('.foo.js')
+})
+```
+
+### requireAll
+
+Same as `fsReadAll`, but instead require the files. Helpful when you want to load all the config files inside a directory on app boot.
+
+```ts
+import { requireAll } from '@poppinss/utils/build/helpers'
+const config = requireAll(join(__dirname, 'config'))
+
+{
+  file1: {}, // exported object
+  file2: {} // exported object
+}
+```
+
+### resolveFrom
+
+Works similar to `require.resolve`, however it handles the absolute paths properly.
+
+```ts
+import { resolveFrom } from '@poppinss/utils/build/helpers'
+
+resolveFrom(__dirname, 'npm-package') // returns path to package "main" file
+resolveFrom(__dirname, './foo.js') // returns path to `foo.js` (if exists)
+resolveFrom(__dirname, join(__dirname, './foo.js')) // returns path to `foo.js` (if exists)
+```
+
+### resolveDir
+
+The `require.resolve` or `resolveFrom` method can only resolve paths to a given file and not the directory. For example: If you pass path to a directory, then it will search for `index.js` inside it and in case of a package, it will be search for `main` entry point.
+
+On the other hand, the `resolveDir` method can also resolve path to directories using following resolution.
+
+- Absolute paths are returned as it is.
+- Relative paths starting with `./` or `.\` are resolved using `path.join`.
+- Path to packages inside `node_modules` are resolved as follows: - Uses `require.resolve` to resolve the `package.json` file. - Then replace the `package-name` with the absolute resolved package path.
+
+```ts
+import { resolveDir } from '@poppinss/utils/build/helpers'
+
+resolveDir(__dirname, './database/migrations')
+// __dirname + /database/migrations
+
+resolveDir(__dirname, 'some-package/database/migrations')
+// {path-to-package}/database/migrations
+
+resolveDir(__dirname, '@some/package/database/migrations')
+// {path-to-package}/database/migrations
+```
+
+### interpolate
+
+A small utility function to interpolate values inside a string.
+
+```ts
+import { interpolate } from '@poppinss/utils/build/helpers'
+
+interpolate('hello {{ username }}', {
+  username: 'virk'
+})
+
+interpolate('hello {{ users.0.username }}', {
+  users: [{ username: 'virk' }]
+})
+```
+
+If value is missing, it will be replaced with an `'undefined'` string.
+
+Use the `\` to escape a mustache block from getting evaluated.
+
+```ts
+import { interpolate } from '@poppinss/utils/build/helpers'
+
+interpolate('\\{{ username }} expression evaluates to {{ username }}', {
+  username: 'virk'
+})
+// Output {{username}} expression evaluates to virk
+```
+
+### Base 64 Encode/Decode
+
+Following helpers for base64 encoding/decoding also exists.
+
+#### encode
+
+```ts
+import { base64 } from '@poppinss/utils/build/helpers'
+base64.encode('hello world')
+base64.encode(Buffer.from('hello world', 'binary'))
+```
+
+#### decode
+
+```ts
+import { base64 } from '@poppinss/utils/build/helpers'
+base64.decode(base64.encode('hello world'))
+base64.decode(base64.encode(Buffer.from('hello world', 'binary')), 'binary')
+```
+
+#### urlEncode
+
+Same as `encode`, but safe for URLS and Filenames
+
+#### urlDecode
+
+Same as `decode`, but decodes the `urlEncode` output values
+
+### Random String
+
+A helper to generate random strings of a given length. Uses `crypto` under the hood.
+
+```ts
+import { randomString } from '@poppinss/utils/build/helpers'
+randomString(32)
+randomString(128)
+```
+
+### Safe equal
+
+Compares two values by avoid [timing attack](https://en.wikipedia.org/wiki/Timing_attack). Accepts any input that can be passed to `Buffer.from`
+
+```ts
+import { safeValue } from '@poppinss/utils/build/helpers'
+if (safeValue('foo', 'foo')) {
+}
+```
+
+### Message Builder
+
+Message builder provides a sane API for stringifying objects similar to `JSON.stringify` but has a few advantages.
+
+- It is safe from JSON poisoning vulnerability.
+- You can define expiry and purpose for the encoding. The `verify` method will respect these values.
+
+The message builder alone may seem useless, since anyone can decode the object and change its expiry or purpose. However, you can generate an hash of the stringified object and verify for tampering by validating the hash. This is what AdonisJS does for cookies.
+
+```ts
+import { MessageBuilder } from '@poppinss/utils/build/helpers'
+const builder = new MessageBuilder()
+const encoded = builder.build({ username: 'virk' }, '1 hour', 'login')
+```
+
+Now verify it
+
+```ts
+builder.verify(encoded) // returns null, no purpose defined
+builder.verify(encoded, 'register') // returns null, purpose mismatch.
+builder.verify(encoded, 'login') // return { username: 'virk' }
+```
+
+### compose
 
 Javascript doesn't have a concept of inherting multiple classes together and neither does Typescript. However, the [official documentation](https://www.typescriptlang.org/docs/handbook/mixins.html) of Typescript does talks about the concept of mixins.
 
@@ -435,7 +597,7 @@ UserWithAttributes(UserWithAge(UserWithPassword(UserWithEmail(BaseModel))))
 The `compose` method is a small utility to improve the syntax a bit.
 
 ```ts
-import { compose } from '@poppinss/utils'
+import { compose } from '@poppinss/utils/build/helpers'
 
 class User extends compose(
   BaseModel,
@@ -446,7 +608,7 @@ class User extends compose(
 ) {}
 ```
 
-### Mixins gotchas
+#### Mixins gotchas
 
 Typescript has an [open issue](https://github.com/microsoft/TypeScript/issues/37142) related to the constructor arguments of the mixin class or the base class.
 
@@ -470,13 +632,572 @@ class User extends compose(BaseModel, UserWithEmail) {}
 You can work around this by overriding the constructor of the base class.
 
 ```ts
-import { NormalizeConstructor, compose } from '@poppinss/utils'
+import { NormalizeConstructor, compose } from '@poppinss/utils/build/helpers'
 
 const UserWithEmail = <T extends NormalizeConstructor<typeof BaseModel>>(superclass: T) => {
   return class extends superclass {
     public email: string
   }
 }
+```
+
+### string
+The `string` module includes a bunch of helper methods to work with strings. 
+
+#### camelCase
+Convert a string to its `camelCase` version.
+
+```ts
+import { string } from '@poppinss/utils/build/helpers'
+
+string.camelCase('hello-world') // helloWorld
+```
+
+#### snakeCase
+Convert a string to its `snake_case` version.
+
+```ts
+import { string } from '@poppinss/utils/build/helpers'
+
+string.snakeCase('helloWorld') // hello_world
+```
+
+#### dashCase
+Convert a string to its `dash-case` version. Optionally, you can also capitalize the first letter of each segment.
+
+```ts
+import { string } from '@poppinss/utils/build/helpers'
+
+string.dashCase('helloWorld') // hello-world
+string.dashCase('helloWorld', { capitalize: true }) // Hello-World
+```
+
+#### pascalCase
+Convert a string to its `PascalCase` version. 
+
+```ts
+import { string } from '@poppinss/utils/build/helpers'
+
+string.pascalCase('helloWorld') // HelloWorld
+```
+
+#### capitalCase
+Capitalize a string
+
+```ts
+import { string } from '@poppinss/utils/build/helpers'
+
+string.capitalCase('helloWorld') // Hello World
+```
+
+#### sentenceCase
+Convert string to a sentence
+
+```ts
+import { string } from '@poppinss/utils/build/helpers'
+
+string.sentenceCase('hello-world') // Hello world
+```
+
+#### dotCase
+Convert string to its `dot.case` version.
+
+```ts
+import { string } from '@poppinss/utils/build/helpers'
+
+string.dotCase('hello-world') // hello.world
+```
+
+#### noCase
+Remove all sorts of casing
+
+```ts
+import { string } from '@poppinss/utils/build/helpers'
+
+string.noCase('hello-world') // hello world
+string.noCase('hello_world') // hello world
+string.noCase('helloWorld') // hello world
+```
+
+#### titleCase
+Convert a sentence to title case
+
+```ts
+import { string } from '@poppinss/utils/build/helpers'
+
+string.titleBase('Here is a fox') // Here Is a fox
+```
+
+#### pluralize
+Pluralize a word.
+
+```ts
+import { string } from '@poppinss/utils/build/helpers'
+
+string.pluralize('box') // boxes
+string.pluralize('i') // we
+```
+
+You can also define your own irregular rules using the `string.defineIrregularRule` method.
+
+- The first argument is the singular variation
+- The second argument is the plural variation
+
+```ts
+import { string } from '@poppinss/utils/build/helpers'
+
+string.defineIrregularRule('auth', 'auth')
+string.plural('auth') // auth
+```
+
+You can also define your own uncountable rules using the `string.defineUncountableRule` method.
+
+```ts
+import { string } from '@poppinss/utils/build/helpers'
+
+string.defineUncountableRule('login')
+string.plural('login') // home
+```
+
+#### truncate
+Truncate a string after a given number of characters
+
+```ts
+import { string } from '@poppinss/utils/build/helpers'
+
+string.truncate(
+  'This is a very long, maybe not that long title',
+  12
+) // This is a ve...
+```
+
+By default, the string is truncated exactly after the given characters. However, you can instruct the method to wait for the words to complete.
+
+```ts
+string.truncate(
+  'This is a very long, maybe not that long title',
+  12,
+  {
+    completeWords: true
+  }
+) // This is a very...
+```
+
+Also, it is possible to customize the suffix.
+
+```ts
+string.truncate(
+  'This is a very long, maybe not that long title',
+  12,
+  {
+    completeWords: true,
+    suffix: ' <a href="/1"> Read more </a>',
+  }
+) // This is a very <a href="/1"> Read more </a>
+```
+
+#### excerpt
+The `excerpt` method is same as the `truncate` method. However, it strips the HTML from the string.
+
+```ts
+import { string } from '@poppinss/utils/build/helpers'
+
+string.excerpt(
+  '<p>This is a <strong>very long</strong>, maybe not that long title</p>',
+  12
+) // This is a very...
+```
+
+#### condenseWhitespace
+Condense whitespaces from a given string. The method removes the whitespace from the `left`, `right` and multiple whitespace in between the words.
+
+```ts
+import { string } from '@poppinss/utils/build/helpers'
+
+string.condenseWhitespace(' hello  world ')
+// hello world
+```
+
+#### escapeHTML
+Escape HTML from the string
+
+```ts
+import { string } from '@poppinss/utils/build/helpers'
+
+string.escapeHTML('<p> foo © bar </p>')
+// &lt;p&gt; foo © bar &lt;/p&gt;
+```
+
+Additonally, you can also encode non-ascii symbols
+
+```ts
+import { string } from '@poppinss/utils/build/helpers'
+
+string.escapeHTML(
+  '<p> foo © bar </p>',
+  {
+    encodeSymbols: true
+  }
+)
+// &lt;p&gt; foo &#xA9; bar &lt;/p&gt;
+```
+
+#### encodeSymbols
+Encode symbols. Checkout [he](https://npm.im/he) for available options
+
+```ts
+import { string } from '@poppinss/utils/build/helpers'
+
+string.encodeSymbols('foo © bar')
+// foo &#xA9; bar
+```
+
+#### toSentence
+Join an array of words with a separator. 
+
+```ts
+import { string } from '@poppinss/utils/build/helpers'
+
+string.toSentence([
+  'route',
+  'middleware',
+  'controller'
+]) // route, middleware, and controller
+
+string.toSentence([
+  'route',
+  'middleware'
+]) // route and middleware
+```
+
+You can also customize
+
+- `separator`: The value between two words except the last one
+- `pairSeparator`: The value between the first and the last word. Used, only when there are two words
+- `lastSeparator`: The value between the second last and the last word. Used, only when there are more than two words
+
+```ts
+string.toSentence([
+  'route',
+  'middleware',
+  'controller'
+], {
+  separator: '/ ',
+  lastSeparator: '/or '
+}) // route/ middleware/or controller
+```
+
+#### prettyBytes
+Convert bytes value to a human readable string. For options, recommend the [bytes](https://www.npmjs.com/package/bytes) package.
+
+```ts
+import { string } from '@poppinss/utils/build/helpers'
+
+string.prettyBytes(1024) // 1KB
+string.prettyBytes(1024, { unitSeparator: ' ' }) // 1 KB
+```
+
+#### toBytes
+Convert human readable string to bytes. This method is the opposite of the `prettyBytes` method.
+
+```ts
+import { string } from '@poppinss/utils/build/helpers'
+
+string.toBytes('1KB') // 1024
+```
+
+#### prettyMs
+Convert time in milliseconds to a human readable string
+
+```ts
+import { string } from '@poppinss/utils/build/helpers'
+
+string.prettyMs(60000) // 1min
+string.prettyMs(60000, { long: true }) // 1 minute
+```
+
+#### toMs
+Convert human readable string to milliseconds. This method is the opposite of the `prettyMs` method.
+
+```ts
+import { string } from '@poppinss/utils/build/helpers'
+
+string.toMs('1min') // 60000
+```
+
+#### ordinalize
+Ordinalize a string or a number value
+
+```ts
+import { string } from '@poppinss/utils/build/helpers'
+
+string.ordinalize(1) // 1st
+string.ordinalize(99) // 99th
+```
+
+#### generateRandom
+Generate a cryptographically strong random string
+
+```ts
+import { string } from '@poppinss/utils/build/helpers'
+
+string.generateRandom(32)
+```
+
+#### isEmpty
+Find if a value is empty. Also checks for empty strings with all whitespace
+
+```ts
+import { string } from '@poppinss/utils/build/helpers'
+
+string.isEmpty('') // true
+string.isEmpty('      ') // true
+```
+
+### Types
+The types module allows distinguishing between different Javascript datatypes. The `typeof` returns the same type for many different values. For example:
+
+```ts
+typeof ({}) // object
+typeof ([]) // object
+typeof (null) // object
+```
+
+WHAT??? Yes, coz everything is an object in Javascript. To have better control, you can make use of the `types.lookup` method.
+
+#### lookup
+Returns a more accurate type for a given value.
+
+```ts
+import { types } from '@poppinss/utils/build/helpers'
+
+types.lookup({}) // object
+types.lookup([]) // array
+types.lookup(Object.create(null)) // object
+types.lookup(null) // null
+types.lookup(function () {}) // function
+types.lookup(class Foo {}) // class
+types.lookup(new Map()) // map
+```
+
+#### isNull
+Find if the given value is null
+
+```ts
+import { types } from '@poppinss/utils/build/helpers'
+
+types.isNull(null)) // true
+```
+
+#### isBoolean
+Find if the given value is a boolean
+
+```ts
+import { types } from '@poppinss/utils/build/helpers'
+
+types.isBoolean(true)) // true
+```
+
+#### isBuffer
+Find if the given value is a buffer
+
+```ts
+import { types } from '@poppinss/utils/build/helpers'
+
+types.isBuffer(new Buffer())) // true
+```
+
+#### isNumber
+Find if the given value is a number
+
+```ts
+import { types } from '@poppinss/utils/build/helpers'
+
+types.isNumber(100)) // true
+```
+
+#### isString
+Find if the given value is a string
+
+```ts
+import { types } from '@poppinss/utils/build/helpers'
+
+types.isString('hello')) // true
+```
+
+#### isArguments
+Find if the given value is an arguments object
+
+```ts
+import { types } from '@poppinss/utils/build/helpers'
+
+function foo() {
+  types.isArguments(arguments)) // true
+}
+```
+
+#### isObject
+Find if the given value is a plain object
+
+```ts
+import { types } from '@poppinss/utils/build/helpers'
+
+types.isObject({})) // true
+```
+
+#### isDate
+Find if the given value is a date object
+
+```ts
+import { types } from '@poppinss/utils/build/helpers'
+
+types.isDate(new Date())) // true
+```
+
+#### isArray
+Find if the given value is an array
+
+```ts
+import { types } from '@poppinss/utils/build/helpers'
+
+types.isArray([1, 2, 3])) // true
+```
+
+#### isRegexp
+Find if the given value is an regular expression
+
+```ts
+import { types } from '@poppinss/utils/build/helpers'
+
+types.isRegexp(/[a-z]+/)) // true
+```
+
+#### isError
+Find if the given value is an instance of the error object
+
+```ts
+import { types } from '@poppinss/utils/build/helpers'
+import { Exception } from '@poppinss/utils'
+
+types.isError(new Error('foo'))) // true
+types.isError(new Exception('foo'))) // true
+```
+
+#### isFunction
+Find if the given value is a function
+
+```ts
+import { types } from '@poppinss/utils/build/helpers'
+
+types.isFunction(function foo() {})) // true
+```
+
+#### isClass
+Find if the given value is a class constructor. Uses regex to distinguish between a function and a class.
+
+```ts
+import { types } from '@poppinss/utils/build/helpers'
+
+class User {}
+
+types.isClass(User) // true
+types.isFunction(User) // true
+```
+
+#### isInteger
+Find if the given value is an integer.
+
+```ts
+import { types } from '@poppinss/utils/build/helpers'
+
+types.isInteger(22.00) // true
+types.isInteger(22) // true
+types.isInteger(-1) // true
+types.isInteger(-1.00) // true
+
+types.isInteger(22.10) // false
+types.isInteger(.3) // false
+types.isInteger(-.3) // false
+```
+
+#### isFloat
+Find if the given value is an float number.
+
+```ts
+import { types } from '@poppinss/utils/build/helpers'
+
+types.isFloat(22.10) // true
+types.isFloat(-22.10) // true
+types.isFloat(.3) // true
+types.isFloat(-.3) // true
+
+types.isFloat(22.00) // false
+types.isFloat(-22.00) // false
+types.isFloat(-22) // false
+```
+
+#### isDecimal
+Find if the given value has a decimal. The value can be a string or a number. The number values are casted to a string by calling the `toString()` method on the value itself.
+
+The string conversion is peformed to test the value against a regex. Since, there is no way to natively find a decimal value in Javascript.
+
+```ts
+import { types } from '@poppinss/utils/build/helpers'
+
+types.isDecimal('22.10') // true
+types.isDecimal(22.1) // true
+
+types.isDecimal('-22.10') // true
+types.isDecimal(-22.1) // true
+
+types.isDecimal('.3') // true
+types.isDecimal(0.3) // true
+
+types.isDecimal('-.3') // true
+types.isDecimal(-0.3) // true
+
+types.isDecimal('22.00') // true
+types.isDecimal(22.0) // false (gets converted to 22)
+
+types.isDecimal('-22.00') // true
+types.isDecimal(-22.0) // false (gets converted to -22)
+
+types.isDecimal('22') // false
+types.isDecimal(22) // false
+
+types.isDecimal('0.0000000000001') // true
+types.isDecimal(0.0000000000001) // false (gets converted to 1e-13)
+```
+
+### ObjectBuilder
+A very simple class to conditionally builder an object. Quite often, I create a new object from an existing one and wants to avoid writing undefined values to it. For example
+
+```ts
+const obj = {
+  ...(user.username ? { username: user.username } : {}),
+  ...(user.id ? { id: user.id } : {}),
+  ...(user.createdAt ? { createdAt: user.createdAt.toString() } : {}),
+}
+```
+
+Not only the above code is harder to write. It is performance issues as well, since we are destructuring too many objects.
+
+To address this use case, you can make use of the `ObjectBuilder` class as follows
+
+```ts
+import { ObjectBuilder } from '@poppinss/utils/build/helpers'
+
+const obj = new ObjectBuilder()
+  .add('username', user.username)
+  .add('id', user.id)
+  .add('createdAt', user.createdAt && user.createdAt.toString())
+  .value // returns the underlying object
+```
+
+The `add` method ignores the value if its `undefined`. So it never gets added to the object at all. You can also ignore `null` properties by passing a boolean flag to the constructor.
+
+```ts
+new ObjectBuilder(true) // ignore null as well
 ```
 
 [circleci-image]: https://img.shields.io/circleci/project/github/poppinss/utils/master.svg?style=for-the-badge&logo=circleci

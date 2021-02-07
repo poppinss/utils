@@ -8,7 +8,7 @@
  */
 
 import test from 'japa'
-import { compose, NormalizeConstructor } from '../src/compose'
+import { compose, NormalizeConstructor } from '../src/Helpers'
 
 test.group('compose', () => {
   test('apply multiple mixins to a given base class', async (assert) => {

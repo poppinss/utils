@@ -11,7 +11,7 @@ import test from 'japa'
 import { join } from 'path'
 import { Filesystem } from '@poppinss/dev-utils'
 
-import { requireAll } from '../src/requireAll'
+import { requireAll } from '../src/Helpers'
 const fs = new Filesystem(join(__dirname, 'app'))
 
 test.group('require all', (group) => {

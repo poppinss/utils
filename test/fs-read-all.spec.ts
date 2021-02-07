@@ -11,7 +11,8 @@ import test from 'japa'
 import { join } from 'path'
 import { Filesystem } from '@poppinss/dev-utils'
 
-import { fsReadAll } from '../src/fsReadAll'
+import { fsReadAll } from '../src/Helpers'
+
 const fs = new Filesystem(join(__dirname, 'app'))
 
 test.group('read all', (group) => {

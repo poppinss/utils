@@ -8,7 +8,7 @@
  */
 
 import test from 'japa'
-import { safeEqual } from '../src/safeEqual'
+import { safeEqual } from '../src/Helpers'
 
 test.group('safeEqual | equals', () => {
   test('compare two strings', (assert) => {

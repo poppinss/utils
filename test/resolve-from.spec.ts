@@ -10,13 +10,13 @@
 import test from 'japa'
 import { join } from 'path'
 
-import { resolveFrom } from '../src/resolveFrom'
+import { resolveFrom } from '../src/Helpers'
 
 test.group('resolve from', () => {
   test('resolve relative path from a base directory', (assert) => {
     assert.equal(
-      resolveFrom(__dirname, '../src/requireAll'),
-      join(__dirname, '../src', 'requireAll.ts')
+      resolveFrom(__dirname, '../src/Helpers/requireAll'),
+      join(__dirname, '../src', 'Helpers', 'requireAll.ts')
     )
   })
 

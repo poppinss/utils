@@ -8,7 +8,7 @@
  */
 
 import test from 'japa'
-import { base64 } from '../src/base64'
+import { base64 } from '../src/Helpers'
 
 // eslint-disable-next-line max-len
 const base64String =

@@ -8,7 +8,7 @@
  */
 
 import test from 'japa'
-import { interpolate } from '../src/interpolate'
+import { interpolate } from '../src/Helpers'
 
 test.group('Interpolate', () => {
   test('interpolate values inside a template', (assert) => {
@@ -125,5 +125,15 @@ test.group('Interpolate', () => {
     obj.value = 'test'
     const template = interpolate('Value is {{value}}', obj)
     assert.equal(template, 'Value is test')
+  })
+
+  test('allow escaping interpolation braces', (assert) => {
+    const template = interpolate('Value is \\{{value}}', {})
+    assert.equal(template, 'Value is {{value}}')
+  })
+
+  test('allow interpolation expression and escape sequences together', (assert) => {
+    const template = interpolate('\\{{value}} is {{value}}', { value: 10 })
+    assert.equal(template, '{{value}} is 10')
   })
 })

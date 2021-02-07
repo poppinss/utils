@@ -27,7 +27,7 @@ function jsonParseTransform(
 
 /**
  * Copied directly from https://github.com/nuxt-contrib/destr/blob/master/src/index.ts but
- * instead raises the malformed JSON exceptions over swallowing them
+ * instead raises the malformed JSON exceptions vs swallowing them
  */
 export function safeParse(
   val: string,
@@ -48,5 +48,6 @@ export function safeParse(
   if (suspectProtoRx.test(val) || suspectConstructorRx.test(val)) {
     return JSON.parse(val, (key, value) => jsonParseTransform(key, value, reviver))
   }
+
   return JSON.parse(val, reviver)
 }

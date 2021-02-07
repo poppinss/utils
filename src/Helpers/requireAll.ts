@@ -1,7 +1,3 @@
-/**
- * @module @poppinss/utils
- */
-
 /*
  * @poppinss/utils
  *
@@ -14,8 +10,8 @@
 import { extname } from 'path'
 import rAll from 'require-all'
 
-import { esmResolver } from './esmResolver'
-import { isScriptFile } from './isScriptFile'
+import { esmResolver } from '../esmResolver'
+import { isScriptFile } from '../isScriptFile'
 
 /**
  * Function to filter selected files only

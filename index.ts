@@ -7,23 +7,11 @@
  * file that was distributed with this source code.
  */
 
-export { base64 } from './src/base64'
-export { compose, NormalizeConstructor } from './src/compose'
-
-// @ts-ignore
 export * as lodash from './src/lodash'
 export { Exception } from './src/Exception'
-export { safeEqual } from './src/safeEqual'
 export { safeParse } from './src/safeParse'
-export { safeStringify } from './src/safeStringify'
-export { fsReadAll } from './src/fsReadAll'
-export { resolveDir } from './src/resolveDir'
-export { requireAll } from './src/requireAll'
 export { esmRequire } from './src/esmRequire'
-export { interpolate } from './src/interpolate'
 export { esmResolver } from './src/esmResolver'
-export { resolveFrom } from './src/resolveFrom'
-export { randomString } from './src/randomString'
-export { MessageBuilder } from './src/MessageBuilder'
+export { safeStringify } from './src/safeStringify'
 export { defineStaticProperty } from './src/defineStaticProperty'
 export { ManagerConfigValidator } from './src/ManagerConfigValidator'
