@@ -58,42 +58,42 @@ export function lookup(
 /**
  * Find if a given value is undefined
  */
-export function isUndefined(value: any): boolean {
+export function isUndefined(value: any): value is undefined {
   return lookup(value) === 'undefined'
 }
 
 /**
  * Find if a given value is null
  */
-export function isNull(value: any): boolean {
+export function isNull(value: any): value is null {
   return lookup(value) === 'null'
 }
 
 /**
  * Find if a given value is a boolean
  */
-export function isBoolean(value: any): boolean {
+export function isBoolean(value: any): value is boolean {
   return lookup(value) === 'boolean'
 }
 
 /**
  * Find if a given value is a buffer
  */
-export function isBuffer(value: any): boolean {
+export function isBuffer(value: any): value is Buffer {
   return lookup(value) === 'buffer'
 }
 
 /**
  * Find if a given value is a number
  */
-export function isNumber(value: any): boolean {
+export function isNumber(value: any): value is number {
   return lookup(value) === 'number'
 }
 
 /**
  * Find if a given value is a string
  */
-export function isString(value: any): boolean {
+export function isString(value: any): value is string {
   return lookup(value) === 'string'
 }
 
@@ -114,21 +114,21 @@ export function isObject(value: any): boolean {
 /**
  * Find if a given value is a date instance
  */
-export function isDate(value: any): boolean {
+export function isDate(value: any): value is Date {
   return lookup(value) === 'date'
 }
 
 /**
  * Find if a given value is an array
  */
-export function isArray(value: any): boolean {
+export function isArray(value: any): value is any[] {
   return lookup(value) === 'array'
 }
 
 /**
  * Find if a given value is an regularExpression
  */
-export function isRegexp(value: any): boolean {
+export function isRegexp(value: any): value is RegExp {
   return lookup(value) === 'regexp'
 }
 
@@ -142,7 +142,7 @@ export function isError(value: any): boolean {
 /**
  * Find if a given value is a Function
  */
-export function isFunction(value: any): boolean {
+export function isFunction(value: any): value is Function {
   return lookup(value) === 'function'
 }
 
@@ -150,14 +150,14 @@ export function isFunction(value: any): boolean {
  * Find if a given value is a class. Uses regular expression, since there
  * is no way to natively distinguish a class and a function in Javascript
  */
-export function isClass(value: any) {
+export function isClass(value: any): boolean {
   return lookup(value) === 'class'
 }
 
 /**
  * Find if a value is an integer or not
  */
-export function isInteger(value: number): boolean {
+export function isInteger(value: number): value is number {
   return Number.isInteger(value)
 }
 
@@ -165,7 +165,7 @@ export function isInteger(value: number): boolean {
  * Find if a value is float value or not. The values with more than
  * zero remainder returns true
  */
-export function isFloat(value: number): boolean {
+export function isFloat(value: number): value is number {
   return value !== (value | 0)
 }
 
