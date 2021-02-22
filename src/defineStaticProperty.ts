@@ -7,7 +7,7 @@
  * file that was distributed with this source code.
  */
 
-import cloneDeep from 'lodash/cloneDeep'
+import { cloneDeep } from './lodash'
 
 /**
  * Define static properties on a class with inheritance in play.
