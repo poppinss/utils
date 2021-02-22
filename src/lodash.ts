@@ -7,7 +7,7 @@
  * file that was distributed with this source code.
  */
 
-/// <reference path="./lodash.types.d.ts" />
+/// <reference path="../types/lodash.types.d.ts" />
 
 export { default as pick } from 'lodash/pick'
 export { default as omit } from 'lodash/omit'
