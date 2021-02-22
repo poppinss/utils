@@ -269,7 +269,7 @@ Lodash itself is a bulky library and most of the times, we don't need all the fu
 
 Also, all of the lodash functions are published as individual modules on npm. However, most of those individual packages are outdated and using them is not an option.
 
-Instead, we decided to use the `lodash-cli` to create a custom build for all the utilities we need inside AdonisJS ecosystem and export it as part of this package.
+Instead, we decided to pick some individual utilities that we need inside AdonisJS ecosystem and export them from the lodash package, as each function is exposed in its own separate file.
 
 ```ts
 import { lodash } from '@poppinss/utils'
@@ -282,13 +282,13 @@ Following is the list of exported helpers.
 
 - [pick](https://lodash.com/docs/latest#pick)
 - [omit](https://lodash.com/docs/latest#omit)
-- [get](https://lodash.com/docs/latest#get)
 - [has](https://lodash.com/docs/latest#has)
-- [size](https://lodash.com/docs/latest#size)
+- [get](https://lodash.com/docs/latest#get)
 - [set](https://lodash.com/docs/latest#set)
 - [unset](https://lodash.com/docs/latest#unset)
 - [mergeWith](https://lodash.com/docs/latest#mergeWith)
 - [merge](https://lodash.com/docs/latest#merge)
+- [size](https://lodash.com/docs/latest#size)
 - [clone](https://lodash.com/docs/latest#clone)
 - [cloneDeep](https://lodash.com/docs/latest#cloneDeep)
 
