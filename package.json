@@ -38,24 +38,24 @@
 		"@types/fs-readdir-recursive": "^1.0.0",
 		"@types/lodash": "^4.14.168",
 		"@types/ms": "^0.7.31",
-		"@types/node": "^14.14.31",
+		"@types/node": "^14.14.35",
 		"@types/pluralize": "0.0.29",
 		"@types/require-all": "^3.0.1",
 		"commitizen": "^4.2.3",
 		"cz-conventional-changelog": "^3.3.0",
 		"del-cli": "^3.0.1",
 		"doctoc": "^2.0.0",
-		"eslint": "^7.20.0",
-		"eslint-config-prettier": "^8.0.0",
+		"eslint": "^7.22.0",
+		"eslint-config-prettier": "^8.1.0",
 		"eslint-plugin-adonis": "^1.2.1",
 		"eslint-plugin-prettier": "^3.3.1",
 		"github-label-sync": "^2.0.0",
-		"husky": "^5.1.0",
+		"husky": "^5.2.0",
 		"japa": "^3.1.1",
-		"mrm": "^2.5.19",
+		"mrm": "^2.6.0",
 		"np": "^7.4.0",
 		"prettier": "^2.2.1",
-		"typescript": "^4.1.5"
+		"typescript": "^4.2.3"
 	},
 	"nyc": {
 		"exclude": [
@@ -96,7 +96,7 @@
 		"pluralize": "^8.0.0",
 		"require-all": "^3.0.0",
 		"resolve-from": "^5.0.0",
-		"slugify": "^1.4.7",
+		"slugify": "^1.5.0",
 		"truncatise": "0.0.8"
 	},
 	"directories": {
