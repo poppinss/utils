@@ -59,3 +59,7 @@ declare module 'lodash/clone' {
 declare module 'lodash/cloneDeep' {
   export default function cloneDeep<T>(value: T): T
 }
+
+declare module 'lodash/toPath' {
+  export default function toPath(value: any): string[]
+}
