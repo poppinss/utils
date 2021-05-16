@@ -17,7 +17,8 @@ import { plural, singular, addIrregularRule, addUncountableRule } from 'pluraliz
 
 export { default as toSlug } from 'slugify'
 
-const SMALL_WORDS = /\b(?:an?d?|a[st]|because|but|by|en|for|i[fn]|neither|nor|o[fnr]|only|over|per|so|some|tha[tn]|the|to|up|upon|vs?\.?|versus|via|when|with|without|yet)\b/i
+const SMALL_WORDS =
+  /\b(?:an?d?|a[st]|because|but|by|en|for|i[fn]|neither|nor|o[fnr]|only|over|per|so|some|tha[tn]|the|to|up|upon|vs?\.?|versus|via|when|with|without|yet)\b/i
 const TOKENS = /[^\s:–—-]+|./g
 const WHITESPACE = /\s/
 const IS_MANUAL_CASE = /.(?=[A-Z]|\..)/

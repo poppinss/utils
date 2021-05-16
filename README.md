@@ -47,15 +47,15 @@ import {
 
 // After version 3.0
 import {
-  MessageBuilder,
-  base64,
-  compose,
-  fsReadAll,
-  interpolate,
-  requireAll,
-  resolveDir,
-  resolveFrom,
-  safeEqual
+MessageBuilder,
+base64,
+compose,
+fsReadAll,
+interpolate,
+requireAll,
+resolveDir,
+resolveFrom,
+safeEqual
 } from '@poppinss/utils/build/helpers'
 
 ````
@@ -102,6 +102,7 @@ string.titleCase()
 
 <!-- START doctoc generated TOC please keep comment here to allow auto update -->
 <!-- DON'T EDIT THIS SECTION, INSTEAD RE-RUN doctoc TO UPDATE -->
+
 ## Table of contents
 
 - [Installation](#installation)
@@ -380,6 +381,7 @@ The `defineStaticProperty` takes a total of three arguments.
 - The `define` strategy will always use the `defaultValue` to define the property on the class. In other words, there is no copy behavior, but prototypal inheritance chain is also breaked by explicitly re-defining the property.
 
 ## Helpers
+
 The helpers module is also available in AdonisJS applications as follows:
 
 ```ts
@@ -468,11 +470,11 @@ A small utility function to interpolate values inside a string.
 import { interpolate } from '@poppinss/utils/build/helpers'
 
 interpolate('hello {{ username }}', {
-  username: 'virk'
+  username: 'virk',
 })
 
 interpolate('hello {{ users.0.username }}', {
-  users: [{ username: 'virk' }]
+  users: [{ username: 'virk' }],
 })
 ```
 
@@ -484,7 +486,7 @@ Use the `\` to escape a mustache block from getting evaluated.
 import { interpolate } from '@poppinss/utils/build/helpers'
 
 interpolate('\\{{ username }} expression evaluates to {{ username }}', {
-  username: 'virk'
+  username: 'virk',
 })
 // Output: {{ username }} expression evaluates to virk
 ```
@@ -635,9 +637,11 @@ const UserWithEmail = <T extends NormalizeConstructor<typeof BaseModel>>(supercl
 ```
 
 ### string
-The `string` module includes a bunch of helper methods to work with strings. 
+
+The `string` module includes a bunch of helper methods to work with strings.
 
 #### camelCase
+
 Convert a string to its `camelCase` version.
 
 ```ts
@@ -647,6 +651,7 @@ string.camelCase('hello-world') // helloWorld
 ```
 
 #### snakeCase
+
 Convert a string to its `snake_case` version.
 
 ```ts
@@ -656,6 +661,7 @@ string.snakeCase('helloWorld') // hello_world
 ```
 
 #### dashCase
+
 Convert a string to its `dash-case` version. Optionally, you can also capitalize the first letter of each segment.
 
 ```ts
@@ -666,7 +672,8 @@ string.dashCase('helloWorld', { capitalize: true }) // Hello-World
 ```
 
 #### pascalCase
-Convert a string to its `PascalCase` version. 
+
+Convert a string to its `PascalCase` version.
 
 ```ts
 import { string } from '@poppinss/utils/build/helpers'
@@ -675,6 +682,7 @@ string.pascalCase('helloWorld') // HelloWorld
 ```
 
 #### capitalCase
+
 Capitalize a string
 
 ```ts
@@ -684,6 +692,7 @@ string.capitalCase('helloWorld') // Hello World
 ```
 
 #### sentenceCase
+
 Convert string to a sentence
 
 ```ts
@@ -693,6 +702,7 @@ string.sentenceCase('hello-world') // Hello world
 ```
 
 #### dotCase
+
 Convert string to its `dot.case` version.
 
 ```ts
@@ -702,6 +712,7 @@ string.dotCase('hello-world') // hello.world
 ```
 
 #### noCase
+
 Remove all sorts of casing
 
 ```ts
@@ -713,6 +724,7 @@ string.noCase('helloWorld') // hello world
 ```
 
 #### titleCase
+
 Convert a sentence to title case
 
 ```ts
@@ -722,6 +734,7 @@ string.titleCase('Here is a fox') // Here Is a fox
 ```
 
 #### pluralize
+
 Pluralize a word.
 
 ```ts
@@ -753,55 +766,44 @@ string.plural('login') // home
 ```
 
 #### truncate
+
 Truncate a string after a given number of characters
 
 ```ts
 import { string } from '@poppinss/utils/build/helpers'
 
-string.truncate(
-  'This is a very long, maybe not that long title',
-  12
-) // This is a ve...
+string.truncate('This is a very long, maybe not that long title', 12) // This is a ve...
 ```
 
 By default, the string is truncated exactly after the given characters. However, you can instruct the method to wait for the words to complete.
 
 ```ts
-string.truncate(
-  'This is a very long, maybe not that long title',
-  12,
-  {
-    completeWords: true
-  }
-) // This is a very...
+string.truncate('This is a very long, maybe not that long title', 12, {
+  completeWords: true,
+}) // This is a very...
 ```
 
 Also, it is possible to customize the suffix.
 
 ```ts
-string.truncate(
-  'This is a very long, maybe not that long title',
-  12,
-  {
-    completeWords: true,
-    suffix: ' <a href="/1"> Read more </a>',
-  }
-) // This is a very <a href="/1"> Read more </a>
+string.truncate('This is a very long, maybe not that long title', 12, {
+  completeWords: true,
+  suffix: ' <a href="/1"> Read more </a>',
+}) // This is a very <a href="/1"> Read more </a>
 ```
 
 #### excerpt
+
 The `excerpt` method is same as the `truncate` method. However, it strips the HTML from the string.
 
 ```ts
 import { string } from '@poppinss/utils/build/helpers'
 
-string.excerpt(
-  '<p>This is a <strong>very long</strong>, maybe not that long title</p>',
-  12
-) // This is a very...
+string.excerpt('<p>This is a <strong>very long</strong>, maybe not that long title</p>', 12) // This is a very...
 ```
 
 #### condenseWhitespace
+
 Condense whitespaces from a given string. The method removes the whitespace from the `left`, `right` and multiple whitespace in between the words.
 
 ```ts
@@ -812,6 +814,7 @@ string.condenseWhitespace(' hello  world ')
 ```
 
 #### escapeHTML
+
 Escape HTML from the string
 
 ```ts
@@ -826,16 +829,14 @@ Additonally, you can also encode non-ascii symbols
 ```ts
 import { string } from '@poppinss/utils/build/helpers'
 
-string.escapeHTML(
-  '<p> foo © bar </p>',
-  {
-    encodeSymbols: true
-  }
-)
+string.escapeHTML('<p> foo © bar </p>', {
+  encodeSymbols: true,
+})
 // &lt;p&gt; foo &#xA9; bar &lt;/p&gt;
 ```
 
 #### encodeSymbols
+
 Encode symbols. Checkout [he](https://npm.im/he) for available options
 
 ```ts
@@ -846,21 +847,15 @@ string.encodeSymbols('foo © bar')
 ```
 
 #### toSentence
-Join an array of words with a separator. 
+
+Join an array of words with a separator.
 
 ```ts
 import { string } from '@poppinss/utils/build/helpers'
 
-string.toSentence([
-  'route',
-  'middleware',
-  'controller'
-]) // route, middleware, and controller
+string.toSentence(['route', 'middleware', 'controller']) // route, middleware, and controller
 
-string.toSentence([
-  'route',
-  'middleware'
-]) // route and middleware
+string.toSentence(['route', 'middleware']) // route and middleware
 ```
 
 You can also customize
@@ -870,17 +865,14 @@ You can also customize
 - `lastSeparator`: The value between the second last and the last word. Used, only when there are more than two words
 
 ```ts
-string.toSentence([
-  'route',
-  'middleware',
-  'controller'
-], {
+string.toSentence(['route', 'middleware', 'controller'], {
   separator: '/ ',
-  lastSeparator: '/or '
+  lastSeparator: '/or ',
 }) // route/ middleware/or controller
 ```
 
 #### prettyBytes
+
 Convert bytes value to a human readable string. For options, recommend the [bytes](https://www.npmjs.com/package/bytes) package.
 
 ```ts
@@ -891,6 +883,7 @@ string.prettyBytes(1024, { unitSeparator: ' ' }) // 1 KB
 ```
 
 #### toBytes
+
 Convert human readable string to bytes. This method is the opposite of the `prettyBytes` method.
 
 ```ts
@@ -900,6 +893,7 @@ string.toBytes('1KB') // 1024
 ```
 
 #### prettyMs
+
 Convert time in milliseconds to a human readable string
 
 ```ts
@@ -910,6 +904,7 @@ string.prettyMs(60000, { long: true }) // 1 minute
 ```
 
 #### toMs
+
 Convert human readable string to milliseconds. This method is the opposite of the `prettyMs` method.
 
 ```ts
@@ -919,6 +914,7 @@ string.toMs('1min') // 60000
 ```
 
 #### ordinalize
+
 Ordinalize a string or a number value
 
 ```ts
@@ -929,6 +925,7 @@ string.ordinalize(99) // 99th
 ```
 
 #### generateRandom
+
 Generate a cryptographically strong random string
 
 ```ts
@@ -938,6 +935,7 @@ string.generateRandom(32)
 ```
 
 #### isEmpty
+
 Find if a value is empty. Also checks for empty strings with all whitespace
 
 ```ts
@@ -948,17 +946,19 @@ string.isEmpty('      ') // true
 ```
 
 ### Types
+
 The types module allows distinguishing between different Javascript datatypes. The `typeof` returns the same type for many different values. For example:
 
 ```ts
-typeof ({}) // object
-typeof ([]) // object
-typeof (null) // object
+typeof {} // object
+typeof [] // object
+typeof null // object
 ```
 
 WHAT??? Yes, coz everything is an object in Javascript. To have better control, you can make use of the `types.lookup` method.
 
 #### lookup
+
 Returns a more accurate type for a given value.
 
 ```ts
@@ -974,6 +974,7 @@ types.lookup(new Map()) // map
 ```
 
 #### isNull
+
 Find if the given value is null
 
 ```ts
@@ -983,6 +984,7 @@ types.isNull(null)) // true
 ```
 
 #### isBoolean
+
 Find if the given value is a boolean
 
 ```ts
@@ -992,6 +994,7 @@ types.isBoolean(true)) // true
 ```
 
 #### isBuffer
+
 Find if the given value is a buffer
 
 ```ts
@@ -1001,6 +1004,7 @@ types.isBuffer(new Buffer())) // true
 ```
 
 #### isNumber
+
 Find if the given value is a number
 
 ```ts
@@ -1010,6 +1014,7 @@ types.isNumber(100)) // true
 ```
 
 #### isString
+
 Find if the given value is a string
 
 ```ts
@@ -1019,6 +1024,7 @@ types.isString('hello')) // true
 ```
 
 #### isArguments
+
 Find if the given value is an arguments object
 
 ```ts
@@ -1030,6 +1036,7 @@ function foo() {
 ```
 
 #### isObject
+
 Find if the given value is a plain object
 
 ```ts
@@ -1039,6 +1046,7 @@ types.isObject({})) // true
 ```
 
 #### isDate
+
 Find if the given value is a date object
 
 ```ts
@@ -1048,6 +1056,7 @@ types.isDate(new Date())) // true
 ```
 
 #### isArray
+
 Find if the given value is an array
 
 ```ts
@@ -1057,6 +1066,7 @@ types.isArray([1, 2, 3])) // true
 ```
 
 #### isRegexp
+
 Find if the given value is an regular expression
 
 ```ts
@@ -1066,6 +1076,7 @@ types.isRegexp(/[a-z]+/)) // true
 ```
 
 #### isError
+
 Find if the given value is an instance of the error object
 
 ```ts
@@ -1077,6 +1088,7 @@ types.isError(new Exception('foo'))) // true
 ```
 
 #### isFunction
+
 Find if the given value is a function
 
 ```ts
@@ -1086,6 +1098,7 @@ types.isFunction(function foo() {})) // true
 ```
 
 #### isClass
+
 Find if the given value is a class constructor. Uses regex to distinguish between a function and a class.
 
 ```ts
@@ -1098,38 +1111,41 @@ types.isFunction(User) // true
 ```
 
 #### isInteger
+
 Find if the given value is an integer.
 
 ```ts
 import { types } from '@poppinss/utils/build/helpers'
 
-types.isInteger(22.00) // true
+types.isInteger(22.0) // true
 types.isInteger(22) // true
 types.isInteger(-1) // true
-types.isInteger(-1.00) // true
+types.isInteger(-1.0) // true
 
-types.isInteger(22.10) // false
-types.isInteger(.3) // false
-types.isInteger(-.3) // false
+types.isInteger(22.1) // false
+types.isInteger(0.3) // false
+types.isInteger(-0.3) // false
 ```
 
 #### isFloat
+
 Find if the given value is an float number.
 
 ```ts
 import { types } from '@poppinss/utils/build/helpers'
 
-types.isFloat(22.10) // true
-types.isFloat(-22.10) // true
-types.isFloat(.3) // true
-types.isFloat(-.3) // true
+types.isFloat(22.1) // true
+types.isFloat(-22.1) // true
+types.isFloat(0.3) // true
+types.isFloat(-0.3) // true
 
-types.isFloat(22.00) // false
-types.isFloat(-22.00) // false
+types.isFloat(22.0) // false
+types.isFloat(-22.0) // false
 types.isFloat(-22) // false
 ```
 
 #### isDecimal
+
 Find if the given value has a decimal. The value can be a string or a number. The number values are casted to a string by calling the `toString()` method on the value itself.
 
 The string conversion is peformed to test the value against a regex. Since, there is no way to natively find a decimal value in Javascript.
@@ -1163,6 +1179,7 @@ types.isDecimal(0.0000000000001) // false (gets converted to 1e-13)
 ```
 
 ### ObjectBuilder
+
 A very simple class to conditionally builder an object. Quite often, I create a new object from an existing one and wants to avoid writing undefined values to it. For example
 
 ```ts
@@ -1183,8 +1200,7 @@ import { ObjectBuilder } from '@poppinss/utils/build/helpers'
 const obj = new ObjectBuilder()
   .add('username', user.username)
   .add('id', user.id)
-  .add('createdAt', user.createdAt && user.createdAt.toString())
-  .value // returns the underlying object
+  .add('createdAt', user.createdAt && user.createdAt.toString()).value // returns the underlying object
 ```
 
 The `add` method ignores the value if its `undefined`. So it never gets added to the object at all. You can also ignore `null` properties by passing a boolean flag to the constructor.
