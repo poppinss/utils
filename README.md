@@ -4,7 +4,7 @@
 
 > Collection of reusable scripts used by AdonisJS core team
 
-[![circleci-image]][circleci-url] [![typescript-image]][typescript-url] [![npm-image]][npm-url] [![license-image]][license-url] [![synk-image]][synk-url]
+[![gh-workflow-image]][gh-workflow-url] [![typescript-image]][typescript-url] [![npm-image]][npm-url] [![license-image]][license-url] [![synk-image]][synk-url]
 
 This module exports a collection of re-usable utilties to avoid re-writing the same code in every other package. We also include a handful of Lodash utilities, which are used across the AdonisJS packages eco-system.
 
@@ -1209,13 +1209,17 @@ The `add` method ignores the value if its `undefined`. So it never gets added to
 new ObjectBuilder(true) // ignore null as well
 ```
 
-[circleci-image]: https://img.shields.io/circleci/project/github/poppinss/utils/master.svg?style=for-the-badge&logo=circleci
-[circleci-url]: https://circleci.com/gh/poppinss/utils 'circleci'
+[gh-workflow-image]: https://img.shields.io/github/workflow/status/poppinss/utils/test?style=for-the-badge
+[gh-workflow-url]: https://github.com/poppinss/utils/actions/workflows/test.yml "Github action"
+
 [typescript-image]: https://img.shields.io/badge/Typescript-294E80.svg?style=for-the-badge&logo=typescript
 [typescript-url]: "typescript"
+
 [npm-image]: https://img.shields.io/npm/v/@poppinss/utils.svg?style=for-the-badge&logo=npm
 [npm-url]: https://npmjs.org/package/@poppinss/utils 'npm'
+
 [license-image]: https://img.shields.io/npm/l/@poppinss/utils?color=blueviolet&style=for-the-badge
 [license-url]: LICENSE.md 'license'
+
 [synk-image]: https://img.shields.io/snyk/vulnerabilities/github/poppinss/utils?label=Synk%20Vulnerabilities&style=for-the-badge
 [synk-url]: https://snyk.io/test/github/poppinss/utils?targetFile=package.json 'synk'

@@ -11,3 +11,4 @@ build
 dist
 yarn.lock
 shrinkwrap.yaml
+test/__app
