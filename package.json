@@ -41,8 +41,6 @@
 		"@types/node": "^15.6.1",
 		"@types/pluralize": "0.0.29",
 		"@types/require-all": "^3.0.2",
-		"commitizen": "^4.2.4",
-		"cz-conventional-changelog": "^3.3.0",
 		"del-cli": "^3.0.1",
 		"doctoc": "^2.0.0",
 		"eslint": "^7.27.0",
@@ -64,12 +62,6 @@
 		"extension": [
 			".ts"
 		]
-	},
-	"husky": {
-		"hooks": {
-			"pre-commit": "doctoc README.md --title='## Table of contents' && git add README.md",
-			"commit-msg": "node ./node_modules/@adonisjs/mrm-preset/validateCommit/conventional/validate.js"
-		}
 	},
 	"config": {
 		"commitizen": {
