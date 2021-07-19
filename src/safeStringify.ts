@@ -7,9 +7,7 @@
  * file that was distributed with this source code.
  */
 
-import stringify from 'fast-safe-stringify'
-
-type ReplacerFn = (this: any, key: string, value: any) => any
+import { stringify, ReplacerFn } from './fast-safe-stringify'
 
 /**
  * Replacer to handle bigints and remove Circular values all together

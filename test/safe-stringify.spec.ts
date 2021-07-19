@@ -76,4 +76,18 @@ test.group('Stringify', () => {
 
     assert.deepEqual(safeStringify({ a: BigInt(18), b: 4 }, replacer), '{"a":"18n","b":4}')
   })
+
+  test('raise exception when toJSON returns error', (assert) => {
+    assert.plan(1)
+
+    try {
+      safeStringify({
+        toJSON() {
+          throw new Error('blow up')
+        },
+      })
+    } catch (error) {
+      assert.equal(error.message, 'blow up')
+    }
+  })
 })

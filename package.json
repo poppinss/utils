@@ -79,7 +79,6 @@
 		"bytes": "^3.1.0",
 		"change-case": "^4.1.2",
 		"cuid": "^2.1.8",
-		"fast-safe-stringify": "^2.0.8",
 		"fs-readdir-recursive": "^1.1.0",
 		"he": "^1.2.0",
 		"kind-of": "^6.0.3",
