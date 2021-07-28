@@ -8,6 +8,8 @@
  */
 
 export * as lodash from './src/lodash'
+
+export { slash } from './src/slash'
 export { Exception } from './src/Exception'
 export { safeParse } from './src/safeParse'
 export { esmRequire } from './src/esmRequire'
