@@ -8,21 +8,22 @@
  */
 
 import cloneDeep from 'lodash/cloneDeep'
+type Constructor = new (...args: any[]) => any
 
 /**
  * Define static properties on a class with inheritance in play.
  */
-export function defineStaticProperty<Base extends Function, Prop extends keyof Base>(
-  self: any,
-  BaseClass: Base,
+export function defineStaticProperty<T extends Constructor, Prop extends keyof T>(
+  self: T,
+  BaseClass: Constructor,
   {
     propertyName,
     defaultValue,
     strategy,
   }: {
     propertyName: Prop
-    defaultValue: Base[Prop]
-    strategy: 'inherit' | 'define' | ((value: Base[Prop]) => Base[Prop])
+    defaultValue: T[Prop]
+    strategy: 'inherit' | 'define' | ((value: T[Prop]) => T[Prop])
   }
 ) {
   if (!self.hasOwnProperty(propertyName)) {
