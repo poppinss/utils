@@ -9,7 +9,6 @@
 
 import { extname } from 'path'
 import rAll from 'require-all'
-import { string } from '.'
 
 import { esmResolver } from '../esmResolver'
 import { isScriptFile } from '../isScriptFile'
