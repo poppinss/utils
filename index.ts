@@ -10,6 +10,7 @@
 export * as lodash from './src/lodash'
 
 export { slash } from './src/slash'
+export { flatten } from './src/flatten'
 export { Exception } from './src/Exception'
 export { safeParse } from './src/safeParse'
 export { esmRequire } from './src/esmRequire'
