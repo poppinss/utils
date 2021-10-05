@@ -426,6 +426,16 @@ const config = requireAll(join(__dirname, 'config'))
 }
 ```
 
+The method also accepts the following options
+
+```ts
+requireAll(join(__dirname, 'config'), recursive, optional, filter)
+```
+
+- `recursive` Load all files recursively. Defaults to true.
+- `optional` Do not raise exception when the root directory is missing. Defaults to false.
+- `filter` Cherry pick files to require. By default, all JavaScript, TypeScript and JSON files are required.
+
 ### resolveFrom
 
 Works similar to `require.resolve`, however it handles the absolute paths properly.
@@ -529,6 +539,48 @@ import { safeValue } from '@poppinss/utils/build/helpers'
 
 if (safeValue('foo', 'foo')) {
 }
+```
+
+### flatten
+Flatten an object/array. The method wraps the [flattie](https://github.com/lukeed/flattie) package.
+
+```ts
+import { flatten } from '@poppinss/utils'
+
+flatten({
+  a: 'hi',
+  b: {
+    a: null,
+    b: ['foo', '', null, 'bar'],
+    d: 'hello',
+    e: {
+      a: 'yo',
+      b: undefined,
+      c: 'sup',
+      d: 0,
+      f: [
+        { foo: 123, bar: 123 },
+        { foo: 465, bar: 456 },
+      ]
+    }
+  },
+  c: 'world'
+});
+// {
+//   'a': 'hi',
+//   'b.b.0': 'foo',
+//   'b.b.1': '',
+//   'b.b.3': 'bar',
+//   'b.d': 'hello',
+//   'b.e.a': 'yo',
+//   'b.e.c': 'sup',
+//   'b.e.d': 0,
+//   'b.e.f.0.foo': 123,
+//   'b.e.f.0.bar': 123,
+//   'b.e.f.1.foo': 465,
+//   'b.e.f.1.bar': 456,
+//   'c': 'world'
+// }
 ```
 
 ### Message Builder
