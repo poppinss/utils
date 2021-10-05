@@ -118,4 +118,37 @@ test.group('require all', (group) => {
     const fn = () => requireAll(fs.basePath, true, true)
     assert.doesNotThrow(fn)
   })
+
+  test('define custom filter', async (assert) => {
+    await fs.add(
+      'app.ts',
+      `export default {
+      loaded: true
+    }`
+    )
+
+    await fs.add('server.ts', 'export const loaded = true')
+    await fs.add('config.js', 'module.exports = { loaded: true }')
+    await fs.add('main.json', '{ "loaded": true }')
+
+    const output = requireAll(fs.basePath, true, true, (file) => file.endsWith('.json'))
+    assert.deepEqual(output, {
+      main: { loaded: true },
+    })
+  })
+
+  test('define key name for the file', async (assert) => {
+    await fs.add('foo/bar/main.json', '{ "loaded": true }')
+
+    const output = requireAll(fs.basePath, true, true, (file) => {
+      return file.endsWith('.json') ? 'foo' : false
+    })
+    assert.deepEqual(output, {
+      foo: {
+        bar: {
+          foo: { loaded: true },
+        },
+      },
+    })
+  })
 })

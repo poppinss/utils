@@ -9,20 +9,16 @@
 
 import { extname } from 'path'
 import rAll from 'require-all'
+import { string } from '.'
 
 import { esmResolver } from '../esmResolver'
 import { isScriptFile } from '../isScriptFile'
 
 /**
- * Function to filter selected files only
+ * Function to filter and keep script files only
  */
 function fileFilter(file: string) {
-  const ext = extname(file)
-  if (!isScriptFile(file)) {
-    return false
-  }
-
-  return file.replace(new RegExp(`${ext}$`), '')
+  return isScriptFile(file)
 }
 
 /**
@@ -30,12 +26,37 @@ function fileFilter(file: string) {
  * for files ending with `.ts`, `.js` and `.json`. Also files ending with
  * `.d.ts` are ignored.
  */
-export function requireAll(location: string, recursive = true, optional = false) {
+export function requireAll(
+  location: string,
+  recursive = true,
+  optional = false,
+  filter: (file: string) => boolean | string = fileFilter
+) {
   try {
     return rAll({
       dirname: location,
       recursive,
-      filter: fileFilter,
+      filter: (file: string) => {
+        let result: boolean | string = true
+
+        /**
+         * Invoke user defined function
+         */
+        if (typeof filter === 'function') {
+          result = filter(file)
+        }
+
+        /**
+         * Use the default file name when file is meant to
+         * be kept
+         */
+        if (result === true) {
+          const ext = extname(file)
+          return file.replace(new RegExp(`${ext}$`), '')
+        }
+
+        return result
+      },
       resolve: esmResolver,
     })
   } catch (error) {
