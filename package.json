@@ -38,7 +38,7 @@
 		"@types/fs-readdir-recursive": "^1.0.0",
 		"@types/lodash": "^4.14.175",
 		"@types/ms": "^0.7.31",
-		"@types/node": "^16.10.2",
+		"@types/node": "^16.10.3",
 		"@types/pluralize": "0.0.29",
 		"@types/require-all": "^3.0.3",
 		"del-cli": "^4.0.1",
