@@ -205,4 +205,23 @@ test.group('Define static property', () => {
     assert.deepEqual(Main.hooks.before, new Set())
     assert.deepEqual(Main.hooks.after, new Set())
   })
+
+  test('define property on abstract class extending the base class', (assert) => {
+    abstract class Base {
+      public static hooks: any
+
+      public static boot() {
+        defineStaticProperty(this, Base, {
+          propertyName: 'hooks',
+          defaultValue: {},
+          strategy: 'inherit',
+        })
+      }
+    }
+
+    class Main extends Base {}
+    Main.boot()
+
+    assert.deepEqual(Main.hooks, {})
+  })
 })

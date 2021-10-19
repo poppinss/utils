@@ -8,14 +8,19 @@
  */
 
 import cloneDeep from 'lodash/cloneDeep'
+
 type Constructor = new (...args: any[]) => any
+type AbstractConstructor = abstract new (...args: any[]) => any
 
 /**
  * Define static properties on a class with inheritance in play.
  */
-export function defineStaticProperty<T extends Constructor, Prop extends keyof T>(
+export function defineStaticProperty<
+  T extends Constructor | AbstractConstructor,
+  Prop extends keyof T
+>(
   self: T,
-  BaseClass: Constructor,
+  BaseClass: Constructor | AbstractConstructor,
   {
     propertyName,
     defaultValue,
