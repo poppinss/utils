@@ -13,6 +13,7 @@
 	],
 	"scripts": {
 		"mrm": "mrm --preset=@adonisjs/mrm-preset",
+    "pretest": "npm run lint",
 		"test": "node .bin/test.js",
 		"clean": "del build",
 		"compile": "npm run lint && npm run clean && tsc",
