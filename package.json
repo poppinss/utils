@@ -1,6 +1,6 @@
 {
 	"name": "@poppinss/utils",
-	"version": "3.3.1",
+	"version": "4.0.0",
 	"description": "Handy utilities for repetitive work",
 	"main": "build/index.js",
 	"files": [
@@ -13,7 +13,7 @@
 	],
 	"scripts": {
 		"mrm": "mrm --preset=@adonisjs/mrm-preset",
-    "pretest": "npm run lint",
+		"pretest": "npm run lint",
 		"test": "node .bin/test.js",
 		"clean": "del build",
 		"compile": "npm run lint && npm run clean && tsc",
