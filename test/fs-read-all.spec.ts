@@ -33,7 +33,10 @@ test.group('read all', (group) => {
     await fs.add('main.json', '{ "loaded": true }')
 
     const output = fsReadAll(fs.basePath)
-    assert.deepEqual(output, ['app.ts', 'config.js', 'main.json', 'server.ts'])
+    assert.deepEqual(
+      output,
+      ['app.ts', 'config.js', 'main.json', 'server.ts'].map((path) => join(...path.split('/')))
+    )
   })
 
   test('collect files recursively', async (assert) => {
@@ -49,7 +52,12 @@ test.group('read all', (group) => {
     await fs.add('json/main.json', '{ "loaded": true }')
 
     const output = fsReadAll(fs.basePath)
-    assert.deepEqual(output, ['js/config.js', 'json/main.json', 'ts/app.ts', 'ts/server.ts'])
+    assert.deepEqual(
+      output,
+      ['js/config.js', 'json/main.json', 'ts/app.ts', 'ts/server.ts'].map((path) =>
+        join(...path.split('/'))
+      )
+    )
   })
 
   test.skipInCI('ignore .d.ts files', async (assert) => {
@@ -65,6 +73,9 @@ test.group('read all', (group) => {
     await fs.add('json/main.json', '{ "loaded": true }')
 
     const output = fsReadAll(fs.basePath)
-    assert.deepEqual(output, ['js/config.js', 'json/main.json', 'ts/app.ts'])
+    assert.deepEqual(
+      output,
+      ['js/config.js', 'json/main.json', 'ts/app.ts'].map((path) => join(...path.split('/')))
+    )
   })
 })
