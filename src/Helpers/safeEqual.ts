@@ -7,7 +7,7 @@
  * file that was distributed with this source code.
  */
 
-import alloc from 'buffer-alloc'
+import { Buffer } from 'buffer'
 import { timingSafeEqual } from 'crypto'
 
 type BufferSafeValue =
@@ -32,13 +32,13 @@ export function safeEqual<T extends BufferSafeValue>(value: T, comparisonValue: 
     /**
      * Value A
      */
-    const valueBuffer = alloc(expectedLength, 0, 'utf-8')
+    const valueBuffer = Buffer.alloc(expectedLength, 0, 'utf-8')
     valueBuffer.write(value)
 
     /**
      * Value B
      */
-    const comparisonValueBuffer = alloc(expectedLength, 0, 'utf-8')
+    const comparisonValueBuffer = Buffer.alloc(expectedLength, 0, 'utf-8')
     comparisonValueBuffer.write(comparisonValue)
 
     /**
