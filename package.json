@@ -73,6 +73,7 @@
 		"anyBranch": false
 	},
 	"dependencies": {
+		"@poppinss/file-generator": "^1.0.2",
 		"@types/bytes": "^3.1.1",
 		"@types/he": "^1.1.2",
 		"bytes": "^3.1.2",

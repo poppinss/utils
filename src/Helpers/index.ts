@@ -8,6 +8,7 @@
  */
 
 export { default as cuid } from 'cuid'
+export * as file from '@poppinss/file-generator'
 
 export { base64 } from './base64'
 export { compose, NormalizeConstructor } from './compose'
