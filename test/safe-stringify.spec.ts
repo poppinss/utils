@@ -23,6 +23,14 @@ test.group('Stringify', () => {
     assert.deepEqual(safeStringify(a), '{"b":2}')
   })
 
+  test('stringify object with set', (assert) => {
+    const a: any = {
+      b: 2,
+      a: new Set([1, 2, 3]),
+    }
+    assert.deepEqual(safeStringify(a), '{"b":2,"a":[1,2,3]}')
+  })
+
   test('stringify object with bigint', (assert) => {
     const a: any = {
       b: BigInt(10),
