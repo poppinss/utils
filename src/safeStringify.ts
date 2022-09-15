@@ -24,6 +24,10 @@ function jsonStringifyReplacer(replacer?: ReplacerFn, removeCircular?: boolean):
       return val.toString()
     }
 
+    if (val instanceof Set) {
+      return Array.from(val)
+    }
+
     return val
   }
 }
