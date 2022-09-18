@@ -31,6 +31,11 @@ test.group('Stringify', () => {
     assert.deepEqual(safeStringify(a), '{"b":2,"a":[1,2,3]}')
   })
 
+  test('stringify nested sets', (assert) => {
+    const a: any = new Set([1, new Set([{ hello: new Set(['world']) }]), 'test'])
+    assert.deepEqual(safeStringify(a), '[1,[{"hello":["world"]}],"test"]')
+  })
+
   test('stringify object with bigint', (assert) => {
     const a: any = {
       b: BigInt(10),
