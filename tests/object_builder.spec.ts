@@ -1,7 +1,7 @@
 /*
  * @poppinss/utils
  *
- * (c) Harminder Virk <virk@adonisjs.com>
+ * (c) Poppinss
  *
  * For the full copyright and license information, please view the LICENSE
  * file that was distributed with this source code.
@@ -25,7 +25,7 @@ test.group('ObjectBuilder', () => {
     assert.deepEqual(new ObjectBuilder().add('name', null).value, { name: null })
   })
 
-  test('ignore null values', ({ assert }) => {
+  test('conditionally ignore null values', ({ assert }) => {
     assert.deepEqual(new ObjectBuilder(true).add('name', null).value, {})
   })
 
@@ -40,8 +40,10 @@ test.group('ObjectBuilder', () => {
   test('find if a value exists', ({ assert }) => {
     const obj = new ObjectBuilder()
     obj.add('name', 'virk')
+    obj.add('foo', false)
 
     assert.isTrue(obj.has('name'))
+    assert.isTrue(obj.has('foo'))
     assert.isFalse(obj.has('age'))
   })
 

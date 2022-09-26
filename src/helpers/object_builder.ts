@@ -1,7 +1,7 @@
 /*
  * @poppinss/utils
  *
- * (c) Harminder Virk <virk@adonisjs.com>
+ * (c) Poppinss
  *
  * For the full copyright and license information, please view the LICENSE
  * file that was distributed with this source code.
@@ -27,15 +27,18 @@
  *     'fullName',
  *     user.firstName && user.lastName ? `${user.firstName} ${user.lastName}` : undefined
  *   )
- *   .value
+ *   .toObject()
  */
 export class ObjectBuilder {
+  #ignoreNull: boolean
   value: any = {}
 
-  constructor(private ignoreNull?: boolean) {}
+  constructor(ignoreNull?: boolean) {
+    this.#ignoreNull = ignoreNull === true ? true : false
+  }
 
   /**
-   * Add value to the property.
+   * Add a key-value pair to the object
    *
    * - Undefined values are ignored
    * - Null values are ignored, when `ignoreNull` is set to true
@@ -45,7 +48,7 @@ export class ObjectBuilder {
       return this
     }
 
-    if (this.ignoreNull === true && value === null) {
+    if (this.#ignoreNull === true && value === null) {
       return this
     }
 
@@ -54,7 +57,7 @@ export class ObjectBuilder {
   }
 
   /**
-   * Remove value from the object
+   * Remove key from the object
    */
   remove(key: string): this {
     delete this.value[key]
@@ -69,9 +72,16 @@ export class ObjectBuilder {
   }
 
   /**
-   * Get the existing value
+   * Get the existing value for a given key
    */
   get<T extends any>(key: string): T {
     return this.value[key]
+  }
+
+  /**
+   * Get the underlying constructed object
+   */
+  toObject() {
+    return this.value
   }
 }
