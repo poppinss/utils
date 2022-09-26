@@ -11,7 +11,7 @@
 	],
 	"scripts": {
 		"pretest": "npm run lint",
-    "test": "npm run vscode:test",
+		"test": "npm run vscode:test",
 		"vscode:test": "node --loader=ts-node/esm bin/test.ts",
 		"clean": "del-cli build",
 		"compile": "npm run lint && npm run clean && tsc",
