@@ -1,36 +1,29 @@
 /*
- * @adonisjs/encryption
+ * @poppinss/utils
  *
- * (c) Harminder Virk <virk@adonisjs.com>
+ * (c) Poppinss
  *
  * For the full copyright and license information, please view the LICENSE
  * file that was distributed with this source code.
  */
 
-import ms from 'ms'
+import { parse } from '@lukeed/ms'
 import { safeParse } from '../safe_parse.js'
 import { safeStringify } from '../safe_stringify.js'
 
 /**
- * Message builder exposes an API to JSON.stringify values by encoding purpose
- * and expiryDate inside them. It returns a readable string, which is the
- * output of `JSON.stringify`.
+ * Message builder exposes an API to "JSON.stringify" values by
+ * encoding purpose and expiry date inside them.
  *
- * Why use this over `JSON.stringify`?
- *
- * - It protects you from JSON poisioning
- * - Allows encoding expiry dates to the message. It means, the message builer is
- *   helpful, when you want to encode a message and pass it around, but also control
- *   the TTL of the message
- * - Allows encoding purpose. Again, useful for distribution.
+ * The return value must be further encrypted to prevent tempering.
  */
 export class MessageBuilder {
-  private getExpiryDate(expiresIn?: string | number): undefined | Date {
+  #getExpiryDate(expiresIn?: string | number): undefined | Date {
     if (!expiresIn) {
       return undefined
     }
 
-    const expiryMs = typeof expiresIn === 'string' ? ms(expiresIn) : expiresIn
+    const expiryMs = typeof expiresIn === 'string' ? parse(expiresIn) : expiresIn
     if (expiryMs === undefined || expiryMs === null) {
       throw new Error(`Invalid value for expiresIn "${expiresIn}"`)
     }
@@ -41,7 +34,7 @@ export class MessageBuilder {
   /**
    * Returns a boolean telling, if message has been expired or not
    */
-  private isExpired(message: any) {
+  #isExpired(message: any) {
     if (!message.expiryDate) {
       return false
     }
@@ -55,15 +48,15 @@ export class MessageBuilder {
   }
 
   /**
-   * Builds a message by encoding expiry and purpose inside it
+   * Builds a message by encoding expiry date and purpose inside it.
    */
-  build(message: any, expiresIn?: string | number, purpose?: string) {
-    const expiryDate = this.getExpiryDate(expiresIn)
+  build(message: any, expiresIn?: string | number, purpose?: string): string {
+    const expiryDate = this.#getExpiryDate(expiresIn)
     return safeStringify({ message, purpose, expiryDate })
   }
 
   /**
-   * Verifies the message for expiry and purpose
+   * Verifies the message for expiry and purpose.
    */
   verify<T extends any>(message: any, purpose?: string): null | T {
     const parsed = safeParse(message)
@@ -93,7 +86,7 @@ export class MessageBuilder {
     /**
      * Ensure isn't expired
      */
-    if (this.isExpired(parsed)) {
+    if (this.#isExpired(parsed)) {
       return null
     }
 
