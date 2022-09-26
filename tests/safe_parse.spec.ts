@@ -1,7 +1,7 @@
 /*
  * @poppinss/utils
  *
- * (c) Harminder Virk <virk@adonisjs.com>
+ * (c) Poppinss
  *
  * For the full copyright and license information, please view the LICENSE
  * file that was distributed with this source code.
@@ -28,7 +28,7 @@ test.group('Parser', () => {
   })
 
   test('parses object string (reviver)', ({ assert }) => {
-    const reviver = (_, value) => {
+    const reviver = (_: string, value: any) => {
       return typeof value === 'number' ? value + 1 : value
     }
 
@@ -36,7 +36,7 @@ test.group('Parser', () => {
   })
 
   test('sanitizes object string (reviver, options)', ({ assert }) => {
-    const reviver = (_, value) => {
+    const reviver = (_: string, value: any) => {
       return typeof value === 'number' ? value + 1 : value
     }
 
