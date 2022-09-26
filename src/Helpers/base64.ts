@@ -1,7 +1,7 @@
 /*
  * @poppinss/utils
  *
- * (c) Harminder Virk <virk@adonisjs.com>
+ * (c) Poppinss
  *
  * For the full copyright and license information, please view the LICENSE
  * file that was distributed with this source code.
@@ -15,9 +15,9 @@ class Base64 {
   /**
    * Base64 encode Buffer or string
    */
-  public encode(arrayBuffer: ArrayBuffer | SharedArrayBuffer): string
-  public encode(data: string, encoding?: BufferEncoding): string
-  public encode(data: ArrayBuffer | SharedArrayBuffer | string, encoding?: BufferEncoding): string {
+  encode(arrayBuffer: ArrayBuffer | SharedArrayBuffer): string
+  encode(data: string, encoding?: BufferEncoding): string
+  encode(data: ArrayBuffer | SharedArrayBuffer | string, encoding?: BufferEncoding): string {
     if (typeof data === 'string') {
       return Buffer.from(data, encoding).toString('base64')
     }
@@ -27,11 +27,11 @@ class Base64 {
   /**
    * Base64 decode a previously encoded string or Buffer.
    */
-  public decode(encode: string, encoding: BufferEncoding, strict: true): string | null
-  public decode(encode: string, encoding: undefined, strict: true): string | null
-  public decode(encode: string, encoding?: BufferEncoding, strict?: false): string
-  public decode(encode: Buffer, encoding?: BufferEncoding): string
-  public decode(
+  decode(encode: string, encoding: BufferEncoding, strict: true): string | null
+  decode(encode: string, encoding: undefined, strict: true): string | null
+  decode(encode: string, encoding?: BufferEncoding, strict?: false): string
+  decode(encode: Buffer, encoding?: BufferEncoding): string
+  decode(
     encoded: string | Buffer,
     encoding: BufferEncoding = 'utf-8',
     strict: boolean = false
@@ -51,12 +51,9 @@ class Base64 {
   /**
    * Base64 encode Buffer or string to be URL safe. (RFC 4648)
    */
-  public urlEncode(arrayBuffer: ArrayBuffer | SharedArrayBuffer): string
-  public urlEncode(data: string, encoding?: BufferEncoding): string
-  public urlEncode(
-    data: ArrayBuffer | SharedArrayBuffer | string,
-    encoding?: BufferEncoding
-  ): string {
+  urlEncode(arrayBuffer: ArrayBuffer | SharedArrayBuffer): string
+  urlEncode(data: string, encoding?: BufferEncoding): string
+  urlEncode(data: ArrayBuffer | SharedArrayBuffer | string, encoding?: BufferEncoding): string {
     const encoded = typeof data === 'string' ? this.encode(data, encoding) : this.encode(data)
     return encoded.replace(/\+/g, '-').replace(/\//g, '_').replace(/\=/g, '')
   }
@@ -64,11 +61,11 @@ class Base64 {
   /**
    * Base64 URL decode a previously encoded string or Buffer. (RFC 4648)
    */
-  public urlDecode(encode: string, encoding: BufferEncoding, strict: true): string | null
-  public urlDecode(encode: string, encoding: undefined, strict: true): string | null
-  public urlDecode(encode: string, encoding?: BufferEncoding, strict?: false): string
-  public urlDecode(encode: Buffer, encoding?: BufferEncoding): string
-  public urlDecode(
+  urlDecode(encode: string, encoding: BufferEncoding, strict: true): string | null
+  urlDecode(encode: string, encoding: undefined, strict: true): string | null
+  urlDecode(encode: string, encoding?: BufferEncoding, strict?: false): string
+  urlDecode(encode: Buffer, encoding?: BufferEncoding): string
+  urlDecode(
     encoded: string | Buffer,
     encoding: BufferEncoding = 'utf-8',
     strict: boolean = false

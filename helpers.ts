@@ -7,4 +7,4 @@
  * file that was distributed with this source code.
  */
 
-export * from './src/Helpers'
+export * from './src/helpers/index.js'

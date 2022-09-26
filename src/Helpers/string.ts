@@ -9,11 +9,11 @@
 
 import ms from 'ms'
 import truncatise from 'truncatise'
-import { randomBytes } from 'crypto'
+import { randomBytes } from 'node:crypto'
 import he, { EncodeOptions } from 'he'
 import * as changeCase from 'change-case'
 import bytes, { BytesOptions } from 'bytes'
-import { plural, singular, addIrregularRule, addUncountableRule } from 'pluralize'
+import * as pluralizePkg from 'pluralize'
 
 export { default as toSlug } from 'slugify'
 
@@ -62,14 +62,14 @@ function normalizeBase64(value: string) {
  * Define an irregular rule
  */
 export function defineIrregularRule(singleValue: string, pluralValue: string) {
-  addIrregularRule(singleValue, pluralValue)
+  pluralize.addIrregularRule(singleValue, pluralValue)
 }
 
 /**
  * Define uncountable rule
  */
 export function defineUncountableRule(word: string) {
-  addUncountableRule(word)
+  pluralizePkg.addUncountableRule(word)
 }
 
 /**
@@ -136,14 +136,14 @@ export function noCase(value: string): string {
  * Pluralize a word
  */
 export function pluralize(word: string): string {
-  return plural(word)
+  return pluralizePkg.plural(word)
 }
 
 /**
  * Singularize a word
  */
 export function singularize(word: string): string {
-  return singular(word)
+  return pluralizePkg.singular(word)
 }
 
 /**
@@ -287,7 +287,7 @@ export function isEmpty(value: string): boolean {
  * Ordinalize a give number or string
  */
 export function ordinalize(value: string | number): string {
-  const transformedValue = Math.abs(typeof value === 'string' ? parseInt(value) : value)
+  const transformedValue = Math.abs(typeof value === 'string' ? Number.parseInt(value) : value)
   if (!Number.isFinite(transformedValue) || Number.isNaN(transformedValue)) {
     throw new Error('Cannot ordinalize NAN or infinite numbers')
   }

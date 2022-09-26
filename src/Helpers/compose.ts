@@ -1,7 +1,7 @@
 /*
  * @poppinss/utils
  *
- * (c) Harminder Virk <virk@adonisjs.com>
+ * (c) Poppinss
  *
  * For the full copyright and license information, please view the LICENSE
  * file that was distributed with this source code.
@@ -95,9 +95,9 @@ export function compose<T extends Constructor, A, B, C, D, E, F, G, H, I>(
   mixinH: UnaryFunction<G, H>,
   mixinI: UnaryFunction<H, I>
 ): I
-export function compose(
-  superclass: Constructor,
-  ...mixins: Array<UnaryFunction<any, any>>
-): UnaryFunction<any, any> {
+export function compose<T extends Constructor, Mixins extends UnaryFunction<T, T>>(
+  superclass: T,
+  ...mixins: Mixins[]
+) {
   return mixins.reduce((c, mixin) => mixin(c), superclass)
 }
