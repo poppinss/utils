@@ -32,8 +32,9 @@ function parseProp(data: any, key: string) {
 /**
  * A simple function interpolate values inside curly braces.
  *
- * @example
- * `interpolate('hello {{ username }}', { username: 'virk' })`
+ * ```
+ * interpolate('hello {{ username }}', { username: 'virk' })
+ * ```
  */
 export function interpolate(input: string, data: any) {
   return input.replace(/(\\)?{{(.*?)}}/g, (_, escapeChar, key) => {

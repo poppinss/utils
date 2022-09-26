@@ -16,7 +16,7 @@ import { naturalSort } from './natural_sort.js'
 import { ReadAllFilesOptions } from '../types.js'
 
 /**
- * Default filter to remove dot files
+ * Filter to remove dot files
  */
 function filterDotFiles(fileName: string) {
   return fileName[0] !== '.'
@@ -55,7 +55,18 @@ async function readFiles(
  * Returns an array of file paths from the given location. You can
  * optionally filter and sort files by passing relevant options
  *
- * - fsReadAll
+ * ```ts
+ * await fsReadAll(new URL('./', import.meta.url))
+ *
+ * await fsReadAll(new URL('./', import.meta.url), {
+ *   filter: (filePath) => filePath.endsWith('.js')
+ * })
+
+ * await fsReadAll(new URL('./', import.meta.url), {
+ *   absolute: true,
+ *   unixPaths: true
+ * })
+* ```
  */
 export async function fsReadAll(
   location: string | URL,

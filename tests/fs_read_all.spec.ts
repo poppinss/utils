@@ -1,7 +1,7 @@
 /*
  * @poppinss/utils
  *
- * (c) AdonisJS
+ * (c) Poppinss
  *
  * For the full copyright and license information, please view the LICENSE
  * file that was distributed with this source code.
@@ -11,6 +11,7 @@ import { join } from 'node:path'
 import { test } from '@japa/runner'
 import { ensureDir, remove, outputFile } from 'fs-extra'
 
+import { slash } from '../src/slash.js'
 import { fsReadAll } from '../src/helpers/fs_read_all.js'
 import { dirname, normalize } from '../test_helpers/index.js'
 
@@ -254,7 +255,7 @@ test.group('FS read all | absolute paths', (group) => {
     assert.deepEqual(
       files,
       ['app.ts', 'app/server.ts', 'config/config.js', 'config/main.json'].map(
-        (filePath) => `${BASE_PATH}/${filePath}`
+        (filePath) => `${slash(BASE_PATH)}/${filePath}`
       )
     )
   })

@@ -9,8 +9,6 @@
 
 type Constructor = new (...args: any[]) => any
 
-/* eslint-disable no-redeclare */
-
 /**
  * Normalizes constructor to work with mixins. There is an open bug for mixins
  * to allow constructors other than `...args: any[]`

@@ -1,7 +1,7 @@
 /*
  * @poppinss/utils
  *
- * (c) Harminder Virk <virk@adonisjs.com>
+ * (c) Poppinss
  *
  * For the full copyright and license information, please view the LICENSE
  * file that was distributed with this source code.
@@ -12,7 +12,7 @@ import { interpolate } from '../src/helpers/interpolate.js'
 
 test.group('Interpolate', () => {
   test('interpolate values inside a template', ({ assert }) => {
-    assert.equal(interpolate('hello {{username}}', { username: 'virk' }), 'hello virk')
+    assert.equal(interpolate('hello {{ username }}', { username: 'virk' }), 'hello virk')
   })
 
   test('interpolate nested values inside a template', ({ assert }) => {

@@ -11,7 +11,8 @@
 	],
 	"scripts": {
 		"pretest": "npm run lint",
-		"test": "node --loader=ts-node/esm bin/test.ts",
+    "test": "npm run vscode:test",
+		"vscode:test": "node --loader=ts-node/esm bin/test.ts",
 		"clean": "del-cli build",
 		"compile": "npm run lint && npm run clean && tsc",
 		"build": "npm run compile",
@@ -54,6 +55,7 @@
 	},
 	"dependencies": {
 		"@poppinss/file-generator": "^2.0.0-0",
+		"pupa": "^3.1.0",
 		"slash": "^4.0.0"
 	},
 	"repository": {
