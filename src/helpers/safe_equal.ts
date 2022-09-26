@@ -1,7 +1,7 @@
 /*
  * @poppinss/utils
  *
- * (c) Harminder Virk <virk@adonisjs.com>
+ * (c) Poppinss
  *
  * For the full copyright and license information, please view the LICENSE
  * file that was distributed with this source code.
@@ -19,39 +19,39 @@ type BufferSafeValue =
   | { [Symbol.toPrimitive](hint: 'string'): string }
 
 /**
- * Generates a random string for a given size
+ * Compare two values to see if they are equal. The comparison is done in
+ * a way to avoid timing-attacks.
  */
-export function safeEqual<T extends BufferSafeValue>(value: T, comparisonValue: T) {
-  if (typeof value === 'string' && typeof comparisonValue === 'string') {
+export function safeEqual<T extends BufferSafeValue>(expected: T, actual: T) {
+  if (typeof expected === 'string' && typeof actual === 'string') {
     /**
-     * The length of the main value to ensure that we compare equal strings
-     * against each other to get a constant time.
+     * The length of the comparison value.
      */
-    const expectedLength = Buffer.byteLength(value)
+    const expectedLength = Buffer.byteLength(expected)
 
     /**
-     * Value A
+     * Expected value
      */
-    const valueBuffer = Buffer.alloc(expectedLength, 0, 'utf-8')
-    valueBuffer.write(value)
+    const expectedValueBuffer = Buffer.alloc(expectedLength, 0, 'utf-8')
+    expectedValueBuffer.write(expected)
 
     /**
-     * Value B
+     * Actual value (taken from user input)
      */
-    const comparisonValueBuffer = Buffer.alloc(expectedLength, 0, 'utf-8')
-    comparisonValueBuffer.write(comparisonValue)
+    const actualValueBuffer = Buffer.alloc(expectedLength, 0, 'utf-8')
+    actualValueBuffer.write(actual)
 
     /**
      * Ensure values are same and also have same length
      */
     return (
-      timingSafeEqual(valueBuffer, comparisonValueBuffer) &&
-      expectedLength === Buffer.byteLength(comparisonValue)
+      timingSafeEqual(expectedValueBuffer, actualValueBuffer) &&
+      expectedLength === Buffer.byteLength(actual)
     )
   }
 
   return timingSafeEqual(
-    Buffer.from(value as ArrayBuffer | SharedArrayBuffer),
-    Buffer.from(comparisonValue as ArrayBuffer | SharedArrayBuffer)
+    Buffer.from(expected as ArrayBuffer | SharedArrayBuffer),
+    Buffer.from(actual as ArrayBuffer | SharedArrayBuffer)
   )
 }
