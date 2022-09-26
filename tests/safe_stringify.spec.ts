@@ -11,6 +11,19 @@ import { test } from '@japa/runner'
 import { safeStringify } from '../src/safe_stringify.js'
 
 test.group('Stringify', () => {
+  test('stringify number', ({ assert }) => {
+    assert.deepEqual(safeStringify(1), '1')
+  })
+
+  test('stringify boolean', ({ assert }) => {
+    assert.deepEqual(safeStringify(false), 'false')
+  })
+
+  test('stringify date/time', ({ assert }) => {
+    const date = new Date()
+    assert.deepEqual(safeStringify(date), `"${date.toISOString()}"`)
+  })
+
   test('stringify object', ({ assert }) => {
     assert.deepEqual(safeStringify({ b: 2, a: 1 }), '{"b":2,"a":1}')
   })
@@ -44,7 +57,7 @@ test.group('Stringify', () => {
   })
 
   test('stringifies object (replacer)', ({ assert }) => {
-    const replacer = (_, value) => {
+    const replacer = (_: any, value: any) => {
       return typeof value === 'number' ? value + 1 : value
     }
 
@@ -62,7 +75,7 @@ test.group('Stringify', () => {
   })
 
   test('stringifies object with bigint (replacer returns bigint)', ({ assert }) => {
-    const replacer = (_, value) => {
+    const replacer = (_: any, value: any) => {
       return typeof value === 'bigint' ? value + BigInt(1) : value
     }
 
@@ -70,24 +83,40 @@ test.group('Stringify', () => {
   })
 
   test('stringifies object with bigint (replacer handles bigint)', ({ assert }) => {
-    const replacer = (_, value) => {
+    const replacer = (_: any, value: any) => {
       return typeof value === 'bigint' ? `${value.toString()}n` : value
     }
 
     assert.deepEqual(safeStringify({ a: BigInt(18), b: 4 }, replacer), '{"a":"18n","b":4}')
   })
 
-  test('raise exception when toJSON returns error', ({ assert }) => {
-    assert.plan(1)
-
-    try {
+  test('call toJSON', ({ assert }) => {
+    assert.deepEqual(
       safeStringify({
         toJSON() {
-          throw new Error('blow up')
+          return {
+            foo: 'bar',
+            baz: {
+              toJSON() {
+                return 'baz'
+              },
+            },
+          }
         },
-      })
-    } catch (error) {
-      assert.equal(error.message, 'blow up')
-    }
+      }),
+      '{"foo":"bar","baz":"baz"}'
+    )
+  })
+
+  test('raise exception when toJSON returns error', ({ assert }) => {
+    assert.throws(
+      () =>
+        safeStringify({
+          toJSON() {
+            throw new Error('blow up')
+          },
+        }),
+      'blow up'
+    )
   })
 })

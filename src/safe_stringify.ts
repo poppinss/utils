@@ -7,17 +7,23 @@
  * file that was distributed with this source code.
  */
 
-import { stringify, ReplacerFn } from './fast_safe_stringify.js'
+import { configure } from 'safe-stable-stringify'
+
+const stringify = configure({
+  bigint: false,
+  circularValue: undefined,
+  deterministic: false,
+})
+
+type ReplacerFn = (this: any, key: string, value: any) => any
 
 /**
- * Replacer to handle bigints and remove Circular values all together
+ * Replacer to handle custom data types.
+ *
+ * - Bigints are converted to string
  */
-function jsonStringifyReplacer(replacer?: ReplacerFn, removeCircular?: boolean): ReplacerFn {
+function jsonStringifyReplacer(replacer?: ReplacerFn): ReplacerFn {
   return function (key, value) {
-    if (removeCircular && value === '[Circular]') {
-      return
-    }
-
     const val = replacer ? replacer.call(this, key, value) : value
 
     if (typeof val === 'bigint') {
@@ -29,12 +35,9 @@ function jsonStringifyReplacer(replacer?: ReplacerFn, removeCircular?: boolean):
 }
 
 /**
- * Safely stringifies a Javascript native value
+ * String Javascript values to a JSON string. Handles circular
+ * references and bigints
  */
 export function safeStringify(value: any, replacer?: ReplacerFn, space?: string | number): string {
-  try {
-    return JSON.stringify(value, jsonStringifyReplacer(replacer, false), space)
-  } catch {
-    return stringify(value, jsonStringifyReplacer(replacer, true), space)
-  }
+  return stringify(value, jsonStringifyReplacer(replacer), space)
 }
