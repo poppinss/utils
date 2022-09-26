@@ -1,7 +1,7 @@
 /*
  * @poppinss/utils
  *
- * (c) Harminder Virk <virk@adonisjs.com>
+ * (c) Poppinss
  *
  * For the full copyright and license information, please view the LICENSE
  * file that was distributed with this source code.
@@ -17,60 +17,58 @@
  * ```
  */
 export class Exception extends Error {
+  /**
+   * Static properties to defined on the exception once
+   * and then re-use them
+   */
+  static help?: string
+  static code?: string
+  static status?: number
+  static message?: string
+
+  /**
+   * Name of the class that raised the exception.
+   */
   name: string
-  message: string
+
+  /**
+   * Optional help description for the error. You can use it to define additional
+   * human readable information for the error.
+   */
   help?: string
+
+  /**
+   * A machine readable error code. This will allow the error handling logic
+   * to narrow down exceptions based upon the error code.
+   */
   code?: string
+
+  /**
+   * A status code for the error. Usually helpful when converting errors
+   * to HTTP responses.
+   */
   status: number
 
-  constructor(message: string, status: number = 500, code?: string) {
-    super(message)
+  constructor(message: string, options?: ErrorOptions & { code?: string; status?: number }) {
+    super(message, options)
 
-    /**
-     * Set error message
-     */
-    Object.defineProperty(this, 'message', {
-      configurable: true,
-      enumerable: false,
-      value: code ? `${code}: ${message}` : message,
-      writable: true,
-    })
+    const ErrorConstructor = this.constructor as typeof Exception
 
-    /**
-     * Set error name as a public property
-     */
-    Object.defineProperty(this, 'name', {
-      configurable: true,
-      enumerable: false,
-      value: this.constructor.name,
-      writable: true,
-    })
+    Error.captureStackTrace(this, ErrorConstructor)
+    this.code = options?.code || ErrorConstructor.code
+    this.name = ErrorConstructor.name
+    this.status = options?.status || ErrorConstructor.status || 500
+    this.help = ErrorConstructor.help
+  }
 
-    /**
-     * Set status as a public property
-     */
-    Object.defineProperty(this, 'status', {
-      configurable: true,
-      enumerable: false,
-      value: status,
-      writable: true,
-    })
+  [Symbol.toStringTag]() {
+    return this.constructor.name
+  }
 
-    /**
-     * Set error code as a public property (only when defined)
-     */
-    if (code) {
-      Object.defineProperty(this, 'code', {
-        configurable: true,
-        enumerable: false,
-        value: code,
-        writable: true,
-      })
+  toString() {
+    if (this.code) {
+      return `${this.name} [${this.code}]: ${this.message}`
     }
-
-    /**
-     * Update the stack trace
-     */
-    Error.captureStackTrace(this, this.constructor)
+    return `${this.name}: ${this.message}`
   }
 }
