@@ -14,7 +14,7 @@
     "strictNullChecks": true,
     "allowSyntheticDefaultImports": true,
     "forceConsistentCasingInFileNames": true,
-    "noImplicitAny": true,
+    "noImplicitAny": false,
     "strictFunctionTypes": true,
     "noImplicitThis": true,
     "skipLibCheck": true,

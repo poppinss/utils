@@ -23,54 +23,6 @@ function normalizeBase64(value: string) {
 }
 
 /**
- * Truncate a sentence till a give limit of characters
- */
-export function truncate(
-  sentence: string,
-  charactersLimit: number,
-  options?: {
-    completeWords?: boolean
-    suffix?: string
-  }
-): string {
-  return truncatise(sentence, {
-    TruncateLength: charactersLimit,
-    /**
-     * Do not complete words when "completeWords" is not explicitly set
-     * to true
-     */
-    Strict: options && options.completeWords === true ? false : true,
-    StripHTML: false,
-    TruncateBy: 'characters',
-    Suffix: options && options.suffix,
-  })
-}
-
-/**
- * Same as truncate, but strips out the HTML
- */
-export function excerpt(
-  sentence: string,
-  charactersLimit: number,
-  options?: {
-    completeWords?: boolean
-    suffix?: string
-  }
-): string {
-  return truncatise(sentence, {
-    TruncateLength: charactersLimit,
-    /**
-     * Do not complete words when "completeWords" is not explicitly set
-     * to true
-     */
-    Strict: options && options.completeWords === true ? false : true,
-    StripHTML: true,
-    TruncateBy: 'characters',
-    Suffix: options && options.suffix,
-  })
-}
-
-/**
  * Condenses multiple whitespaces from a string
  */
 export function condenseWhitespace(value: string): string {

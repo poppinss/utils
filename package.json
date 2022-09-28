@@ -61,7 +61,8 @@
 		"pluralize": "^8.0.0",
 		"safe-stable-stringify": "^2.4.0",
 		"secure-json-parse": "^2.5.0",
-		"slash": "^4.0.0"
+		"slash": "^4.0.0",
+		"truncatise": "^0.0.8"
 	},
 	"repository": {
 		"type": "git",
