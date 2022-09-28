@@ -11,25 +11,6 @@ import { test } from '@japa/runner'
 import * as string from '../src/helpers/string.js'
 
 test.group('String helpers', () => {
-  test('pluralize a word', ({ assert }) => {
-    assert.equal(string.pluralize('box'), 'boxes')
-    assert.equal(string.pluralize('i'), 'we')
-  })
-
-  test('define irregular rule', ({ assert }) => {
-    string.defineIrregularRule('login', 'login')
-    assert.equal(string.pluralize('login'), 'login')
-  })
-
-  test('define uncountableRule rule', ({ assert }) => {
-    string.defineUncountableRule('auth')
-    assert.equal(string.pluralize('auth'), 'auth')
-  })
-
-  test('singularize a word', ({ assert }) => {
-    assert.equal(string.singularize('boxes'), 'box')
-  })
-
   test('truncate a sentence', ({ assert }) => {
     assert.equal(
       string.truncate('This is a very long, maybe not that long title', 12),

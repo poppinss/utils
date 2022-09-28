@@ -56,7 +56,9 @@
 	"dependencies": {
 		"@lukeed/ms": "^2.0.0",
 		"@poppinss/file-generator": "^2.0.0-0",
+		"@types/pluralize": "^0.0.29",
 		"case-anything": "^2.1.10",
+		"pluralize": "^8.0.0",
 		"safe-stable-stringify": "^2.4.0",
 		"secure-json-parse": "^2.5.0",
 		"slash": "^4.0.0"

@@ -12,7 +12,6 @@ import truncatise from 'truncatise'
 import { randomBytes } from 'node:crypto'
 import he, { EncodeOptions } from 'he'
 import bytes, { BytesOptions } from 'bytes'
-import * as pluralizePkg from 'pluralize'
 
 export { default as toSlug } from 'slugify'
 
@@ -55,34 +54,6 @@ export function titleCase(input: string) {
  */
 function normalizeBase64(value: string) {
   return value.replace(/\+/g, '-').replace(/\//g, '_').replace(/\=/g, '')
-}
-
-/**
- * Define an irregular rule
- */
-export function defineIrregularRule(singleValue: string, pluralValue: string) {
-  pluralize.addIrregularRule(singleValue, pluralValue)
-}
-
-/**
- * Define uncountable rule
- */
-export function defineUncountableRule(word: string) {
-  pluralizePkg.addUncountableRule(word)
-}
-
-/**
- * Pluralize a word
- */
-export function pluralize(word: string): string {
-  return pluralizePkg.plural(word)
-}
-
-/**
- * Singularize a word
- */
-export function singularize(word: string): string {
-  return pluralizePkg.singular(word)
 }
 
 /**
