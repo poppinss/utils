@@ -11,7 +11,6 @@ import ms from 'ms'
 import truncatise from 'truncatise'
 import { randomBytes } from 'node:crypto'
 import he, { EncodeOptions } from 'he'
-import * as changeCase from 'change-case'
 import bytes, { BytesOptions } from 'bytes'
 import * as pluralizePkg from 'pluralize'
 
@@ -70,66 +69,6 @@ export function defineIrregularRule(singleValue: string, pluralValue: string) {
  */
 export function defineUncountableRule(word: string) {
   pluralizePkg.addUncountableRule(word)
-}
-
-/**
- * Convert string to camelcase
- */
-export function camelCase(value: string): string {
-  return changeCase.camelCase(value)
-}
-
-/**
- * Convert string to snakecase
- */
-export function snakeCase(value: string): string {
-  return changeCase.snakeCase(value)
-}
-
-/**
- * Convert string to dashcase
- */
-export function dashCase(value: string, options?: { capitalize?: boolean }): string {
-  if (options && options.capitalize) {
-    return changeCase.headerCase(value)
-  }
-
-  return changeCase.paramCase(value)
-}
-
-/**
- * Convert string to pascal case
- */
-export function pascalCase(value: string): string {
-  return changeCase.pascalCase(value)
-}
-
-/**
- * Convert string to capital case
- */
-export function capitalCase(value: string): string {
-  return changeCase.capitalCase(value)
-}
-
-/**
- * Convert string to sentence case
- */
-export function sentenceCase(value: string): string {
-  return changeCase.sentenceCase(value)
-}
-
-/**
- * Convert string to dot case
- */
-export function dotCase(value: string): string {
-  return changeCase.dotCase(value)
-}
-
-/**
- * Remove all sort of casing from the string
- */
-export function noCase(value: string): string {
-  return changeCase.noCase(value)
 }
 
 /**

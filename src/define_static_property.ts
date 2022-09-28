@@ -33,7 +33,7 @@ export function defineStaticProperty<
 ) {
   if (!self.hasOwnProperty(propertyName)) {
     /**
-     * Class is inhering the base class directly and hence we don't have to
+     * Class is inherting the base class directly and hence we don't have to
      * copy any properties
      */
     if (Object.getPrototypeOf(self.prototype) === BaseClass.prototype || strategy === 'define') {
@@ -47,9 +47,9 @@ export function defineStaticProperty<
     }
 
     /**
-     * Class is inherting another sub class. We must copy the values to the self
+     * Class is inherting another parent class. We must copy the values to the self
      * class, otherwise mutating them inside the self class will be reflected
-     * on the base class.
+     * on the parent class.
      */
     const value = self[propertyName]
     if (value === undefined) {

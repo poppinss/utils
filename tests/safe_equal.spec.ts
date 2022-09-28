@@ -10,7 +10,7 @@
 import { test } from '@japa/runner'
 import { safeEqual } from '../src/helpers/safe_equal.js'
 
-test.group('safeEqual | equals', () => {
+test.group('safeEqual', () => {
   test('return true when two strings are the same', ({ assert }) => {
     assert.isTrue(safeEqual('hello', 'hello'))
   })
