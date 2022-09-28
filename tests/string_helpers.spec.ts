@@ -11,51 +11,6 @@ import { test } from '@japa/runner'
 import * as string from '../src/helpers/string.js'
 
 test.group('String helpers', () => {
-  test('convert string to camelCase', ({ assert }) => {
-    assert.equal(string.camelCase('hello_world'), 'helloWorld')
-  })
-
-  test('convert string to snake_case', ({ assert }) => {
-    assert.equal(string.snakeCase('helloWorld'), 'hello_world')
-  })
-
-  test('convert string to dash-case', ({ assert }) => {
-    assert.equal(string.dashCase('helloWorld'), 'hello-world')
-  })
-
-  test('convert string to dash-case and capitalize', ({ assert }) => {
-    assert.equal(string.dashCase('helloWorld', { capitalize: true }), 'Hello-World')
-  })
-
-  test('convert string to PascalCase', ({ assert }) => {
-    assert.equal(string.pascalCase('helloWorld'), 'HelloWorld')
-  })
-
-  test('convert string to Capital Case', ({ assert }) => {
-    assert.equal(string.capitalCase('helloWorld'), 'Hello World')
-    assert.equal(string.capitalCase('Here is a fox'), 'Here Is A Fox')
-  })
-
-  test('convert string to Title Case', ({ assert }) => {
-    assert.equal(string.titleCase('hello World'), 'Hello World')
-    assert.equal(string.titleCase('Here is a fox'), 'Here Is a Fox')
-  })
-
-  test('convert string to Sentence case', ({ assert }) => {
-    assert.equal(string.sentenceCase('hello_world_and_universe'), 'Hello world and universe')
-  })
-
-  test('convert string to dot.case', ({ assert }) => {
-    assert.equal(string.dotCase('hello_world'), 'hello.world')
-  })
-
-  test('remove all cases from string', ({ assert }) => {
-    assert.equal(string.noCase('hello_world'), 'hello world')
-    assert.equal(string.noCase('helloWorld'), 'hello world')
-    assert.equal(string.noCase('hello-world'), 'hello world')
-    assert.equal(string.noCase('hello world'), 'hello world')
-  })
-
   test('pluralize a word', ({ assert }) => {
     assert.equal(string.pluralize('box'), 'boxes')
     assert.equal(string.pluralize('i'), 'we')
