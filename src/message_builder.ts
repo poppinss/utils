@@ -7,9 +7,8 @@
  * file that was distributed with this source code.
  */
 
-import { parse } from '@lukeed/ms'
-import { safeParse } from '../safe_parse.js'
-import { safeStringify } from '../safe_stringify.js'
+import json from './json/main.js'
+import milliseconds from './string/milliseconds.js'
 
 /**
  * Message builder exposes an API to "JSON.stringify" values by
@@ -23,11 +22,7 @@ export class MessageBuilder {
       return undefined
     }
 
-    const expiryMs = typeof expiresIn === 'string' ? parse(expiresIn) : expiresIn
-    if (expiryMs === undefined || expiryMs === null) {
-      throw new Error(`Invalid value for expiresIn "${expiresIn}"`)
-    }
-
+    const expiryMs = milliseconds.parse(expiresIn)
     return new Date(Date.now() + expiryMs)
   }
 
@@ -52,14 +47,14 @@ export class MessageBuilder {
    */
   build(message: any, expiresIn?: string | number, purpose?: string): string {
     const expiryDate = this.#getExpiryDate(expiresIn)
-    return safeStringify({ message, purpose, expiryDate })
+    return json.safeStringify({ message, purpose, expiryDate })
   }
 
   /**
    * Verifies the message for expiry and purpose.
    */
   verify<T extends any>(message: any, purpose?: string): null | T {
-    const parsed = safeParse(message)
+    const parsed = json.safeParse(message)
 
     /**
      * Safe parse returns the value as it is when unable to JSON.parse it. However, in

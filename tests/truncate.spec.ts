@@ -8,16 +8,19 @@
  */
 
 import { test } from '@japa/runner'
-import { truncate } from '../src/truncate.js'
+import string from '../src/string/main.js'
 
 test('truncate', () => {
   test('truncate a sentence', ({ assert }) => {
-    assert.equal(truncate('This is a very long, maybe not that long title', 12), 'This is a ve...')
+    assert.equal(
+      string.truncate('This is a very long, maybe not that long title', 12),
+      'This is a ve...'
+    )
   })
 
   test('truncate a sentence, but complete words', ({ assert }) => {
     assert.equal(
-      truncate('This is a very long, maybe not that long title', 12, {
+      string.truncate('This is a very long, maybe not that long title', 12, {
         completeWords: true,
       }),
       'This is a very...'
@@ -26,7 +29,7 @@ test('truncate', () => {
 
   test('define a custom suffix', ({ assert }) => {
     assert.equal(
-      truncate('This is a very long, maybe not that long title', 12, {
+      string.truncate('This is a very long, maybe not that long title', 12, {
         completeWords: true,
         suffix: ' <a href="/1"> Read more </a>',
       }),

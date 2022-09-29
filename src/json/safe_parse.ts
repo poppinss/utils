@@ -8,7 +8,7 @@
  */
 
 import { parse } from 'secure-json-parse'
-import { JSONReviver } from './types.js'
+import { JSONReviver } from '../types.js'
 
 /**
  * A drop-in replacement for JSON.parse with prototype poisoning protection.

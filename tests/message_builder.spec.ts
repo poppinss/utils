@@ -8,7 +8,7 @@
  */
 
 import { test } from '@japa/runner'
-import { MessageBuilder } from '../src/helpers/message_builder.js'
+import { MessageBuilder } from '../src/message_builder.js'
 
 test.group('MessageBuilder | build', () => {
   test('build a number as a message', ({ assert }) => {

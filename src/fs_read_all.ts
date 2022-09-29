@@ -11,9 +11,9 @@ import { join } from 'node:path'
 import { fileURLToPath } from 'node:url'
 import { readdir, stat } from 'node:fs/promises'
 
-import { slash } from '../slash.js'
+import { slash } from './slash.js'
 import { naturalSort } from './natural_sort.js'
-import { ReadAllFilesOptions } from '../types.js'
+import { ReadAllFilesOptions } from './types.js'
 
 /**
  * Filter to remove dot files

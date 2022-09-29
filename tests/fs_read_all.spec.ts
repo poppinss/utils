@@ -11,9 +11,10 @@ import { join } from 'node:path'
 import { test } from '@japa/runner'
 import { ensureDir, remove, outputFile } from 'fs-extra'
 
+import { dirname } from '../index.js'
 import { slash } from '../src/slash.js'
-import { fsReadAll } from '../src/helpers/fs_read_all.js'
-import { dirname, normalize } from '../test_helpers/index.js'
+import { fsReadAll } from '../src/fs_read_all.js'
+import { normalize } from '../test_helpers/index.js'
 
 const BASE_PATH = join(dirname(import.meta.url), 'app')
 

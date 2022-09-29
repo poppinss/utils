@@ -6,9 +6,18 @@
 	"type": "module",
 	"files": [
 		"build/src",
+    "lodash",
+    "build/lodash",
 		"build/index.d.ts",
 		"build/index.js"
 	],
+	"exports": {
+		".": "./build/index.js",
+    "./lodash": "./build/lodash/main.js",
+		"./string": "./build/src/string/main.js",
+		"./json": "./build/src/json/main.js",
+		"./types": "./build/src/types.js"
+	},
 	"scripts": {
 		"pretest": "npm run lint",
 		"test": "npm run vscode:test",
@@ -56,8 +65,13 @@
 	"dependencies": {
 		"@lukeed/ms": "^2.0.0",
 		"@poppinss/file-generator": "^2.0.0-0",
+		"@types/bytes": "^3.1.1",
+		"@types/he": "^1.1.2",
 		"@types/pluralize": "^0.0.29",
+		"bytes": "^3.1.2",
 		"case-anything": "^2.1.10",
+		"flattie": "^1.1.0",
+		"he": "^1.2.0",
 		"pluralize": "^8.0.0",
 		"safe-stable-stringify": "^2.4.0",
 		"secure-json-parse": "^2.5.0",

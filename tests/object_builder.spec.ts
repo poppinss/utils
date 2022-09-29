@@ -8,7 +8,7 @@
  */
 
 import { test } from '@japa/runner'
-import { ObjectBuilder } from '../src/helpers/object_builder.js'
+import { ObjectBuilder } from '../src/object_builder.js'
 
 test.group('ObjectBuilder', () => {
   test('add value to the object', ({ assert }) => {

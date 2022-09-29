@@ -8,7 +8,7 @@
  */
 
 import { test } from '@japa/runner'
-import * as changeCase from '../src/change_case.js'
+import string from '../src/string/main.js'
 
 test.group('Change case', () => {
   test('convert {input} to camelCase')
@@ -25,7 +25,7 @@ test.group('Change case', () => {
       { input: 'version 1.21.0', output: 'version1210' },
     ])
     .run(({ assert }, { input, output }) => {
-      assert.equal(changeCase.camelCase(input), output)
+      assert.equal(string.camelCase(input), output)
     })
 
   test('convert {input} to snake_case')
@@ -44,7 +44,7 @@ test.group('Change case', () => {
       { input: 'version 1.21.0', output: 'version_1210' },
     ])
     .run(({ assert }, { input, output }) => {
-      assert.equal(changeCase.snakeCase(input), output)
+      assert.equal(string.snakeCase(input), output)
     })
 
   test('convert {input} to dash-case')
@@ -62,7 +62,7 @@ test.group('Change case', () => {
       { input: 'version 1.21.0', output: 'version-1210' },
     ])
     .run(({ assert }, { input, output }) => {
-      assert.equal(changeCase.dashCase(input), output)
+      assert.equal(string.dashCase(input), output)
     })
 
   test('convert {input} to dash-case and capitalize')
@@ -76,7 +76,7 @@ test.group('Change case', () => {
       { input: 'version 1.21.0', output: 'Version-1210' },
     ])
     .run(({ assert }, { input, output }) => {
-      assert.equal(changeCase.dashCase(input, { capitalize: true }), output)
+      assert.equal(string.dashCase(input, { capitalize: true }), output)
     })
 
   test('convert {input} to PascalCase')
@@ -92,7 +92,7 @@ test.group('Change case', () => {
       { input: 'version 1.21.0', output: 'Version1210' },
     ])
     .run(({ assert }, { input, output }) => {
-      assert.equal(changeCase.pascalCase(input), output)
+      assert.equal(string.pascalCase(input), output)
     })
 
   test('convert {input} to Capital Case')
@@ -109,7 +109,7 @@ test.group('Change case', () => {
       { input: 'version 1.21.0', output: 'Version 1.21.0' },
     ])
     .run(({ assert }, { input, output }) => {
-      assert.equal(changeCase.capitalCase(input), output)
+      assert.equal(string.capitalCase(input), output)
     })
 
   test('convert "{input}" to Title Case')
@@ -172,7 +172,7 @@ test.group('Change case', () => {
       { input: 'newcastle *upon* tyne', output: 'Newcastle *upon* Tyne' },
     ])
     .run(({ assert }, { input, output }) => {
-      assert.equal(changeCase.titleCase(input), output)
+      assert.equal(string.titleCase(input), output)
     })
 
   test('convert {input} to Sentence case')
@@ -186,7 +186,7 @@ test.group('Change case', () => {
       { input: 'version 1.21.0', output: 'Version 1 21 0' },
     ])
     .run(({ assert }, { input, output }) => {
-      assert.equal(changeCase.sentenceCase(input), output)
+      assert.equal(string.sentenceCase(input), output)
     })
 
   test('convert {input} to dot.case')
@@ -206,7 +206,7 @@ test.group('Change case', () => {
       { input: 'version 1.21.0', output: 'version.1210' },
     ])
     .run(({ assert }, { input, output }) => {
-      assert.equal(changeCase.dotCase(input), output)
+      assert.equal(string.dotCase(input), output)
     })
 
   test('convert {input} to dot.case as lowercase')
@@ -225,7 +225,7 @@ test.group('Change case', () => {
       { input: 'version 1.21.0', output: 'version.1210' },
     ])
     .run(({ assert }, { input, output }) => {
-      assert.equal(changeCase.dotCase(input, { lowerCase: true }), output)
+      assert.equal(string.dotCase(input, { lowerCase: true }), output)
     })
 
   test('removing casing from "{input}"')
@@ -280,6 +280,6 @@ test.group('Change case', () => {
       { input: 'foo_13_bar', output: 'foo 13 bar' },
     ])
     .run(({ assert }, { input, output }) => {
-      assert.equal(changeCase.noCase(input), output)
+      assert.equal(string.noCase(input), output)
     })
 })

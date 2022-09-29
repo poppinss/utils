@@ -8,24 +8,24 @@
  */
 
 import { test } from '@japa/runner'
-import { safeStringify } from '../src/safe_stringify.js'
+import json from '../src/json/main.js'
 
 test.group('Stringify', () => {
   test('stringify number', ({ assert }) => {
-    assert.deepEqual(safeStringify(1), '1')
+    assert.deepEqual(json.safeStringify(1), '1')
   })
 
   test('stringify boolean', ({ assert }) => {
-    assert.deepEqual(safeStringify(false), 'false')
+    assert.deepEqual(json.safeStringify(false), 'false')
   })
 
   test('stringify date/time', ({ assert }) => {
     const date = new Date()
-    assert.deepEqual(safeStringify(date), `"${date.toISOString()}"`)
+    assert.deepEqual(json.safeStringify(date), `"${date.toISOString()}"`)
   })
 
   test('stringify object', ({ assert }) => {
-    assert.deepEqual(safeStringify({ b: 2, a: 1 }), '{"b":2,"a":1}')
+    assert.deepEqual(json.safeStringify({ b: 2, a: 1 }), '{"b":2,"a":1}')
   })
 
   test('stringify object with circular reference', ({ assert }) => {
@@ -33,7 +33,7 @@ test.group('Stringify', () => {
       b: 2,
     }
     a.a = a
-    assert.deepEqual(safeStringify(a), '{"b":2}')
+    assert.deepEqual(json.safeStringify(a), '{"b":2}')
   })
 
   test('stringify object with bigint', ({ assert }) => {
@@ -41,7 +41,7 @@ test.group('Stringify', () => {
       b: BigInt(10),
       a: 10,
     }
-    assert.deepEqual(safeStringify(a), '{"b":"10","a":10}')
+    assert.deepEqual(json.safeStringify(a), '{"b":"10","a":10}')
   })
 
   test('stringify object with bigint and circular reference', ({ assert }) => {
@@ -49,11 +49,11 @@ test.group('Stringify', () => {
       b: BigInt(10),
     }
     a.a = a
-    assert.deepEqual(safeStringify(a), '{"b":"10"}')
+    assert.deepEqual(json.safeStringify(a), '{"b":"10"}')
   })
 
   test('stringifies object', ({ assert }) => {
-    assert.deepEqual(safeStringify({ a: 18, b: 4 }), '{"a":18,"b":4}')
+    assert.deepEqual(json.safeStringify({ a: 18, b: 4 }), '{"a":18,"b":4}')
   })
 
   test('stringifies object (replacer)', ({ assert }) => {
@@ -61,17 +61,17 @@ test.group('Stringify', () => {
       return typeof value === 'number' ? value + 1 : value
     }
 
-    assert.deepEqual(safeStringify({ a: 18, b: 4 }, replacer), '{"a":19,"b":5}')
+    assert.deepEqual(json.safeStringify({ a: 18, b: 4 }, replacer), '{"a":19,"b":5}')
   })
 
   test('stringifies object removing circular reference', ({ assert }) => {
     const o: any = { a: 18, b: 4 }
     o.o = o
-    assert.deepEqual(safeStringify(o), '{"a":18,"b":4}')
+    assert.deepEqual(json.safeStringify(o), '{"a":18,"b":4}')
   })
 
   test('stringifies object with bigint', ({ assert }) => {
-    assert.deepEqual(safeStringify({ a: BigInt(18), b: 4 }), '{"a":"18","b":4}')
+    assert.deepEqual(json.safeStringify({ a: BigInt(18), b: 4 }), '{"a":"18","b":4}')
   })
 
   test('stringifies object with bigint (replacer returns bigint)', ({ assert }) => {
@@ -79,7 +79,7 @@ test.group('Stringify', () => {
       return typeof value === 'bigint' ? value + BigInt(1) : value
     }
 
-    assert.deepEqual(safeStringify({ a: BigInt(18), b: 4 }, replacer), '{"a":"19","b":4}')
+    assert.deepEqual(json.safeStringify({ a: BigInt(18), b: 4 }, replacer), '{"a":"19","b":4}')
   })
 
   test('stringifies object with bigint (replacer handles bigint)', ({ assert }) => {
@@ -87,12 +87,12 @@ test.group('Stringify', () => {
       return typeof value === 'bigint' ? `${value.toString()}n` : value
     }
 
-    assert.deepEqual(safeStringify({ a: BigInt(18), b: 4 }, replacer), '{"a":"18n","b":4}')
+    assert.deepEqual(json.safeStringify({ a: BigInt(18), b: 4 }, replacer), '{"a":"18n","b":4}')
   })
 
   test('call toJSON', ({ assert }) => {
     assert.deepEqual(
-      safeStringify({
+      json.safeStringify({
         toJSON() {
           return {
             foo: 'bar',
@@ -111,7 +111,7 @@ test.group('Stringify', () => {
   test('raise exception when toJSON returns error', ({ assert }) => {
     assert.throws(
       () =>
-        safeStringify({
+        json.safeStringify({
           toJSON() {
             throw new Error('blow up')
           },

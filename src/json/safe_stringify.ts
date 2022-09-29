@@ -8,7 +8,7 @@
  */
 
 import { configure } from 'safe-stable-stringify'
-import { JSONReplacer } from './types.js'
+import { JSONReplacer } from '../types.js'
 
 const stringify = configure({
   bigint: false,

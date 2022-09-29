@@ -8,7 +8,7 @@
  */
 
 import { test } from '@japa/runner'
-import { safeEqual } from '../src/helpers/safe_equal.js'
+import { safeEqual } from '../src/safe_equal.js'
 
 test.group('safeEqual', () => {
   test('return true when two strings are the same', ({ assert }) => {

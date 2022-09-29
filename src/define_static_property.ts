@@ -1,13 +1,13 @@
 /*
  * @poppinss/utils
  *
- * (c) Harminder Virk <virk@adonisjs.com>
+ * (c) Poppinss
  *
  * For the full copyright and license information, please view the LICENSE
  * file that was distributed with this source code.
  */
 
-import cloneDeep from 'lodash/cloneDeep'
+import lodash from '../lodash/main.js'
 
 type Constructor = new (...args: any[]) => any
 type AbstractConstructor = abstract new (...args: any[]) => any
@@ -63,7 +63,7 @@ export function defineStaticProperty<
     }
 
     Object.defineProperty(self, propertyName, {
-      value: typeof strategy === 'function' ? strategy(value) : cloneDeep(value),
+      value: typeof strategy === 'function' ? strategy(value) : lodash.cloneDeep(value),
       configurable: true,
       enumerable: true,
       writable: true,

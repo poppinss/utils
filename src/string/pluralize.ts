@@ -16,12 +16,12 @@ import { default as pluralizePkg } from 'pluralize'
 export function pluralize(word: string, count?: number, inclusive?: boolean): string {
   return pluralizePkg(word, count, inclusive)
 }
+pluralize.addPluralRule = pluralizePkg.addPluralRule
+pluralize.addSingularRule = pluralizePkg.addSingularRule
+pluralize.addIrregularRule = pluralizePkg.addIrregularRule
+pluralize.addUncountableRule = pluralizePkg.addUncountableRule
 
 export const plural = pluralizePkg.plural
 export const singular = pluralizePkg.singular
 export const isPlural = pluralizePkg.isPlural
 export const isSingular = pluralizePkg.isSingular
-export const addPluralRule = pluralizePkg.addPluralRule
-export const addSingularRule = pluralizePkg.addSingularRule
-export const addIrregularRule = pluralizePkg.addIrregularRule
-export const addUncountableRule = pluralizePkg.addUncountableRule
