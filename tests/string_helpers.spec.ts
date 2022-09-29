@@ -31,14 +31,6 @@ test.group('String helpers', () => {
     )
   })
 
-  test('slugify string', ({ assert }) => {
-    assert.equal(string.toSlug('hello world'), 'hello-world')
-  })
-
-  test('slugify string containing unicode symbols', ({ assert }) => {
-    assert.equal(string.toSlug('hello ♥ world'), 'hello-love-world')
-  })
-
   test('make sentence from multiple words', ({ assert }) => {
     assert.equal(
       string.toSentence(['routes', 'controllers', 'middleware']),
@@ -67,7 +59,7 @@ test.group('String helpers', () => {
     assert.equal(string.ordinalize(12.87), '12.87th')
     assert.equal(string.ordinalize(99), '99th')
     assert.equal(string.ordinalize(-14), '-14th')
-    assert.throw(
+    assert.throws(
       () => string.ordinalize(Number.POSITIVE_INFINITY),
       'Cannot ordinalize NAN or infinite numbers'
     )

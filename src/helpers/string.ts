@@ -8,12 +8,9 @@
  */
 
 import ms from 'ms'
-import truncatise from 'truncatise'
 import { randomBytes } from 'node:crypto'
 import he, { EncodeOptions } from 'he'
 import bytes, { BytesOptions } from 'bytes'
-
-export { default as toSlug } from 'slugify'
 
 /**
  * Normalizes base64 string by removing special chars and padding
