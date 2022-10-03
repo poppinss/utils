@@ -13,7 +13,10 @@
 	],
 	"exports": {
 		".": "./build/index.js",
-		"./lodash": "./build/lodash/main.cjs",
+		"./lodash": {
+      "types": "./lodash/lodash.types.d.ts",
+      "node": "./build/lodash/main.cjs"
+    },
 		"./string": "./build/src/string/main.js",
 		"./json": "./build/src/json/main.js",
 		"./types": "./build/src/types.js"
