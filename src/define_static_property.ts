@@ -7,7 +7,7 @@
  * file that was distributed with this source code.
  */
 
-import lodash from '../lodash/main.js'
+import lodash from '@poppinss/utils/lodash'
 
 type Constructor = new (...args: any[]) => any
 type AbstractConstructor = abstract new (...args: any[]) => any
@@ -20,41 +20,26 @@ export function defineStaticProperty<
   Prop extends keyof T
 >(
   self: T,
-  BaseClass: Constructor | AbstractConstructor,
+  propertyName: Prop,
   {
-    propertyName,
-    defaultValue,
+    initialValue,
     strategy,
   }: {
-    propertyName: Prop
-    defaultValue: T[Prop]
+    initialValue: T[Prop]
     strategy: 'inherit' | 'define' | ((value: T[Prop]) => T[Prop])
   }
 ) {
   if (!self.hasOwnProperty(propertyName)) {
-    /**
-     * Class is inherting the base class directly and hence we don't have to
-     * copy any properties
-     */
-    if (Object.getPrototypeOf(self.prototype) === BaseClass.prototype || strategy === 'define') {
-      Object.defineProperty(self, propertyName, {
-        value: defaultValue,
-        configurable: true,
-        enumerable: true,
-        writable: true,
-      })
-      return
-    }
+    const value = self[propertyName]
 
     /**
-     * Class is inherting another parent class. We must copy the values to the self
-     * class, otherwise mutating them inside the self class will be reflected
-     * on the parent class.
+     * Define the property as it is when the strategy is set
+     * to "define". Or the value on the prototype chain
+     * is set to undefined.
      */
-    const value = self[propertyName]
-    if (value === undefined) {
+    if (strategy === 'define' || value === undefined) {
       Object.defineProperty(self, propertyName, {
-        value: defaultValue,
+        value: initialValue,
         configurable: true,
         enumerable: true,
         writable: true,

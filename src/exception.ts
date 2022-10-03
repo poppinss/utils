@@ -49,16 +49,18 @@ export class Exception extends Error {
    */
   status: number
 
-  constructor(message: string, options?: ErrorOptions & { code?: string; status?: number }) {
+  constructor(message?: string, options?: ErrorOptions & { code?: string; status?: number }) {
     super(message, options)
 
     const ErrorConstructor = this.constructor as typeof Exception
 
-    Error.captureStackTrace(this, ErrorConstructor)
+    this.message = message || ErrorConstructor.message || ''
     this.code = options?.code || ErrorConstructor.code
     this.name = ErrorConstructor.name
     this.status = options?.status || ErrorConstructor.status || 500
     this.help = ErrorConstructor.help
+
+    Error.captureStackTrace(this, ErrorConstructor)
   }
 
   [Symbol.toStringTag]() {

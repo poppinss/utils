@@ -27,9 +27,9 @@ class Base64 {
   /**
    * Base64 decode a previously encoded string or Buffer.
    */
-  decode(encode: string, encoding: BufferEncoding, strict: true): string | null
-  decode(encode: string, encoding: undefined, strict: true): string | null
-  decode(encode: string, encoding?: BufferEncoding, strict?: false): string
+  decode(encode: string, encoding: BufferEncoding, strict: true): string
+  decode(encode: string, encoding: undefined, strict: true): string
+  decode(encode: string, encoding?: BufferEncoding, strict?: false): string | null
   decode(encode: Buffer, encoding?: BufferEncoding): string
   decode(
     encoded: string | Buffer,
@@ -41,11 +41,13 @@ class Base64 {
     }
 
     const decoded = Buffer.from(encoded, 'base64').toString(encoding)
-    if (strict && this.encode(decoded, encoding) !== encoded) {
-      return null
+    const isInvalid = this.encode(decoded, encoding) !== encoded
+
+    if (strict && isInvalid) {
+      throw new Error('Cannot decode malformed value')
     }
 
-    return decoded
+    return isInvalid ? null : decoded
   }
 
   /**
@@ -61,9 +63,9 @@ class Base64 {
   /**
    * Base64 URL decode a previously encoded string or Buffer. (RFC 4648)
    */
-  urlDecode(encode: string, encoding: BufferEncoding, strict: true): string | null
-  urlDecode(encode: string, encoding: undefined, strict: true): string | null
-  urlDecode(encode: string, encoding?: BufferEncoding, strict?: false): string
+  urlDecode(encode: string, encoding: BufferEncoding, strict: true): string
+  urlDecode(encode: string, encoding: undefined, strict: true): string
+  urlDecode(encode: string, encoding?: BufferEncoding, strict?: false): string | null
   urlDecode(encode: Buffer, encoding?: BufferEncoding): string
   urlDecode(
     encoded: string | Buffer,
@@ -75,11 +77,13 @@ class Base64 {
     }
 
     const decoded = Buffer.from(encoded, 'base64').toString(encoding)
-    if (strict && this.urlEncode(decoded, encoding) !== encoded) {
-      return null
+    const isInvalid = this.urlEncode(decoded, encoding) !== encoded
+
+    if (strict && isInvalid) {
+      throw new Error('Cannot urlDecode malformed value')
     }
 
-    return decoded
+    return isInvalid ? null : decoded
   }
 }
 

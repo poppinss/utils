@@ -1,7 +1,7 @@
 /*
  * @poppinss/utils
  *
- * (c) Harminder Virk <virk@adonisjs.com>
+ * (c) Poppinss
  *
  * For the full copyright and license information, please view the LICENSE
  * file that was distributed with this source code.
@@ -178,6 +178,7 @@ test.group('Change case', () => {
   test('convert {input} to Sentence case')
     .with([
       { input: '', output: '' },
+      { input: 'getting-started-with-adonisjs', output: 'Getting started with adonisjs' },
       { input: 'test', output: 'Test' },
       { input: 'test string', output: 'Test string' },
       { input: 'Test String', output: 'Test string' },

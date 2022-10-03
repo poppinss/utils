@@ -11,22 +11,28 @@ import { test } from '@japa/runner'
 import { ObjectBuilder } from '../src/object_builder.js'
 
 test.group('ObjectBuilder', () => {
+  test('define initial value', ({ assert }) => {
+    assert.deepEqual(new ObjectBuilder({ name: 'virk' }).toObject(), {
+      name: 'virk',
+    })
+  })
+
   test('add value to the object', ({ assert }) => {
-    assert.deepEqual(new ObjectBuilder().add('name', 'virk').value, {
+    assert.deepEqual(new ObjectBuilder().add('name', 'virk').toObject(), {
       name: 'virk',
     })
   })
 
   test('ignore if value is undefined', ({ assert }) => {
-    assert.deepEqual(new ObjectBuilder().add('name', undefined).value, {})
+    assert.deepEqual(new ObjectBuilder().add('name', undefined).toObject(), {})
   })
 
   test('add null values', ({ assert }) => {
-    assert.deepEqual(new ObjectBuilder().add('name', null).value, { name: null })
+    assert.deepEqual(new ObjectBuilder().add('name', null).toObject(), { name: null })
   })
 
   test('conditionally ignore null values', ({ assert }) => {
-    assert.deepEqual(new ObjectBuilder(true).add('name', null).value, {})
+    assert.deepEqual(new ObjectBuilder({}, true).add('name', null).toObject(), {})
   })
 
   test('get existing value', ({ assert }) => {
@@ -54,6 +60,6 @@ test.group('ObjectBuilder', () => {
 
     assert.isFalse(obj.has('name'))
     assert.isFalse(obj.has('age'))
-    assert.deepEqual(obj.value, {})
+    assert.deepEqual(obj.toObject(), {})
   })
 })

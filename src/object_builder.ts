@@ -31,9 +31,10 @@
  */
 export class ObjectBuilder {
   #ignoreNull: boolean
-  value: any = {}
+  value: Record<any, any>
 
-  constructor(ignoreNull?: boolean) {
+  constructor(initialValue?: Record<any, any>, ignoreNull?: boolean) {
+    this.value = initialValue || {}
     this.#ignoreNull = ignoreNull === true ? true : false
   }
 

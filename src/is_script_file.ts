@@ -8,7 +8,7 @@
  */
 
 import { extname } from 'node:path'
-const JS_MODULES = ['.js', '.json']
+const JS_MODULES = ['.js', '.json', '.cjs', '.mjs']
 
 /**
  * Returns `true` when file ends with `.js`, `.json` or

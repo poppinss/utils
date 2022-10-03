@@ -10,7 +10,7 @@
 import { test } from '@japa/runner'
 import string from '../src/string/main.js'
 
-test('truncate', () => {
+test.group('truncate', () => {
   test('truncate a sentence', ({ assert }) => {
     assert.equal(
       string.truncate('This is a very long, maybe not that long title', 12),

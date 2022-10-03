@@ -22,36 +22,39 @@ type BufferSafeValue =
  * Compare two values to see if they are equal. The comparison is done in
  * a way to avoid timing-attacks.
  */
-export function safeEqual<T extends BufferSafeValue>(expected: T, actual: T) {
-  if (typeof expected === 'string' && typeof actual === 'string') {
+export function safeEqual<T extends BufferSafeValue, U extends BufferSafeValue>(
+  trustedValue: T,
+  userInput: U
+): boolean {
+  if (typeof trustedValue === 'string' && typeof userInput === 'string') {
     /**
      * The length of the comparison value.
      */
-    const expectedLength = Buffer.byteLength(expected)
+    const trustedLength = Buffer.byteLength(trustedValue)
 
     /**
      * Expected value
      */
-    const expectedValueBuffer = Buffer.alloc(expectedLength, 0, 'utf-8')
-    expectedValueBuffer.write(expected)
+    const trustedValueBuffer = Buffer.alloc(trustedLength, 0, 'utf-8')
+    trustedValueBuffer.write(trustedValue)
 
     /**
      * Actual value (taken from user input)
      */
-    const actualValueBuffer = Buffer.alloc(expectedLength, 0, 'utf-8')
-    actualValueBuffer.write(actual)
+    const userValueBuffer = Buffer.alloc(trustedLength, 0, 'utf-8')
+    userValueBuffer.write(userInput)
 
     /**
      * Ensure values are same and also have same length
      */
     return (
-      timingSafeEqual(expectedValueBuffer, actualValueBuffer) &&
-      expectedLength === Buffer.byteLength(actual)
+      timingSafeEqual(trustedValueBuffer, userValueBuffer) &&
+      trustedLength === Buffer.byteLength(userInput)
     )
   }
 
   return timingSafeEqual(
-    Buffer.from(expected as ArrayBuffer | SharedArrayBuffer),
-    Buffer.from(actual as ArrayBuffer | SharedArrayBuffer)
+    Buffer.from(trustedValue as ArrayBuffer | SharedArrayBuffer),
+    Buffer.from(userInput as ArrayBuffer | SharedArrayBuffer)
   )
 }

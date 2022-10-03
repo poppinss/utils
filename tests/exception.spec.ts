@@ -104,15 +104,20 @@ test.group('Exception', () => {
   test('set error cause', ({ assert }) => {
     class UserNotFound extends Exception {
       static message = 'Unable to find user'
-      static status = 404
-      static code = 'E_USER_NOT_FOUND'
-      static help = 'Make sure the user exists in the table'
     }
 
-    const error = new UserNotFound(UserNotFound.message)
+    const error = new UserNotFound(UserNotFound.message, { cause: new Error('foo') })
     assert.equal(error.message, 'Unable to find user')
-    assert.equal(error.status, 404)
-    assert.equal(error.code, 'E_USER_NOT_FOUND')
-    assert.equal(error.help, 'Make sure the user exists in the table')
+    assert.equal((error.cause as any).message, 'foo')
+  })
+
+  test('create error without runtime error message', ({ assert }) => {
+    class UserNotFound extends Exception {
+      static message = 'Unable to find user'
+    }
+
+    const error = new UserNotFound()
+    assert.equal(error.message, 'Unable to find user')
+    assert.match(error.stack!, /UserNotFound: Unable to find user/)
   })
 })

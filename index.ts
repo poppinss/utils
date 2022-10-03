@@ -15,6 +15,7 @@ export { compose } from './src/compose.js'
 export { defineStaticProperty } from './src/define_static_property.js'
 export { Exception } from './src/exception.js'
 export { flatten } from './src/flatten.js'
+export { fsImportAll } from './src/fs_import_all.js'
 export { fsReadAll } from './src/fs_read_all.js'
 export { isScriptFile } from './src/is_script_file.js'
 export { MessageBuilder } from './src/message_builder.js'
@@ -26,13 +27,13 @@ export { slash } from './src/slash.js'
 /**
  * Get dirname for a given file path URL
  */
-export function dirname(url: string | URL) {
-  return pathDirname(filename(url))
+export function getDirname(url: string | URL) {
+  return pathDirname(getFilename(url))
 }
 
 /**
  * Get filename for a given file path URL
  */
-export function filename(url: string | URL) {
+export function getFilename(url: string | URL) {
   return fileURLToPath(url)
 }

@@ -8,8 +8,8 @@
  */
 
 import { join } from 'node:path'
-import { fileURLToPath } from 'node:url'
 import { readdir, stat } from 'node:fs/promises'
+import { fileURLToPath, pathToFileURL } from 'node:url'
 
 import { slash } from './slash.js'
 import { naturalSort } from './natural_sort.js'
@@ -46,9 +46,23 @@ async function readFiles(
     return
   }
 
-  options.absolute
-    ? files.push(options.unixPaths ? slash(location) : location)
-    : files.push(options.unixPaths ? slash(relativePath) : relativePath)
+  switch (options.pathType) {
+    case 'relative':
+    default:
+      files.push(relativePath)
+      break
+    case 'absolute':
+      files.push(location)
+      break
+    case 'unixRelative':
+      files.push(slash(relativePath))
+      break
+    case 'unixAbsolute':
+      files.push(slash(location))
+      break
+    case 'url':
+      files.push(pathToFileURL(location).href)
+  }
 }
 
 /**
@@ -75,6 +89,20 @@ export async function fsReadAll(
   const normalizedLocation = typeof location === 'string' ? location : fileURLToPath(location)
   const normalizedOptions = Object.assign({ absolute: false, sort: naturalSort }, options)
   const files: string[] = []
+
+  /**
+   * Check to see if the root directory exists and ignore
+   * error when "ignoreMissingRoot" is set to true
+   */
+  try {
+    await stat(normalizedLocation)
+  } catch (error) {
+    if (normalizedOptions.ignoreMissingRoot) {
+      return []
+    }
+
+    throw error
+  }
 
   await readFiles(normalizedLocation, files, normalizedOptions, '')
 

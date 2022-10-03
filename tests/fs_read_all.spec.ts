@@ -11,12 +11,12 @@ import { join } from 'node:path'
 import { test } from '@japa/runner'
 import { ensureDir, remove, outputFile } from 'fs-extra'
 
-import { dirname } from '../index.js'
+import { getDirname } from '../index.js'
 import { slash } from '../src/slash.js'
 import { fsReadAll } from '../src/fs_read_all.js'
 import { normalize } from '../test_helpers/index.js'
 
-const BASE_PATH = join(dirname(import.meta.url), 'app')
+const BASE_PATH = join(getDirname(import.meta.url), 'app')
 
 test.group('FS read all | relative paths', (group) => {
   group.each.setup(async () => {
@@ -118,7 +118,7 @@ test.group('FS read all | relative paths', (group) => {
     await outputFile(join(BASE_PATH, 'config/config.js'), '')
     await outputFile(join(BASE_PATH, 'config/main.json'), '')
 
-    const files = await fsReadAll(BASE_PATH, { unixPaths: true })
+    const files = await fsReadAll(BASE_PATH, { pathType: 'unixRelative' })
 
     expectTypeOf(files).toEqualTypeOf<string[]>()
     assert.deepEqual(files, ['app.ts', 'app/server.ts', 'config/config.js', 'config/main.json'])
@@ -138,7 +138,7 @@ test.group('FS read all | absolute paths', (group) => {
     await outputFile(join(BASE_PATH, 'main.json'), '')
 
     const files = await fsReadAll(BASE_PATH, {
-      absolute: true,
+      pathType: 'absolute',
     })
 
     expectTypeOf(files).toEqualTypeOf<string[]>()
@@ -157,7 +157,7 @@ test.group('FS read all | absolute paths', (group) => {
     await outputFile(join(BASE_PATH, 'config/main.json'), '')
 
     const files = await fsReadAll(BASE_PATH, {
-      absolute: true,
+      pathType: 'absolute',
     })
 
     expectTypeOf(files).toEqualTypeOf<string[]>()
@@ -179,7 +179,7 @@ test.group('FS read all | absolute paths', (group) => {
     await outputFile(join(BASE_PATH, 'config/main.json'), '')
 
     const files = await fsReadAll(BASE_PATH, {
-      absolute: true,
+      pathType: 'absolute',
     })
 
     expectTypeOf(files).toEqualTypeOf<string[]>()
@@ -201,7 +201,7 @@ test.group('FS read all | absolute paths', (group) => {
     await outputFile(join(BASE_PATH, 'config/main.json'), '')
 
     const files = await fsReadAll(BASE_PATH, {
-      absolute: true,
+      pathType: 'absolute',
       filter: (filePath) => filePath.endsWith('.ts'),
     })
 
@@ -222,7 +222,7 @@ test.group('FS read all | absolute paths', (group) => {
     await outputFile(join(BASE_PATH, 'config/main.json'), '')
 
     const files = await fsReadAll(BASE_PATH, {
-      absolute: true,
+      pathType: 'absolute',
       sort: (current, next) => {
         if (next < current) {
           return -1
@@ -248,8 +248,7 @@ test.group('FS read all | absolute paths', (group) => {
     await outputFile(join(BASE_PATH, 'config/main.json'), '')
 
     const files = await fsReadAll(BASE_PATH, {
-      absolute: true,
-      unixPaths: true,
+      pathType: 'unixAbsolute',
     })
 
     expectTypeOf(files).toEqualTypeOf<string[]>()

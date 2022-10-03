@@ -7,8 +7,6 @@
  * file that was distributed with this source code.
  */
 
-import { encode, decode, escape, unescape } from 'he'
-
 import bytes from './bytes.js'
 import seconds from './seconds.js'
 import { slug } from './slugify.js'
@@ -58,10 +56,6 @@ export default {
   sentenceCase,
   snakeCase,
   titleCase,
-  encode,
-  decode,
-  escape,
-  unescape,
   random,
   toSentence,
   condenseWhitespace,

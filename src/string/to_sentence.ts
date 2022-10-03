@@ -33,7 +33,7 @@ export function toSentence(
   }
 
   /**
-   * Giving some love to two items, so that one can use oxford comma's
+   * Giving some love to two items, so that one can ditch comma with two items
    */
   if (values.length === 2) {
     return `${values[0]}${options?.pairSeparator || ' and '}${values[1]}`

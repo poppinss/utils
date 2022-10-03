@@ -7,11 +7,21 @@
  * file that was distributed with this source code.
  */
 
-export type ReadAllFilesOptions = {
+type ScanFsBaseOptions = {
+  ignoreMissingRoot?: boolean
   filter?: (filePath: string, index: number) => boolean
   sort?: (current: string, next: string) => number
-  absolute?: boolean
-  unixPaths?: boolean
+}
+
+export type ImportAllFilesOptions = ScanFsBaseOptions & {
+  /**
+   * A custom method to transform collection keys
+   */
+  transformKeys?: (keys: string[]) => string[]
+}
+
+export type ReadAllFilesOptions = ScanFsBaseOptions & {
+  pathType?: 'relative' | 'unixRelative' | 'absolute' | 'unixAbsolute' | 'url'
 }
 
 export type JSONReplacer = (this: any, key: string, value: any) => any

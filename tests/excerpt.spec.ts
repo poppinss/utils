@@ -10,7 +10,7 @@
 import { test } from '@japa/runner'
 import string from '../src/string/main.js'
 
-test('excerpt', () => {
+test.group('excerpt', () => {
   test('generate excerpt by stripping html', ({ assert }) => {
     assert.equal(
       string.excerpt('<p>This is a <strong>very long</strong>, maybe not that long title</p>', 12),

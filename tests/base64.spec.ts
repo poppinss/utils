@@ -41,7 +41,7 @@ test.group('Base 64 | encode', () => {
   })
 })
 
-test.group('Base 64 | urlDecode', () => {
+test.group('Base 64 | decode', () => {
   test('decode as binary value', ({ assert }) => {
     assert.equal(base64.urlDecode(base64UrlEncodedString, 'binary'), binaryData)
     assert.equal(base64.decode(base64String, 'binary'), binaryData)
@@ -60,15 +60,15 @@ test.group('Base 64 | urlDecode', () => {
     assert.equal(base64.decode(base64.encode(value)), value)
   })
 
-  test('return corrupt value when unable to decode (strict: false)', ({ assert }) => {
+  test('return null when unable to decode value (strict: false)', ({ assert }) => {
     const value = 'hello+world'
-    assert.isNotNull(base64.urlDecode(value, 'utf-8'))
-    assert.isNotNull(base64.decode(value, 'utf-8'))
+    assert.isNull(base64.urlDecode(value, 'utf-8'))
+    assert.isNull(base64.decode(value, 'utf-8'))
   })
 
-  test('return null value when unable to decode (strict: true)', ({ assert }) => {
+  test('throw error when unable to decode value (strict: true)', ({ assert }) => {
     const value = 'hello+world'
-    assert.isNull(base64.urlDecode(value, 'utf-8', true))
-    assert.isNull(base64.decode(value, 'utf-8', true))
+    assert.throws(() => base64.urlDecode(value, 'utf-8', true), 'Cannot urlDecode malformed value')
+    assert.throws(() => base64.decode(value, 'utf-8', true), 'Cannot decode malformed value')
   })
 })
