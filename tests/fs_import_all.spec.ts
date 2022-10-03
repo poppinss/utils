@@ -17,6 +17,8 @@ import { fsImportAll } from '../src/fs_import_all.js'
 const BASE_PATH = join(getDirname(import.meta.url), 'app')
 
 test.group('importAll', (group) => {
+  group.tap((t) => t.skip(import.meta.url.endsWith('.js'), 'Need ts-node'))
+
   group.each.setup(async () => {
     await ensureDir(BASE_PATH)
     return () => remove(BASE_PATH)
