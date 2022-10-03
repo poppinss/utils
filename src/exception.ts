@@ -21,10 +21,10 @@ export class Exception extends Error {
    * Static properties to defined on the exception once
    * and then re-use them
    */
-  static help?: string
-  static code?: string
-  static status?: number
-  static message?: string
+  declare static help?: string
+  declare static code?: string
+  declare static status?: number
+  declare static message?: string
 
   /**
    * Name of the class that raised the exception.
@@ -35,13 +35,13 @@ export class Exception extends Error {
    * Optional help description for the error. You can use it to define additional
    * human readable information for the error.
    */
-  help?: string
+  declare help?: string
 
   /**
    * A machine readable error code. This will allow the error handling logic
    * to narrow down exceptions based upon the error code.
    */
-  code?: string
+  declare code?: string
 
   /**
    * A status code for the error. Usually helpful when converting errors
@@ -54,11 +54,19 @@ export class Exception extends Error {
 
     const ErrorConstructor = this.constructor as typeof Exception
 
-    this.message = message || ErrorConstructor.message || ''
-    this.code = options?.code || ErrorConstructor.code
     this.name = ErrorConstructor.name
+    this.message = message || ErrorConstructor.message || ''
     this.status = options?.status || ErrorConstructor.status || 500
-    this.help = ErrorConstructor.help
+
+    const code = options?.code || ErrorConstructor.code
+    if (code !== undefined) {
+      this.code = code
+    }
+
+    const help = ErrorConstructor.help
+    if (help !== undefined) {
+      this.help = help
+    }
 
     Error.captureStackTrace(this, ErrorConstructor)
   }
