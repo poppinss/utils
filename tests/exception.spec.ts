@@ -39,6 +39,7 @@ test.group('Exception', () => {
     try {
       throw new Exception('Some message')
     } catch (error) {
+      console.log(error.stack.split(EOL))
       assert.match(error.stack.split(EOL)[1], new RegExp(import.meta.url))
     }
   })
@@ -54,6 +55,7 @@ test.group('Exception', () => {
     try {
       throw new UserNotFound(UserNotFound.message)
     } catch (error) {
+      console.log(error.stack.split(EOL))
       assert.match(error.stack.split(EOL)[1], new RegExp(import.meta.url))
     }
   })
@@ -69,6 +71,7 @@ test.group('Exception', () => {
     try {
       throw new UserNotFound(UserNotFound.message)
     } catch (error) {
+      console.log(error.stack.split(EOL))
       assert.match(error.stack.split(EOL)[1], new RegExp(import.meta.url))
     }
   })
