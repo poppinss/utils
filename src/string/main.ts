@@ -15,7 +15,7 @@ import { excerpt } from './excerpt.js'
 import { ordinal } from './ordinal.js'
 import { truncate } from './truncate.js'
 import milliseconds from './milliseconds.js'
-import { toSentence } from './to_sentence.js'
+import { sentence } from './sentence.js'
 import { interpolate } from './interpolate.js'
 import { plural, pluralize, singular, isPlural, isSingular } from './pluralize.js'
 import {
@@ -57,7 +57,7 @@ const string = {
   snakeCase,
   titleCase,
   random,
-  toSentence,
+  sentence,
   condenseWhitespace,
   seconds,
   milliseconds,

@@ -10,7 +10,7 @@
 /**
  * Convert an array of values to a sentence.
  */
-export function toSentence(
+export function sentence(
   values: any[],
   options?: {
     separator?: string
