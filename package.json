@@ -1,6 +1,6 @@
 {
 	"name": "@poppinss/utils",
-	"version": "5.0.0",
+	"version": "6.0.0-0",
 	"description": "Handy utilities for repetitive work",
 	"main": "build/index.js",
 	"type": "module",
@@ -14,9 +14,9 @@
 	"exports": {
 		".": "./build/index.js",
 		"./lodash": {
-      "types": "./lodash/lodash.types.d.ts",
-      "node": "./build/lodash/main.cjs"
-    },
+			"types": "./lodash/lodash.types.d.ts",
+			"node": "./build/lodash/main.cjs"
+		},
 		"./string": "./build/src/string/main.js",
 		"./json": "./build/src/json/main.js",
 		"./types": "./build/src/types.js"
