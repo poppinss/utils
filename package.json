@@ -1,6 +1,6 @@
 {
 	"name": "@poppinss/utils",
-	"version": "6.0.0-0",
+	"version": "6.0.0-1",
 	"description": "Handy utilities for repetitive work",
 	"main": "build/index.js",
 	"type": "module",
