@@ -10,7 +10,9 @@
 import { safeParse } from './safe_parse.js'
 import { safeStringify } from './safe_stringify.js'
 
-export default {
+const json = {
   safeParse,
   safeStringify,
 }
+
+export default json

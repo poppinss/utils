@@ -37,7 +37,7 @@ function condenseWhitespace(value: string): string {
   return value.trim().replace(/\s{2,}/g, ' ')
 }
 
-export default {
+const string = {
   excerpt,
   truncate,
   slug,
@@ -64,3 +64,5 @@ export default {
   bytes,
   ordinal,
 }
+
+export default string
