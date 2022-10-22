@@ -7,13 +7,6 @@
  * file that was distributed with this source code.
  */
 
-function uncurryThis(fn: any) {
-  return function (...args: any[]) {
-    return Function.call.apply(fn, args)
-  }
-}
-const hasOwnProperty = uncurryThis(Object.prototype.hasOwnProperty)
-
 /**
  * Parses prop
  */
@@ -24,7 +17,7 @@ function parseProp(data: any, key: string) {
       return
     }
     const token = tokens.shift()!
-    data = hasOwnProperty(data, token) ? data[token] : undefined
+    data = Object.hasOwn(data, token) ? data[token] : undefined
   }
   return data
 }

@@ -7,6 +7,7 @@
  * file that was distributed with this source code.
  */
 
+// @ts-expect-error (Package has no types)
 import truncatise from 'truncatise'
 
 /**

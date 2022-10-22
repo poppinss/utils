@@ -43,7 +43,7 @@ export class MessageBuilder {
    */
   build(message: any, expiresIn?: string | number, purpose?: string): string {
     const expiryDate = this.#getExpiryDate(expiresIn)
-    return json.safeStringify({ message, purpose, expiryDate })
+    return json.safeStringify({ message, purpose, expiryDate })!
   }
 
   /**
