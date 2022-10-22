@@ -15,6 +15,7 @@
     "allowSyntheticDefaultImports": true,
     "forceConsistentCasingInFileNames": true,
     "noImplicitAny": false,
+    "strictBindCallApply": true,
     "strictFunctionTypes": true,
     "noImplicitThis": true,
     "skipLibCheck": true,
