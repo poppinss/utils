@@ -71,4 +71,9 @@ test.group('Base 64 | decode', () => {
     assert.throws(() => base64.urlDecode(value, 'utf-8', true), 'Cannot urlDecode malformed value')
     assert.throws(() => base64.decode(value, 'utf-8', true), 'Cannot decode malformed value')
   })
+
+  test('decode a buffer', ({ assert }) => {
+    assert.equal(base64.urlDecode(Buffer.from('hello world'), 'utf-8'), 'hello world')
+    assert.equal(base64.decode(Buffer.from('hello world'), 'utf-8'), 'hello world')
+  })
 })

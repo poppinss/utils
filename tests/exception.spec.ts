@@ -119,4 +119,30 @@ test.group('Exception', () => {
     assert.equal(error.message, 'Unable to find user')
     assert.match(error.stack!, /UserNotFound: Unable to find user/)
   })
+
+  test('Convert error to string', ({ assert }) => {
+    class UserNotFound extends Exception {
+      static message = 'Unable to find user'
+    }
+
+    const error = new UserNotFound()
+    assert.equal(error.toString(), 'UserNotFound: Unable to find user')
+
+    const errorWithCode = new UserNotFound(UserNotFound.message, { code: 'E_USER_NOT_FOUND' })
+    assert.equal(errorWithCode.toString(), 'UserNotFound [E_USER_NOT_FOUND]: Unable to find user')
+  })
+
+  test('get class string name', ({ assert }) => {
+    class UserNotFound extends Exception {
+      static message = 'Unable to find user'
+    }
+
+    const error = new UserNotFound()
+    assert.equal(Object.prototype.toString.call(error), '[object UserNotFound]')
+  })
+
+  test('raise exception with empty message', ({ assert }) => {
+    const error = new Exception()
+    assert.equal(error.message, '')
+  })
 })

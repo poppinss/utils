@@ -24,7 +24,7 @@ export default {
     }
 
     const milliseconds = parse(duration)
-    if (!milliseconds) {
+    if (milliseconds === undefined) {
       throw new Error(`Invalid duration expression "${duration}"`)
     }
 

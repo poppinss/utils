@@ -46,9 +46,9 @@ async function readFiles(
     return
   }
 
-  switch (options.pathType) {
+  const pathType = options.pathType || 'relative'
+  switch (pathType) {
     case 'relative':
-    default:
       files.push(relativePath)
       break
     case 'absolute':

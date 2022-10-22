@@ -14,6 +14,10 @@ test.group('Ordinal', () => {
   test('ordinalize a value', ({ assert }) => {
     assert.equal(string.ordinal(1), '1st')
     assert.equal(string.ordinal(2), '2nd')
+    assert.equal(string.ordinal(3), '3rd')
+    assert.equal(string.ordinal('1'), '1st')
+    assert.equal(string.ordinal('2'), '2nd')
+    assert.equal(string.ordinal('3'), '3rd')
     assert.equal(string.ordinal(84), '84th')
     assert.equal(string.ordinal(0), '0th')
     assert.equal(string.ordinal(10), '10th')

@@ -203,11 +203,15 @@ test.group('Define static property', () => {
       }
     }
 
+    Base.hooks = {
+      before: new Set(['1']),
+      after: new Set(['2']),
+    }
     class Main extends Base {}
     Main.boot()
 
-    assert.deepEqual(Main.hooks.before, new Set())
-    assert.deepEqual(Main.hooks.after, new Set())
+    assert.deepEqual(Main.hooks.before, new Set(['1']))
+    assert.deepEqual(Main.hooks.after, new Set(['2']))
   })
 
   test('allow inheritance with abstract base class', ({ assert }) => {

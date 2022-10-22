@@ -40,6 +40,10 @@ test.group('String helpers', () => {
     assert.equal(string.milliseconds.parse(60), 60)
   })
 
+  test('raise error when milliseconds expression is invalid', ({ assert }) => {
+    assert.throws(() => string.milliseconds.parse('1 o'), 'Invalid duration expression "1 o"')
+  })
+
   test('format milliseconds to pretty time string expression', ({ assert }) => {
     assert.equal(string.milliseconds.format(3.6e6), '1h')
     assert.equal(string.milliseconds.format(3.6e6, true), '1 hour')
@@ -48,6 +52,10 @@ test.group('String helpers', () => {
   test('convert time expression to seconds', ({ assert }) => {
     assert.equal(string.seconds.parse('10 hour'), 36000)
     assert.equal(string.seconds.parse(60), 60)
+  })
+
+  test('raise error when seconds expression is invalid', ({ assert }) => {
+    assert.throws(() => string.seconds.parse('1 o'), 'Invalid duration expression "1 o"')
   })
 
   test('format seconds to pretty time string expression', ({ assert }) => {

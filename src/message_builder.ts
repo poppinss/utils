@@ -34,12 +34,8 @@ export class MessageBuilder {
       return false
     }
 
-    try {
-      const expiryDate = new Date(message.expiryDate)
-      return Number.isNaN(expiryDate.getTime()) || expiryDate < new Date()
-    } catch (error) {
-      return true
-    }
+    const expiryDate = new Date(message.expiryDate)
+    return Number.isNaN(expiryDate.getTime()) || expiryDate < new Date()
   }
 
   /**
@@ -57,10 +53,9 @@ export class MessageBuilder {
     const parsed = json.safeParse(message)
 
     /**
-     * Safe parse returns the value as it is when unable to JSON.parse it. However, in
-     * our case if value was correctly parsed, it should never match the input
+     * After JSON.parse we do not receive a valid object
      */
-    if (parsed === message) {
+    if (typeof parsed !== 'object' || !parsed) {
       return null
     }
 

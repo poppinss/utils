@@ -61,6 +61,16 @@ test.group('MessageBuilder | verify', () => {
     assert.equal(message.verify(message.build(22)), 22)
   })
 
+  test('return null when message is invalid', ({ assert }) => {
+    const message = new MessageBuilder()
+    assert.isNull(message.verify('"hello"'))
+  })
+
+  test('return null when message property is missing', ({ assert }) => {
+    const message = new MessageBuilder()
+    assert.isNull(message.verify(JSON.stringify({})))
+  })
+
   test('return null when purpose was defined during build, but not verify', ({ assert }) => {
     const message = new MessageBuilder()
     assert.isNull(message.verify(message.build(22, undefined, 'login')))

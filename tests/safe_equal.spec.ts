@@ -36,4 +36,15 @@ test.group('safeEqual | not equals', () => {
   test('return false when actual value is a subset of expected value', ({ assert }) => {
     assert.isFalse(safeEqual('prefix', 'pre'))
   })
+
+  test('compare two buffers', ({ assert }) => {
+    assert.isTrue(safeEqual(Buffer.from('hello'), Buffer.from('hello')))
+  })
+
+  test('raise error any buffer has less bytes', ({ assert }) => {
+    assert.throws(
+      () => safeEqual(Buffer.from('llo'), Buffer.from('hello')),
+      'Input buffers must have the same byte length'
+    )
+  })
 })

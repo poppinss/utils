@@ -45,6 +45,27 @@ test.group('importAll', (group) => {
     })
   })
 
+  test('import script files from a URL', async ({ assert }) => {
+    await outputFile(
+      join(BASE_PATH, 'app.ts'),
+      `export default {
+      loaded: true
+    }`
+    )
+
+    await outputFile(join(BASE_PATH, 'server.ts'), 'export const loaded = true')
+    await outputFile(join(BASE_PATH, 'config.cjs'), 'module.exports = { loaded: true }')
+    await outputFile(join(BASE_PATH, 'main.json'), '{ "loaded": true }')
+
+    const collection = await fsImportAll(new URL('./app', import.meta.url))
+    assert.deepEqual(collection, {
+      app: { loaded: true },
+      server: { loaded: true },
+      config: { loaded: true },
+      main: { loaded: true },
+    })
+  })
+
   test('import files recursively', async ({ assert }) => {
     await outputFile(
       join(BASE_PATH, 'ts/app.ts'),

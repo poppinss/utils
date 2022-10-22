@@ -36,6 +36,18 @@ test.group('FS read all | relative paths', (group) => {
     assert.deepEqual(files, ['app.ts', 'config.js', 'main.json', 'server.ts'].map(normalize))
   })
 
+  test('get a list of all files from a URL', async ({ assert, expectTypeOf }) => {
+    await outputFile(join(BASE_PATH, 'app.ts'), '')
+    await outputFile(join(BASE_PATH, 'server.ts'), '')
+    await outputFile(join(BASE_PATH, 'config.js'), '')
+    await outputFile(join(BASE_PATH, 'main.json'), '')
+
+    const files = await fsReadAll(new URL('./app', import.meta.url))
+
+    expectTypeOf(files).toEqualTypeOf<string[]>()
+    assert.deepEqual(files, ['app.ts', 'config.js', 'main.json', 'server.ts'].map(normalize))
+  })
+
   test('recursively get a list of all files from a directory', async ({ assert, expectTypeOf }) => {
     await outputFile(join(BASE_PATH, 'app.ts'), '')
     await outputFile(join(BASE_PATH, 'app/server.ts'), '')

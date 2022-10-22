@@ -71,7 +71,7 @@ export class Exception extends Error {
     Error.captureStackTrace(this, ErrorConstructor)
   }
 
-  [Symbol.toStringTag]() {
+  get [Symbol.toStringTag]() {
     return this.constructor.name
   }
 

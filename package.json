@@ -23,7 +23,7 @@
 	},
 	"scripts": {
 		"pretest": "npm run lint",
-		"test": "npm run build:lodash && npm run vscode:test",
+		"test": "npm run build:lodash && c8 npm run vscode:test",
 		"build:lodash": "lodash include=\"pick,omit,has,get,set,unset,mergeWith,merge,size,clone,cloneDeep,toPath\" --production && move-file ./lodash.custom.min.js build/lodash/main.cjs",
 		"vscode:test": "node --loader=ts-node/esm bin/test.ts",
 		"clean": "del-cli build",
@@ -36,6 +36,10 @@
 		"format": "prettier --write .",
 		"sync-labels": "github-label-sync --labels .github/labels.json poppinss/utils"
 	},
+  "c8": {
+    "reporter": ["text", "html"],
+    "exclude": ["**/build/lodash/**", "tests/**"]
+  },
 	"keywords": [
 		"toolkit",
 		"utilities"
@@ -53,6 +57,7 @@
 		"@swc/core": "^1.3.10",
 		"@types/fs-extra": "^9.0.13",
 		"@types/node": "^18.11.3",
+		"c8": "^7.12.0",
 		"del-cli": "^5.0.0",
 		"eslint": "^8.26.0",
 		"eslint-config-prettier": "^8.5.0",
