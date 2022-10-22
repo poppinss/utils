@@ -2,10 +2,9 @@
 
 > A toolkit of utilities used across all the AdonisJS, Edge, and Japa packages
 
-
 [![gh-workflow-image]][gh-workflow-url] [![typescript-image]][typescript-url] [![npm-image]][npm-url] [![license-image]][license-url] [![synk-image]][synk-url]
 
-## Why this package exists? 
+## Why this package exists?
 
 Many of my open source projects (including AdonisJS) use many single-purpose utility packages from npm. Over the years, I have faced the following challenges when using these packages.
 
@@ -20,19 +19,21 @@ Many of my open source projects (including AdonisJS) use many single-purpose uti
 > **Warning**: This package is not for general use (outside the AdonisJS ecosystem). I will not add new helpers or remove any to cater to a broader audience.
 
 ## Other packages to use
+
 A note to self and others to consider the following packages.
 
-| Package | Description |
-|---------|-------------|
-| [he](https://www.npmjs.com/package/he) | For escaping HTML entities and encoding unicode symbols. Has zero dependencies |
-| [@sindresorhus/is](https://www.npmjs.com/package/@sindresorhus/is) | For advanced type checking. Has zero dependencies |
+| Package                                                            | Description                                                                    |
+| ------------------------------------------------------------------ | ------------------------------------------------------------------------------ |
+| [he](https://www.npmjs.com/package/he)                             | For escaping HTML entities and encoding unicode symbols. Has zero dependencies |
+| [@sindresorhus/is](https://www.npmjs.com/package/@sindresorhus/is) | For advanced type checking. Has zero dependencies                              |
 
 ## Package size
+
 Even though I do not care much about the package size (most of work is consumed on server side), I am mindful around the utilities and ensure not end up using really big packages for smaller use-cases.
 
-|                 |                 |
-|------------------|-----------------|
-| Source code size | `272K` (approx) |
+|                   |                 |
+| ----------------- | --------------- |
+| Source code size  | `272K` (approx) |
 | Dependencies size | `432K` (approx) |
 
 ## Installation
@@ -83,14 +84,15 @@ console.log(string.excerpt(html, 70))
 // AdonisJS is a Node.js framework, and hence it requires Node.js to be i...
 ```
 
-| Argument | Type | Description |
-|---------|------|---------------|
-| `sentence` | string | The value for which to generate excerpt |
-| `charactersLimit` | string | The number of characters to keep |
-| `options.completeWords` | boolean | When set to `true`, the truncation will happen only after complete words. This option might go over the defined characters limit
-| `options.suffix` | string | The value to append after the truncated string. Defaults to three dots `...` |
+| Argument                | Type    | Description                                                                                                                      |
+| ----------------------- | ------- | -------------------------------------------------------------------------------------------------------------------------------- |
+| `sentence`              | string  | The value for which to generate excerpt                                                                                          |
+| `charactersLimit`       | string  | The number of characters to keep                                                                                                 |
+| `options.completeWords` | boolean | When set to `true`, the truncation will happen only after complete words. This option might go over the defined characters limit |
+| `options.suffix`        | string  | The value to append after the truncated string. Defaults to three dots `...`                                                     |
 
 #### truncate
+
 Truncate a string value to a certain length. The method is the same as the `excerpt` method but does not remove any HTML tags. It is a great fit when you are truncating a non-HTML string.
 
 ```ts
@@ -100,17 +102,18 @@ console.log(string.truncate(text, 70))
 // AdonisJS is a Node.js framework, and hence it requires Node.js to be i...
 ```
 
-| Argument | Type | Description |
-|---------|------|---------------|
-| `sentence` | string | The value to truncate |
-| `charactersLimit` | string | The number of characters to keep |
-| `options.completeWords` | boolean | When set to `true`, the truncation will happen only after complete words. This option might go over the defined characters limit
-| `options.suffix` | string | The value to append after the truncated string. Defaults to three dots `...` |
+| Argument                | Type    | Description                                                                                                                      |
+| ----------------------- | ------- | -------------------------------------------------------------------------------------------------------------------------------- |
+| `sentence`              | string  | The value to truncate                                                                                                            |
+| `charactersLimit`       | string  | The number of characters to keep                                                                                                 |
+| `options.completeWords` | boolean | When set to `true`, the truncation will happen only after complete words. This option might go over the defined characters limit |
+| `options.suffix`        | string  | The value to append after the truncated string. Defaults to three dots `...`                                                     |
 
 #### slug
+
 Generate slug for a string value. The method is exported directly from the [slugify](https://www.npmjs.com/package/slugify) package.
 
-Please check the package documentation for [available options](https://www.npmjs.com/package/slugify#options). 
+Please check the package documentation for [available options](https://www.npmjs.com/package/slugify#options).
 
 ```ts
 console.log(string.slug('hello ♥ world'))
@@ -127,13 +130,11 @@ console.log(string.slug('unicode ♥ is ☢'))
 ```
 
 #### interpolate
+
 Interpolate variables inside a string. The variables must be inside double curly braces.
 
 ```ts
-string.interpolate(
-  'hello {{ user.username }}',
-  { user: { username: 'virk' } }
-)
+string.interpolate('hello {{ user.username }}', { user: { username: 'virk' } })
 
 // hello virk
 ```
@@ -141,10 +142,7 @@ string.interpolate(
 You can also replace array values by mentioning the array index.
 
 ```ts
-string.interpolate(
-  'hello {{ users.0 }}',
-  { users: ['virk'] }
-)
+string.interpolate('hello {{ users.0 }}', { users: ['virk'] })
 
 // hello virk
 ```
@@ -158,6 +156,7 @@ string.interpolate('hello \\{{ users.0 }}', {})
 ```
 
 #### plural
+
 Convert a word to its plural form. The method is exported directly from the [pluralize](https://www.npmjs.com/package/pluralize) package.
 
 ```ts
@@ -166,6 +165,7 @@ string.plural('test')
 ```
 
 #### singular
+
 Convert a word to its singular form. The method is exported directly from the [pluralize](https://www.npmjs.com/package/pluralize) package.
 
 ```ts
@@ -174,6 +174,7 @@ string.singular('tests')
 ```
 
 #### pluralize
+
 This method combines the `singular` and `plural` methods and uses one or the other based on the count. For example:
 
 ```ts
@@ -194,6 +195,7 @@ string.pluralize.addSingularRule(/singles$/i, 'singular')
 ```
 
 #### isPlural
+
 Find if a word is already in plural form. The method is exported directly from the [pluralize](https://www.npmjs.com/package/pluralize) package.
 
 ```ts
@@ -201,6 +203,7 @@ string.isPlural('tests') // true
 ```
 
 #### isSingular
+
 Find if a word is already in a singular form. The method is exported directly from the [pluralize](https://www.npmjs.com/package/pluralize) package.
 
 ```ts
@@ -208,6 +211,7 @@ string.isSingular('test') // true
 ```
 
 #### camelCase
+
 Convert a string value to camelcase.
 
 ```ts
@@ -216,17 +220,18 @@ string.camelCase('user_name') // userName
 
 Following are some of the conversion examples.
 
-| Input | Output |
-|------|---------|
-| 'test' | 'test' |
-| 'test string' | 'testString' |
-| 'Test String' | 'testString' |
-| 'TestV2' | 'testV2' |
-| '_foo_bar_' | 'fooBar' |
+| Input            | Output        |
+| ---------------- | ------------- |
+| 'test'           | 'test'        |
+| 'test string'    | 'testString'  |
+| 'Test String'    | 'testString'  |
+| 'TestV2'         | 'testV2'      |
+| '_foo_bar_'      | 'fooBar'      |
 | 'version 1.2.10' | 'version1210' |
 | 'version 1.21.0' | 'version1210' |
 
 #### capitalCase
+
 Convert a string value to a capital case.
 
 ```ts
@@ -235,16 +240,17 @@ string.capitalCase('helloWorld') // Hello World
 
 Following are some of the conversion examples.
 
-| Input | Output |
-|------|---------|
-| 'test' | 'Test' |
-| 'test string' | 'Test String' |
-| 'Test String' | 'Test String' |
-| 'TestV2' | 'Test V 2' |
+| Input            | Output           |
+| ---------------- | ---------------- |
+| 'test'           | 'Test'           |
+| 'test string'    | 'Test String'    |
+| 'Test String'    | 'Test String'    |
+| 'TestV2'         | 'Test V 2'       |
 | 'version 1.2.10' | 'Version 1.2.10' |
 | 'version 1.21.0' | 'Version 1.21.0' |
 
 #### dashCase
+
 Convert a string value to a dash case.
 
 ```ts
@@ -259,17 +265,18 @@ string.dashCase('helloWorld', { capitalize: true }) // Hello-World
 
 Following are some of the conversion examples.
 
-| Input | Output |
-|--------|--------|
-| 'test' | 'test' |
-| 'test string' | 'test-string' |
-| 'Test String' | 'test-string' |
-| 'Test V2' | 'test-v2' |
-| 'TestV2' | 'test-v-2' |
+| Input            | Output         |
+| ---------------- | -------------- |
+| 'test'           | 'test'         |
+| 'test string'    | 'test-string'  |
+| 'Test String'    | 'test-string'  |
+| 'Test V2'        | 'test-v2'      |
+| 'TestV2'         | 'test-v-2'     |
 | 'version 1.2.10' | 'version-1210' |
 | 'version 1.21.0' | 'version-1210' |
 
 #### dotCase
+
 Convert a string value to a dot case.
 
 ```ts
@@ -284,18 +291,19 @@ string.dotCase('helloWorld', { lowerCase: true }) // hello.world
 
 Following are some of the conversion examples.
 
-| Input | Output |
-|--------|--------|
-| 'test' | 'test' |
-| 'test string' | 'test.string' |
-| 'Test String' | 'Test.String' |
-| 'dot.case' | 'dot.case' |
-| 'path/case' | 'path.case' |
-| 'TestV2' | 'Test.V.2' |
+| Input            | Output         |
+| ---------------- | -------------- |
+| 'test'           | 'test'         |
+| 'test string'    | 'test.string'  |
+| 'Test String'    | 'Test.String'  |
+| 'dot.case'       | 'dot.case'     |
+| 'path/case'      | 'path.case'    |
+| 'TestV2'         | 'Test.V.2'     |
 | 'version 1.2.10' | 'version.1210' |
 | 'version 1.21.0' | 'version.1210' |
 
 #### noCase
+
 Remove all sorts of casing from a string value.
 
 ```ts
@@ -304,36 +312,37 @@ string.noCase('helloWorld') // hello world
 
 Following are some of the conversion examples.
 
-| Input | Output |
-|--------|--------|
-| 'test' | 'test' |
-| 'TEST' | 'test' |
-| 'testString' | 'test string' |
-| 'testString123' | 'test string123' |
-| 'testString_1_2_3' | 'test string 1 2 3' |
-| 'ID123String' | 'id123 string' |
-| 'foo bar123' | 'foo bar123' |
-| 'a1bStar' | 'a1b star' |
-| 'CONSTANT_CASE ' | 'constant case' |
-| 'CONST123_FOO' | 'const123 foo' |
-| 'FOO_bar' | 'foo bar' |
-| 'XMLHttpRequest' | 'xml http request' |
-| 'IQueryAArgs' | 'i query a args' |
-| 'dot.case' | 'dot case' |
-| 'path/case' | 'path case' |
-| 'snake_case' | 'snake case' |
-| 'snake_case123' | 'snake case123' |
-| 'snake_case_123' | 'snake case 123' |
-| '"quotes"' | 'quotes' |
-| 'version 0.45.0' | 'version 0 45 0' |
-| 'version 0..78..9' | 'version 0 78 9' |
-| 'version 4_99/4' | 'version 4 99 4' |
-| '  test  ' | 'test' |
+| Input                  | Output                 |
+| ---------------------- | ---------------------- |
+| 'test'                 | 'test'                 |
+| 'TEST'                 | 'test'                 |
+| 'testString'           | 'test string'          |
+| 'testString123'        | 'test string123'       |
+| 'testString_1_2_3'     | 'test string 1 2 3'    |
+| 'ID123String'          | 'id123 string'         |
+| 'foo bar123'           | 'foo bar123'           |
+| 'a1bStar'              | 'a1b star'             |
+| 'CONSTANT_CASE '       | 'constant case'        |
+| 'CONST123_FOO'         | 'const123 foo'         |
+| 'FOO_bar'              | 'foo bar'              |
+| 'XMLHttpRequest'       | 'xml http request'     |
+| 'IQueryAArgs'          | 'i query a args'       |
+| 'dot.case'             | 'dot case'             |
+| 'path/case'            | 'path case'            |
+| 'snake_case'           | 'snake case'           |
+| 'snake_case123'        | 'snake case123'        |
+| 'snake_case_123'       | 'snake case 123'       |
+| '"quotes"'             | 'quotes'               |
+| 'version 0.45.0'       | 'version 0 45 0'       |
+| 'version 0..78..9'     | 'version 0 78 9'       |
+| 'version 4_99/4'       | 'version 4 99 4'       |
+| ' test '               | 'test'                 |
 | 'something_2014_other' | 'something 2014 other' |
-| 'amazon s3 data' | 'amazon s3 data' |
-| 'foo_13_bar' | 'foo 13 bar' |
+| 'amazon s3 data'       | 'amazon s3 data'       |
+| 'foo_13_bar'           | 'foo 13 bar'           |
 
 #### pascalCase
+
 Convert a string value to pascal case. Great for generating JavaScript class names.
 
 ```ts
@@ -342,16 +351,17 @@ string.pascalCase('user team') // UserTeam
 
 Following are some of the conversion examples.
 
-| Input | Output |
-|--------|--------|
-| 'test' | 'Test' |
-| 'test string' | 'TestString' |
-| 'Test String' | 'TestString' |
-| 'TestV2' | 'TestV2' |
+| Input            | Output        |
+| ---------------- | ------------- |
+| 'test'           | 'Test'        |
+| 'test string'    | 'TestString'  |
+| 'Test String'    | 'TestString'  |
+| 'TestV2'         | 'TestV2'      |
 | 'version 1.2.10' | 'Version1210' |
 | 'version 1.21.0' | 'Version1210' |
 
 #### sentenceCase
+
 Convert a value to a sentence.
 
 ```ts
@@ -361,16 +371,17 @@ string.sentenceCase('getting-started-with-adonisjs')
 
 Following are some of the conversion examples.
 
-| Input | Output |
-|--------|--------|
-| 'test' | 'Test' |
-| 'test string' | 'Test string' |
-| 'Test String' | 'Test string' |
-| 'TestV2' | 'Test v2' |
+| Input            | Output           |
+| ---------------- | ---------------- |
+| 'test'           | 'Test'           |
+| 'test string'    | 'Test string'    |
+| 'Test String'    | 'Test string'    |
+| 'TestV2'         | 'Test v2'        |
 | 'version 1.2.10' | 'Version 1 2 10' |
 | 'version 1.21.0' | 'Version 1 21 0' |
 
 #### snakeCase
+
 Convert value to snake case.
 
 ```ts
@@ -379,18 +390,19 @@ string.snakeCase('user team') // user_team
 
 Following are some of the conversion examples.
 
-| Input | Output |
-|--------|--------|
-| '_id' | 'id' |
-| 'test' | 'test' |
-| 'test string' | 'test_string' |
-| 'Test String' | 'test_string' |
-| 'Test V2' | 'test_v2' |
-| 'TestV2' | 'test_v_2' |
+| Input            | Output         |
+| ---------------- | -------------- |
+| '\_id'           | 'id'           |
+| 'test'           | 'test'         |
+| 'test string'    | 'test_string'  |
+| 'Test String'    | 'test_string'  |
+| 'Test V2'        | 'test_v2'      |
+| 'TestV2'         | 'test_v_2'     |
 | 'version 1.2.10' | 'version_1210' |
 | 'version 1.21.0' | 'version_1210' |
 
 #### titleCase
+
 Convert a string value to title case.
 
 ```ts
@@ -400,20 +412,21 @@ string.titleCase('small word ends on')
 
 Following are some of the conversion examples.
 
-| Input | Output |
-|--------|--------|
-| 'one. two.' | 'One. Two.' |
-| 'a small word starts' | 'A Small Word Starts' |
-| 'small word ends on' | 'Small Word Ends On' |
-| 'we keep NASA capitalized' | 'We Keep NASA Capitalized' |
-| 'pass camelCase through' | 'Pass camelCase Through' |
+| Input                              | Output                             |
+| ---------------------------------- | ---------------------------------- |
+| 'one. two.'                        | 'One. Two.'                        |
+| 'a small word starts'              | 'A Small Word Starts'              |
+| 'small word ends on'               | 'Small Word Ends On'               |
+| 'we keep NASA capitalized'         | 'We Keep NASA Capitalized'         |
+| 'pass camelCase through'           | 'Pass camelCase Through'           |
 | 'follow step-by-step instructions' | 'Follow Step-by-Step Instructions' |
-| 'this vs. that' | 'This vs. That' |
-| 'this vs that' | 'This vs That' |
-| 'newcastle upon tyne' | 'Newcastle upon Tyne' |
-| 'newcastle \*upon\* tyne' | 'Newcastle \*upon\* Tyne' |
+| 'this vs. that'                    | 'This vs. That'                    |
+| 'this vs that'                     | 'This vs That'                     |
+| 'newcastle upon tyne'              | 'Newcastle upon Tyne'              |
+| 'newcastle \*upon\* tyne'          | 'Newcastle \*upon\* Tyne'          |
 
 #### random
+
 Generate a cryptographically secure random string of a given length. The output value is URL safe base64 encoded string.
 
 ```ts
@@ -422,7 +435,8 @@ string.random(32)
 ```
 
 #### toSentence
-Convert an array of words to a comma-separated sentence. 
+
+Convert an array of words to a comma-separated sentence.
 
 ```ts
 string.toSentence(['routes', 'controllers', 'middleware'])
@@ -433,7 +447,7 @@ You can replace the `and` with an `or` by specifying the `options.lastSeparator`
 
 ```ts
 string.toSentence(['routes', 'controllers', 'middleware'], {
-  lastSeparator: ', or '
+  lastSeparator: ', or ',
 })
 ```
 
@@ -444,12 +458,13 @@ string.toSentence(['routes', 'controllers'])
 // routes and controllers
 
 string.toSentence(['routes', 'controllers'], {
-  pairSeparator: ', and '
+  pairSeparator: ', and ',
 })
 // routes, and controllers
 ```
 
 #### condenseWhitespace
+
 Remove multiple whitespaces from a string to a single whitespace.
 
 ```ts
@@ -461,6 +476,7 @@ string.condenseWhitespace('  hello  world  ')
 ```
 
 #### ordinal
+
 Get the ordinal letter for a given number.
 
 ```ts
@@ -474,6 +490,7 @@ string.ordinal(24) // '24th'
 ```
 
 #### seconds.(parse/format)
+
 Parse a string-based time expression to seconds.
 
 ```ts
@@ -495,6 +512,7 @@ string.seconds.format(36000, true) // 10 hours
 ```
 
 #### milliseconds.(parse/format)
+
 Parse a string-based time expression to milliseconds.
 
 ```ts
@@ -516,6 +534,7 @@ string.seconds.format(3.6e6, true) // 1 hour
 ```
 
 #### bytes.(parse/format)
+
 Parse a string-based unit expression to bytes.
 
 ```ts
@@ -538,14 +557,17 @@ string.bytes.format(1024 * 1024 * 1000, { thousandsSeparator: ',' }) // 1,000MB
 ```
 
 ### JSON helpers
+
 Following are the helpers we use to `stringify` and `parse` JSON.
 
 #### safeParse
+
 The native implementation of `JSON.parse` opens up the possibility for [prototype poisoning](https://medium.com/intrinsic-blog/javascript-prototype-poisoning-vulnerabilities-in-the-wild-7bc15347c96). The `safeParse` method removes the `__proto__` and the `constructor.prototype` properties from the JSON string at the time of parsing it.
 
 The method is a wrapper over [secure-json-parse](https://github.com/fastify/secure-json-parse) package.
 
 #### safeStringify
+
 The native implementation of `JSON.stringify` cannot handle circular references or language-specific data types like `BigInt`.
 
 Therefore, we use the [safe-stable-stringify](https://github.com/BridgeAR/safe-stable-stringify) package under the hood to overcome the limitations of native implementation.
@@ -568,12 +590,13 @@ safeStringify(value)
 - The circular references are removed from the final JSON string.
 - The BigInt values are converted to a string.
 
-The `safeStringify` API is the same as the `JSON.stringify` method. 
+The `safeStringify` API is the same as the `JSON.stringify` method.
 
 - You can pass a replacer function as the second parameter.
 - And number of spaces as the third parameter.
 
 ### Lodash helpers
+
 Lodash is quite a big library, and we do not use all its helper methods. Therefore we create a custom build using the lodash CLI and bundle only the once we need.
 
 > **Why not use something else**: All other helpers I have used are not as accurate or well implemented as lodash.
@@ -582,7 +605,7 @@ Lodash is quite a big library, and we do not use all its helper methods. Therefo
 - omit
 - has
 - get
-- set 
+- set
 - unset
 - mergeWith
 - merge
@@ -600,6 +623,7 @@ lodash.pick(collection, keys)
 ```
 
 ### All other helpers
+
 The following helpers are exported from the package main module.
 
 ```ts
@@ -607,6 +631,7 @@ import { base64, compose } from '@poppinss/utils'
 ```
 
 #### base64
+
 Utility methods to base64 encode and decode values.
 
 ```ts
@@ -647,16 +672,11 @@ base64.decode('hello world', 'utf-8', true) // raises exception
 ```
 
 #### compose
+
 The `compose` helper allows you to use TypeScript class mixins with a cleaner API. Following is an example of mixins usage without the compose helper.
 
 ```ts
-class User extends UserWithAttributes(
-  UserWithAge(
-    UserWithPassword(
-      UserWithEmail(BaseModel)
-    )
-  )
-) {}
+class User extends UserWithAttributes(UserWithAge(UserWithPassword(UserWithEmail(BaseModel)))) {}
 ```
 
 Following is an example with the `compose` helper.
@@ -677,6 +697,7 @@ class User extends compose(
 ```
 
 #### defineStaticProperty
+
 The `defineStaticProperty` method allows you to define static properties on a class with different reference strategies.
 
 If you use class inheritance alongside static properties, then either, you will share properties by reference, or you will define them directly on the parent class.
@@ -722,8 +743,7 @@ class UserModel extends AppModel {
 The `defineStaticProperty` method abstracts the logic to clone and also performs some interal checks to see if the value is already defined as an `ownProperty` or not.
 
 ```ts
-class UserModel extends AppModel {
-}
+class UserModel extends AppModel {}
 
 defineStaticProperty(UserModel, 'columns', {
   strategy: 'inherit',
@@ -735,8 +755,8 @@ defineStaticProperty(UserModel, 'columns', {
 - The `define` strategy always re-defines the property, discarding any values on the parent class.
 - The `strategy` value can be function to perform a custom clone operations.
 
-
 #### Exception
+
 A custom exception class with support for defining the error status, error code, and help description. This class aims to standardize exceptions within your projects.
 
 ```ts
@@ -763,12 +783,11 @@ class ResourceNotFound extends Exception {
   static message = 'Unable to find resource with id {{ id }}'
 }
 
-throw new ResourceNotFound(
-  interpolate(ResourceNotFound.message, { id: 1 })
-)
+throw new ResourceNotFound(interpolate(ResourceNotFound.message, { id: 1 }))
 ```
 
 #### flatten
+
 Create a flat object from a nested object/array. The nested keys are combined with a dot-notation (`.`). The method is exported from the [flattie](https://www.npmjs.com/package/flattie) package.
 
 ```ts
@@ -788,10 +807,10 @@ flatten({
       f: [
         { foo: 123, bar: 123 },
         { foo: 465, bar: 456 },
-      ]
-    }
+      ],
+    },
   },
-  c: 'world'
+  c: 'world',
 })
 
 // {
@@ -812,15 +831,13 @@ flatten({
 ```
 
 #### fsReadAll
+
 Get a list of all the files from a directory. The method recursively fetches files from the main and the sub-folders. The dotfiles are ignored implicitly.
 
 ```ts
 import { fsReadAll } from '@poppinss/utils'
 
-const files = await fsReadAll(
-  new URL('./config', import.meta.url),
-  { pathType: 'url' }
-)
+const files = await fsReadAll(new URL('./config', import.meta.url), { pathType: 'url' })
 await Promise.all(files.map((file) => import(file)))
 ```
 
@@ -838,14 +855,15 @@ const options: Partial<Options> = {}
 await fsReadAll(location, options)
 ```
 
-| Argument | Type | Description |
-|---------|------|---------------|
-| `ignoreMissingRoot` | boolean | By default, an exception is raised when the root directory is missing. Setting `ignoreMissingRoot` to true will not result in an error and an empty array is returned back. |
-| `filter` | method | Define a filter to ignore certain paths. The method is called on the final list of files. |
-| `sort` | method | Define a custom method to sort file paths. By default, the files are sorted using natural sort. |
-| `pathType` | enum | Define how to return the collected paths. By default, OS-specific relative paths are returned. If you want to import the collected files, you must set the `pathType = 'url'` |
+| Argument            | Type    | Description                                                                                                                                                                   |
+| ------------------- | ------- | ----------------------------------------------------------------------------------------------------------------------------------------------------------------------------- |
+| `ignoreMissingRoot` | boolean | By default, an exception is raised when the root directory is missing. Setting `ignoreMissingRoot` to true will not result in an error and an empty array is returned back.   |
+| `filter`            | method  | Define a filter to ignore certain paths. The method is called on the final list of files.                                                                                     |
+| `sort`              | method  | Define a custom method to sort file paths. By default, the files are sorted using natural sort.                                                                               |
+| `pathType`          | enum    | Define how to return the collected paths. By default, OS-specific relative paths are returned. If you want to import the collected files, you must set the `pathType = 'url'` |
 
 #### fsImportAll
+
 The `fsImportAll` method imports all the files recursively from a given directory and set the exported value from each module on an object.
 
 ```ts
@@ -861,14 +879,15 @@ console.log(collection)
 
 The second param is the options to customize the import behavior.
 
-| Argument | Type | Description |
-|---------|------|---------------|
+| Argument            | Type    | Description                                                                                                                                                                  |
+| ------------------- | ------- | ---------------------------------------------------------------------------------------------------------------------------------------------------------------------------- |
 | `ignoreMissingRoot` | boolean | By default, an exception is raised when the root directory is missing. Setting `ignoreMissingRoot` to true will not result in an error and an empty object is returned back. |
-| `filter` | method | Define a filter to ignore certain paths. By default only files ending with `.js`, `.ts`, `.json`, `.cjs`, and `.mjs` are imported. |
-| `sort` | method | Define a custom method to sort file paths. By default, the files are sorted using natural sort. |
-| `transformKeys` | method | Define a callback method to transform the keys for the final object. The method receives an array of nested keys and must return an array back. |
+| `filter`            | method  | Define a filter to ignore certain paths. By default only files ending with `.js`, `.ts`, `.json`, `.cjs`, and `.mjs` are imported.                                           |
+| `sort`              | method  | Define a custom method to sort file paths. By default, the files are sorted using natural sort.                                                                              |
+| `transformKeys`     | method  | Define a callback method to transform the keys for the final object. The method receives an array of nested keys and must return an array back.                              |
 
 #### isScriptFile
+
 A filter to know if the file path ends with `.js`, `.json`, `.cjs`, `.mjs` or `.ts`. In the case of `.ts` files, the `.d.ts` returns false.
 
 ```ts
@@ -893,16 +912,19 @@ const options = { pathType: 'url', filter: isScriptFile }
 
 const files = await fsReadAll(dir, options)
 
-await Promise.all(files.map((file) => {
-  if (file.endsWith('.json')) {
-    return import(file, { assert: { type: 'json' } })
-  }
+await Promise.all(
+  files.map((file) => {
+    if (file.endsWith('.json')) {
+      return import(file, { assert: { type: 'json' } })
+    }
 
-  return import(file)
-}))
+    return import(file)
+  })
+)
 ```
 
 #### naturalSort
+
 A sorting function to use natural sort for ordering an array.
 
 ```ts
@@ -916,9 +938,10 @@ const values = ['1_foo_bar', '12_foo_bar'].sort(naturalSort)
 ```
 
 #### safeEqual
+
 Check if two buffer or string values are the same. This method does not leak any timing information and prevents [timing attack](https://javascript.plainenglish.io/what-are-timing-attacks-and-how-to-prevent-them-using-nodejs-158cc7e2d70c).
 
-Under the hood, this method uses Node.js [crypto.timeSafeEqual](https://nodejs.org/api/crypto.html#cryptotimingsafeequala-b) method, with support for comparing string values. *(crypto.timeSafeEqual does not support string comparison)*
+Under the hood, this method uses Node.js [crypto.timeSafeEqual](https://nodejs.org/api/crypto.html#cryptotimingsafeequala-b) method, with support for comparing string values. _(crypto.timeSafeEqual does not support string comparison)_
 
 ```ts
 import { safeEqual } from '@poppinss/utils'
@@ -941,6 +964,7 @@ if (safeEqual(trustedValue, userInput)) {
 ```
 
 #### slash
+
 Convert OS-specific file paths to Unix file paths. The method is exported directly from the [slash](https://npm.im/slash) package.
 
 ```ts
@@ -949,6 +973,7 @@ slash('foo\\bar') // foo/bar
 ```
 
 #### MessageBuilder
+
 Message builder is a convenience layer to stringify JavaScript values with an expiry date and a purpose. For example:
 
 ```ts
@@ -994,6 +1019,7 @@ const decoded = builder.verify(value, 'reset_password')
 ```
 
 #### ObjectBuilder
+
 The `ObjectBuilder` is a convenience class to create an object with dynamic properties. Consider the following example, where we wrap our code inside conditionals before adding the property `b` to the `startingObject`.
 
 ```ts
@@ -1040,6 +1066,7 @@ builder.toObject() // get plain object
 ```
 
 #### dirname/filename
+
 ES modules does not have magic variables `__filename` and `__dirname`. You can use these helpers to get the current directory and filenames as follows.
 
 ```ts
@@ -1050,16 +1077,12 @@ const filename = getFilename(import.meta.url)
 ```
 
 [gh-workflow-image]: https://img.shields.io/github/workflow/status/poppinss/utils/test?style=for-the-badge
-[gh-workflow-url]: https://github.com/poppinss/utils/actions/workflows/test.yml "Github action"
-
+[gh-workflow-url]: https://github.com/poppinss/utils/actions/workflows/test.yml 'Github action'
 [typescript-image]: https://img.shields.io/badge/Typescript-294E80.svg?style=for-the-badge&logo=typescript
 [typescript-url]: "typescript"
-
 [npm-image]: https://img.shields.io/npm/v/@poppinss/utils.svg?style=for-the-badge&logo=npm
 [npm-url]: https://npmjs.org/package/@poppinss/utils 'npm'
-
 [license-image]: https://img.shields.io/npm/l/@poppinss/utils?color=blueviolet&style=for-the-badge
 [license-url]: LICENSE.md 'license'
-
 [synk-image]: https://img.shields.io/snyk/vulnerabilities/github/poppinss/utils?label=Synk%20Vulnerabilities&style=for-the-badge
 [synk-url]: https://snyk.io/test/github/poppinss/utils?targetFile=package.json 'synk'
