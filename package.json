@@ -62,7 +62,7 @@
     "@japa/spec-reporter": "^1.3.2",
     "@swc/core": "^1.3.10",
     "@types/fs-extra": "^9.0.13",
-    "@types/node": "^18.11.3",
+    "@types/node": "^18.11.5",
     "c8": "^7.12.0",
     "del-cli": "^5.0.0",
     "eslint": "^8.26.0",
