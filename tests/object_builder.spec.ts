@@ -11,55 +11,82 @@ import { test } from '@japa/runner'
 import { ObjectBuilder } from '../src/object_builder.js'
 
 test.group('ObjectBuilder', () => {
-  test('define initial value', ({ assert }) => {
-    assert.deepEqual(new ObjectBuilder({ name: 'virk' }).toObject(), {
+  test('define initial value', ({ assert, expectTypeOf }) => {
+    const value = new ObjectBuilder({ name: 'virk' }).toObject()
+    expectTypeOf(value).toEqualTypeOf<{ name: string }>()
+
+    assert.deepEqual(value, {
       name: 'virk',
     })
   })
 
-  test('add value to the object', ({ assert }) => {
-    assert.deepEqual(new ObjectBuilder().add('name', 'virk').toObject(), {
+  test('add value to the object', ({ assert, expectTypeOf }) => {
+    const value = new ObjectBuilder({}).add('name', 'virk').toObject()
+    expectTypeOf(value).toEqualTypeOf<{ name: string }>()
+
+    assert.deepEqual(value, {
       name: 'virk',
     })
   })
 
-  test('ignore if value is undefined', ({ assert }) => {
-    assert.deepEqual(new ObjectBuilder().add('name', undefined).toObject(), {})
+  test('add multiple values to the object', ({ assert, expectTypeOf }) => {
+    const value = new ObjectBuilder({}).add('name', 'virk').add('email', 'foo@bar.com').toObject()
+    expectTypeOf(value).toEqualTypeOf<{ name: string; email: string }>()
+
+    assert.deepEqual(value, {
+      name: 'virk',
+      email: 'foo@bar.com',
+    })
   })
 
-  test('add null values', ({ assert }) => {
-    assert.deepEqual(new ObjectBuilder().add('name', null).toObject(), { name: null })
+  test('ignore if value is undefined', ({ assert, expectTypeOf }) => {
+    const value = new ObjectBuilder({}).add('name', undefined).toObject()
+
+    expectTypeOf(value).toEqualTypeOf<{}>()
+    assert.deepEqual(value, {})
   })
 
-  test('conditionally ignore null values', ({ assert }) => {
-    assert.deepEqual(new ObjectBuilder({}, true).add('name', null).toObject(), {})
+  test('add null values', ({ assert, expectTypeOf }) => {
+    const value = new ObjectBuilder({}).add('name', null).toObject()
+
+    expectTypeOf(value).toEqualTypeOf<{ name: null }>()
+    assert.deepEqual(value, { name: null })
+  })
+
+  test('conditionally ignore null values', ({ assert, expectTypeOf }) => {
+    const value = new ObjectBuilder({}, true).add('name', null).toObject()
+
+    expectTypeOf(value).toEqualTypeOf<{}>()
+    assert.deepEqual(value, {})
   })
 
   test('get existing value', ({ assert }) => {
-    const obj = new ObjectBuilder()
+    let obj = new ObjectBuilder<{ name: string }>({} as any)
     obj.add('name', 'virk')
 
     assert.equal(obj.get('name'), 'virk')
+    // @ts-expect-error
     assert.isUndefined(obj.get('age'))
   })
 
   test('find if a value exists', ({ assert }) => {
-    const obj = new ObjectBuilder()
+    const obj = new ObjectBuilder<{ name: string; foo: false }>({} as any)
     obj.add('name', 'virk')
     obj.add('foo', false)
 
     assert.isTrue(obj.has('name'))
     assert.isTrue(obj.has('foo'))
+
+    // @ts-expect-error
     assert.isFalse(obj.has('age'))
   })
 
   test('remove value', ({ assert }) => {
-    const obj = new ObjectBuilder()
+    const obj = new ObjectBuilder<{ name?: string }>({})
     obj.add('name', 'virk')
     obj.remove('name')
 
     assert.isFalse(obj.has('name'))
-    assert.isFalse(obj.has('age'))
     assert.deepEqual(obj.toObject(), {})
   })
 })

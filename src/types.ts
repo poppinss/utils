@@ -7,6 +7,9 @@
  * file that was distributed with this source code.
  */
 
+type PickKeysByValue<T, V> = { [K in keyof T]: T[K] extends V ? K : never }[keyof T]
+export type OmitProperties<T, P> = Omit<T, PickKeysByValue<T, P>>
+
 type ScanFsBaseOptions = {
   ignoreMissingRoot?: boolean
   filter?: (filePath: string, index: number) => boolean

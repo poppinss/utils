@@ -7,6 +7,8 @@
  * file that was distributed with this source code.
  */
 
+import { OmitProperties } from './types.js'
+
 /**
  * A simple class to build an object incrementally. It is helpful when you
  * want to add properties to the object conditionally.
@@ -29,12 +31,15 @@
  *   )
  *   .toObject()
  */
-export class ObjectBuilder {
+export class ObjectBuilder<
+  ReturnType extends Record<string, any>,
+  IgnoreNull extends boolean = false
+> {
   #ignoreNull: boolean
-  value: Record<any, any> = {}
+  values: ReturnType
 
-  constructor(initialValue?: Record<any, any>, ignoreNull?: boolean) {
-    this.value = initialValue !== undefined ? initialValue : {}
+  constructor(initialValue: ReturnType, ignoreNull?: IgnoreNull) {
+    this.values = initialValue
     this.#ignoreNull = ignoreNull === true ? true : false
   }
 
@@ -44,7 +49,12 @@ export class ObjectBuilder {
    * - Undefined values are ignored
    * - Null values are ignored, when `ignoreNull` is set to true
    */
-  add(key: string, value: any): this {
+  add<Prop extends string>(key: Prop, value: undefined): this
+  add<Prop extends string, Value>(
+    key: Prop,
+    value: Value
+  ): ObjectBuilder<ReturnType & { [P in Prop]: Value }, IgnoreNull>
+  add<Prop extends string, Value>(key: Prop, value: Value): this {
     if (value === undefined) {
       return this
     }
@@ -53,36 +63,38 @@ export class ObjectBuilder {
       return this
     }
 
-    this.value[key] = value
+    ;(this.values as any)[key] = value
     return this
   }
 
   /**
    * Remove key from the object
    */
-  remove(key: string): this {
-    delete this.value[key]
+  remove<K extends keyof ReturnType>(key: K): this {
+    delete this.values[key]
     return this
   }
 
   /**
    * Find if a value exists
    */
-  has(key: string): boolean {
+  has<K extends keyof ReturnType>(key: K): boolean {
     return this.get(key) !== undefined
   }
 
   /**
    * Get the existing value for a given key
    */
-  get<T extends any>(key: string): T {
-    return this.value[key]
+  get<K extends keyof ReturnType>(key: K): ReturnType[K] {
+    return this.values[key]
   }
 
   /**
    * Get the underlying constructed object
    */
-  toObject() {
-    return this.value
+  toObject(): IgnoreNull extends true
+    ? { [K in keyof OmitProperties<ReturnType, null>]: ReturnType[K] }
+    : { [K in keyof ReturnType]: ReturnType[K] } {
+    return this.values
   }
 }

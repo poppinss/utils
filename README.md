@@ -1035,16 +1035,14 @@ if (b) {
 }
 ```
 
-Instead of writing conditionals, your can consider using the Object builder fluent API.
+Instead of writing conditionals, you can consider using the Object builder fluent API.
 
 ```ts
 const builder = new ObjectBuilder({ a: 1 })
 
-// Add property if the value is not undefined.
-builder.add('b', b)
-
-// Get the plain object back
-const plainObject = builder.toObject()
+const plainObject = builder
+  .add('b', b)
+  .toObject()
 ```
 
 By default, only the `undefined` values are ignored. However, you can also ignore `null` values.
