@@ -7,19 +7,9 @@
  * file that was distributed with this source code.
  */
 
-type Constructor = new (...args: any[]) => any
+import type { Constructor } from './types.js'
 
-/**
- * Normalizes constructor to work with mixins. There is an open bug for mixins
- * to allow constructors other than `...args: any[]`
- *
- * https://github.com/microsoft/TypeScript/issues/37142
- */
-export type NormalizeConstructor<T extends Constructor> = {
-  new (...args: any[]): InstanceType<T>
-} & Omit<T, 'constructor'>
-
-export interface UnaryFunction<T, R> {
+interface UnaryFunction<T, R> {
   (source: T): R
 }
 

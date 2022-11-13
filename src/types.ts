@@ -15,7 +15,6 @@ type ScanFsBaseOptions = {
   filter?: (filePath: string, index: number) => boolean
   sort?: (current: string, next: string) => number
 }
-
 export type ImportAllFilesOptions = ScanFsBaseOptions & {
   /**
    * A custom method to transform collection keys
@@ -29,3 +28,15 @@ export type ReadAllFilesOptions = ScanFsBaseOptions & {
 
 export type JSONReplacer = (this: any, key: string, value: any) => any
 export type JSONReviver = (this: any, key: string, value: any) => any
+
+export type Constructor = new (...args: any[]) => any
+
+/**
+ * Normalizes constructor to work with mixins. There is an open bug for mixins
+ * to allow constructors other than `...args: any[]`
+ *
+ * https://github.com/microsoft/TypeScript/issues/37142
+ */
+export type NormalizeConstructor<T extends Constructor> = {
+  new (...args: any[]): InstanceType<T>
+} & Omit<T, 'constructor'>
