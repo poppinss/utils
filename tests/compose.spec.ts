@@ -8,7 +8,8 @@
  */
 
 import { test } from '@japa/runner'
-import { compose, NormalizeConstructor } from '../src/compose.js'
+import { compose } from '../src/compose.js'
+import { NormalizeConstructor } from '../src/types.js'
 
 test.group('compose', () => {
   test('apply multiple mixins to a given base class', async ({ assert, expectTypeOf }) => {
