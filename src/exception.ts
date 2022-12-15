@@ -7,6 +7,8 @@
  * file that was distributed with this source code.
  */
 
+import { format } from 'node:util'
+
 /**
  * Extended Error object with the option to set error `status` and `code`.
  * At AdonisJs, we prefer exceptions with proper error codes to handle
@@ -80,5 +82,26 @@ export class Exception extends Error {
       return `${this.name} [${this.code}]: ${this.message}`
     }
     return `${this.name}: ${this.message}`
+  }
+}
+
+/**
+ * Helper to create anonymous error classes
+ */
+export function createError<T extends any[] = never>(
+  message: string,
+  code: string,
+  status?: number
+): typeof Exception & T extends never
+  ? { new (args?: any, options?: ErrorOptions): Exception }
+  : { new (args: T, options?: ErrorOptions): Exception } {
+  return class extends Exception {
+    static message = message
+    static code = code
+    static status = status
+
+    constructor(args: T, options?: ErrorOptions) {
+      super(format(message, ...(args || [])), options)
+    }
   }
 }

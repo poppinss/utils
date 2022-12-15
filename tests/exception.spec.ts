@@ -8,7 +8,7 @@
  */
 
 import { test } from '@japa/runner'
-import { Exception } from '../src/exception.js'
+import { createError, Exception } from '../src/exception.js'
 
 test.group('Exception', () => {
   test('create exception with error code', ({ assert }) => {
@@ -144,5 +144,29 @@ test.group('Exception', () => {
   test('raise exception with empty message', ({ assert }) => {
     const error = new Exception()
     assert.equal(error.message, '')
+  })
+
+  test('create anonymous exception class', ({ assert }) => {
+    assert.plan(2)
+    const E_USER_NOT_FOUND = createError('Unable to find user', 'E_USER_NOT_FOUND')
+
+    try {
+      throw new E_USER_NOT_FOUND()
+    } catch (error) {
+      assert.equal(error.message, 'Unable to find user')
+      assert.match(error.stack.split('\n')[1], new RegExp(import.meta.url))
+    }
+  })
+
+  test('create anonymous exception class with formatted errors', ({ assert }) => {
+    assert.plan(2)
+    const E_USER_NOT_FOUND = createError<[string]>('Unable to find %s', 'E_USER_NOT_FOUND')
+
+    try {
+      throw new E_USER_NOT_FOUND(['user'])
+    } catch (error) {
+      assert.equal(error.message, 'Unable to find user')
+      assert.match(error.stack.split('\n')[1], new RegExp(import.meta.url))
+    }
   })
 })

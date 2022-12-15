@@ -771,19 +771,18 @@ class ResourceNotFound extends Exception {
 throw new ResourceNotFound()
 ```
 
-Following is an example of creating a dynamic message with interpolation.
+#### Anonymous error classes
+You can also create an anonymous exception class using the `createError` method. The return value is a class
+constructor that accepts an array of values to use for interpolation.
+
+The interpolation of error message is performed using the `util.format` message.
 
 ```ts
-import { Exception } from '@poppinss/utils'
-import string from '@poppinss/utils/string'
+import { createError } from '@poppinss/utils'
+const E_RESOURCE_NOT_FOUND = createError('Unable to find resource with id %d', 'E_RESOURCE_NOT_FOUND')
 
-class ResourceNotFound extends Exception {
-  static code = 'E_RESOURCE_NOT_FOUND'
-  static status = 404
-  static message = 'Unable to find resource with id {{ id }}'
-}
-
-throw new ResourceNotFound(interpolate(ResourceNotFound.message, { id: 1 }))
+const id = 1
+throw new E_RESOURCE_NOT_FOUND([id])
 ```
 
 #### flatten
