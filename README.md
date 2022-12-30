@@ -33,8 +33,8 @@ Even though I do not care much about the package size (most of work is consumed 
 
 |                   |                 |
 | ----------------- | --------------- |
-| Source code size  | `272K` (approx) |
-| Dependencies size | `432K` (approx) |
+| Source code size  | `436K` (approx) |
+| Dependencies size | `496K` (approx) |
 
 ## Installation
 
