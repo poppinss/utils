@@ -13,3 +13,8 @@ export class RuntimeException extends Exception {
   static code = 'E_RUNTIME_EXCEPTION'
   static status = 500
 }
+
+export class InvalidArgumentExceptiom extends Exception {
+  static code = 'E_INVALID_ARGUMENTS_EXCEPTION'
+  static status = 500
+}
