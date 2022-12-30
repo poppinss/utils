@@ -7,7 +7,6 @@
  * file that was distributed with this source code.
  */
 
-// @ts-expect-error (Package has messed up types)
 import { configure } from 'safe-stable-stringify'
 import { JSONReplacer } from '../types.js'
 
