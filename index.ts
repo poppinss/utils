@@ -23,7 +23,8 @@ export { naturalSort } from './src/natural_sort.js'
 export { ObjectBuilder } from './src/object_builder.js'
 export { safeEqual } from './src/safe_equal.js'
 export { slash } from './src/slash.js'
-export { RuntimeException, InvalidArgumentExceptiom } from './src/exceptions/runtime_exception.js'
+export { RuntimeException } from './src/exceptions/runtime_exception.js'
+export { InvalidArgumentsException } from './src/exceptions/invalid_arguments_exception.js'
 
 /**
  * Get dirname for a given file path URL

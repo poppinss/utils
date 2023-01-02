@@ -9,7 +9,7 @@
 
 import { Exception } from '../exception.js'
 
-export class RuntimeException extends Exception {
-  static code = 'E_RUNTIME_EXCEPTION'
+export class InvalidArgumentsException extends Exception {
+  static code = 'E_INVALID_ARGUMENTS_EXCEPTION'
   static status = 500
 }
