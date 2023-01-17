@@ -772,6 +772,7 @@ throw new ResourceNotFound()
 ```
 
 #### Anonymous error classes
+
 You can also create an anonymous exception class using the `createError` method. The return value is a class
 constructor that accepts an array of values to use for interpolation.
 
@@ -779,7 +780,10 @@ The interpolation of error message is performed using the `util.format` message.
 
 ```ts
 import { createError } from '@poppinss/utils'
-const E_RESOURCE_NOT_FOUND = createError('Unable to find resource with id %d', 'E_RESOURCE_NOT_FOUND')
+const E_RESOURCE_NOT_FOUND = createError(
+  'Unable to find resource with id %d',
+  'E_RESOURCE_NOT_FOUND'
+)
 
 const id = 1
 throw new E_RESOURCE_NOT_FOUND([id])
@@ -1039,9 +1043,7 @@ Instead of writing conditionals, you can consider using the Object builder fluen
 ```ts
 const builder = new ObjectBuilder({ a: 1 })
 
-const plainObject = builder
-  .add('b', b)
-  .toObject()
+const plainObject = builder.add('b', b).toObject()
 ```
 
 By default, only the `undefined` values are ignored. However, you can also ignore `null` values.
