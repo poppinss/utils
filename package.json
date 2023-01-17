@@ -18,6 +18,7 @@
       "node": "./build/lodash/main.cjs"
     },
     "./string": "./build/src/string/main.js",
+    "./string_builder": "./build/src/string_builder.js",
     "./json": "./build/src/json/main.js",
     "./types": "./build/src/types.js"
   },
