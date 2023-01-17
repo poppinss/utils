@@ -560,7 +560,7 @@ string.bytes.format(1024 * 1024 * 1000, { thousandsSeparator: ',' }) // 1,000MB
 The string builder offers a fluent API for applying a set of transforms on a string value. You can create an instance of the string builder as follows.
 
 ```ts
-import { StringBuilder } from '@poppinss/utils/string_builder'
+import StringBuilder from '@poppinss/utils/string_builder'
 const builder = new StringBuilder('hello world')
 
 const value = builder.snakeCase().suffix('_controller').toString()

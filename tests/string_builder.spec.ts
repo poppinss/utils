@@ -8,7 +8,7 @@
  */
 
 import { test } from '@japa/runner'
-import { StringBuilder } from '../src/string_builder.js'
+import StringBuilder from '../src/string_builder.js'
 
 test.group('String builder', () => {
   test('change string casing', ({ assert }) => {

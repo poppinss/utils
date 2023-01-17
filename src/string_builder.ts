@@ -13,7 +13,7 @@ import string from './string/main.js'
 /**
  * String builder to transform the string using the fluent API
  */
-export class StringBuilder {
+export default class StringBuilder {
   #value: string
 
   constructor(value: string | StringBuilder) {
