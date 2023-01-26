@@ -937,6 +937,16 @@ await Promise.all(
 )
 ```
 
+#### importDefault
+A helper function that assert a lazy import function output to have a `default export`, otherwise raises an exception.
+
+We use dynamic default exports a lot in AdonisJS apps, so extracting the check to a helper function.
+
+```ts
+import { importDefault } from '@poppinss/utils'
+const defaultVal = await importDefault(() => import('./some_module.js'))
+```
+
 #### naturalSort
 
 A sorting function to use natural sort for ordering an array.

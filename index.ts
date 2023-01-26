@@ -12,6 +12,7 @@ import { dirname as pathDirname } from 'node:path'
 
 export { base64 } from './src/base64.js'
 export { compose } from './src/compose.js'
+export { importDefault } from './src/import_default.js'
 export { defineStaticProperty } from './src/define_static_property.js'
 export { Exception, createError } from './src/exception.js'
 export { flatten } from './src/flatten.js'
