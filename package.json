@@ -22,12 +22,16 @@
     "./json": "./build/src/json/main.js",
     "./types": "./build/src/types.js"
   },
+  "engines": {
+    "node": ">=18.16.0"
+  },
   "scripts": {
     "pretest": "npm run lint",
     "test": "npm run build:lodash && c8 npm run quick:test",
     "build:lodash": "lodash include=\"pick,omit,has,get,set,unset,mergeWith,merge,size,clone,cloneDeep,toPath\" --production && move-file ./lodash.custom.min.js build/lodash/main.cjs",
     "quick:test": "node --loader=ts-node/esm bin/test.ts",
     "clean": "del-cli build",
+    "typecheck": "tsc --noEmit",
     "compile": "npm run lint && npm run clean && tsc",
     "build": "npm run compile && npm run build:lodash",
     "release": "np",
