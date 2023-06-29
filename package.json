@@ -44,9 +44,9 @@
   "author": "virk,poppinss",
   "license": "MIT",
   "devDependencies": {
-    "@adonisjs/eslint-config": "^1.1.5",
-    "@adonisjs/prettier-config": "^1.1.5",
-    "@adonisjs/tsconfig": "^1.1.5",
+    "@adonisjs/eslint-config": "^1.1.6",
+    "@adonisjs/prettier-config": "^1.1.6",
+    "@adonisjs/tsconfig": "^1.1.6",
     "@commitlint/cli": "^17.6.6",
     "@commitlint/config-conventional": "^17.6.6",
     "@japa/assert": "^2.0.0-1",

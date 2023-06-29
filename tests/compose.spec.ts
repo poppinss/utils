@@ -22,7 +22,7 @@ test.group('compose', () => {
       superclass: T
     ) => {
       return class UserEmail extends superclass {
-        email: string
+        declare email: string
         static validatesEmail = false
       }
     }
@@ -31,7 +31,7 @@ test.group('compose', () => {
       superclass: T
     ) => {
       return class UserPassword extends superclass {
-        password: string
+        declare password: string
         static validatesPassword = false
       }
     }
