@@ -1,9 +1,5 @@
 import { assert } from '@japa/assert'
-import { pathToFileURL } from 'node:url'
-import { expectTypeOf } from '@japa/expect-type'
-import { specReporter } from '@japa/spec-reporter'
-import { runFailedTests } from '@japa/run-failed-tests'
-import { processCliArgs, configure, run } from '@japa/runner'
+import { processCLIArgs, configure, run } from '@japa/runner'
 
 /*
 |--------------------------------------------------------------------------
@@ -18,15 +14,11 @@ import { processCliArgs, configure, run } from '@japa/runner'
 |
 | Please consult japa.dev/runner-config for the config docs.
 */
-configure({
-  ...processCliArgs(process.argv.slice(2)),
-  ...{
+processCLIArgs(process.argv.slice(2)),
+  configure({
     files: ['tests/**/*.spec.(ts|js)'],
-    plugins: [assert(), runFailedTests(), expectTypeOf()],
-    reporters: [specReporter()],
-    importer: (filePath) => import(pathToFileURL(filePath).href),
-  },
-})
+    plugins: [assert()],
+  })
 
 /*
 |--------------------------------------------------------------------------
