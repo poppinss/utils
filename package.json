@@ -5,11 +5,8 @@
   "main": "build/index.js",
   "type": "module",
   "files": [
-    "build/src",
-    "lodash",
-    "build/lodash",
-    "build/index.d.ts",
-    "build/index.js"
+    "build",
+    "lodash"
   ],
   "exports": {
     ".": "./build/index.js",
