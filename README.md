@@ -557,6 +557,7 @@ string.bytes.format(1024 * 1024 * 1000, { thousandsSeparator: ',' }) // 1,000MB
 ```
 
 ### String builder
+
 The string builder offers a fluent API for applying a set of transforms on a string value. You can create an instance of the string builder as follows.
 
 ```ts
@@ -938,6 +939,7 @@ await Promise.all(
 ```
 
 #### importDefault
+
 A helper function that assert a lazy import function output to have a `default export`, otherwise raises an exception.
 
 We use dynamic default exports a lot in AdonisJS apps, so extracting the check to a helper function.

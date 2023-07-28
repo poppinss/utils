@@ -33,7 +33,7 @@ import { OmitProperties } from './types.js'
  */
 export class ObjectBuilder<
   ReturnType extends Record<string, any>,
-  IgnoreNull extends boolean = false
+  IgnoreNull extends boolean = false,
 > {
   #ignoreNull: boolean
   values: ReturnType

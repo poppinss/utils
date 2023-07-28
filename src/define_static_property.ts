@@ -17,7 +17,7 @@ type AbstractConstructor = abstract new (...args: any[]) => any
  */
 export function defineStaticProperty<
   T extends Constructor | AbstractConstructor,
-  Prop extends keyof T
+  Prop extends keyof T,
 >(
   self: T,
   propertyName: Prop,
