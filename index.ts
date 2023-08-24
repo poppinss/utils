@@ -10,7 +10,6 @@
 import { fileURLToPath } from 'node:url'
 import { dirname as pathDirname } from 'node:path'
 
-export { assert, assertNotNull, assertUnreachable } from './src/assert.js'
 export { base64 } from './src/base64.js'
 export { compose } from './src/compose.js'
 export { importDefault } from './src/import_default.js'
