@@ -2,7 +2,7 @@
 
 > A toolkit of utilities used across all the AdonisJS, Edge, and Japa packages
 
-[![gh-workflow-image]][gh-workflow-url] [![typescript-image]][typescript-url] [![npm-image]][npm-url] [![license-image]][license-url] [![synk-image]][synk-url]
+[![gh-workflow-image]][gh-workflow-url] [![typescript-image]][typescript-url] [![npm-image]][npm-url] [![license-image]][license-url]
 
 ## Why this package exists?
 
@@ -1116,5 +1116,3 @@ const filename = getFilename(import.meta.url)
 [npm-url]: https://npmjs.org/package/@poppinss/utils 'npm'
 [license-image]: https://img.shields.io/npm/l/@poppinss/utils?color=blueviolet&style=for-the-badge
 [license-url]: LICENSE.md 'license'
-[synk-image]: https://img.shields.io/snyk/vulnerabilities/github/poppinss/utils?label=Synk%20Vulnerabilities&style=for-the-badge
-[synk-url]: https://snyk.io/test/github/poppinss/utils?targetFile=package.json 'synk'
