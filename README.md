@@ -31,10 +31,11 @@ A note to self and others to consider the following packages.
 
 Even though I do not care much about the package size (most of work is consumed on server side), I am mindful around the utilities and ensure not end up using really big packages for smaller use-cases.
 
-|                   |                 |
-| ----------------- | --------------- |
-| Source code size  | `436K` (approx) |
-| Dependencies size | `496K` (approx) |
+Here's the last checked install size of this package.
+
+<a href="https://pkg-size.dev/@poppinss/utils@next">
+  <img src="https://pkg-size.dev/badge/install/319382" title="Install size for @poppinss/utils">
+</a>
 
 ## Installation
 
@@ -55,14 +56,23 @@ Following are the exported modules. Only the generic helpers are shipped from th
 // string sub-module
 import string from '@poppinss/utils/string'
 
+// string builder
+import string from '@poppinss/utils/string_builder'
+
 // json sub-module
 import json from '@poppinss/utils/json'
 
 // lodash sub-module
 import lodash from '@poppinss/utils/lodash'
 
+// assert sub-module
+import assert from '@poppinss/utils/assert'
+
 // main module
 import { base64, Exception, fsReadAll } from '@poppinss/utils'
+
+// types sub-module
+import { ReadAllFilesOptions } from '@poppinss/utils/types'
 ```
 
 ### String helpers
