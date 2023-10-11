@@ -127,6 +127,7 @@
   "tsup": {
     "entry": [
       "./index.ts",
+      "./src/assert.ts",
       "./src/string/main.ts",
       "./src/string_builder.ts",
       "./src/json/main.ts",
