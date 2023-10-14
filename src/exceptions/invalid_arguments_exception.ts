@@ -7,4 +7,9 @@
  * file that was distributed with this source code.
  */
 
-export { default as slash } from 'slash'
+import { Exception } from '../exception.js'
+
+export class InvalidArgumentsException extends Exception {
+  static code = 'E_INVALID_ARGUMENTS_EXCEPTION'
+  static status = 500
+}

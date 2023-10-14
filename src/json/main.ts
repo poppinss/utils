@@ -7,4 +7,12 @@
  * file that was distributed with this source code.
  */
 
-export { default as slash } from 'slash'
+import { safeParse } from './safe_parse.js'
+import { safeStringify } from './safe_stringify.js'
+
+const json = {
+  safeParse,
+  safeStringify,
+}
+
+export default json

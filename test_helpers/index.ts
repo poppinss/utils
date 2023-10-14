@@ -7,4 +7,8 @@
  * file that was distributed with this source code.
  */
 
-export { default as slash } from 'slash'
+import { normalize as pathNormalize } from 'node:path'
+
+export function normalize(filePath: string) {
+  return pathNormalize(filePath)
+}
