@@ -1108,8 +1108,8 @@ const dirname = getDirname(import.meta.url)
 const filename = getFilename(import.meta.url)
 ```
 
-[gh-workflow-image]: https://img.shields.io/github/actions/workflow/status/poppinss/utils/test.yml?style=for-the-badge
-[gh-workflow-url]: https://github.com/poppinss/utils/actions/workflows/test.yml 'Github action'
+[gh-workflow-image]: https://img.shields.io/github/actions/workflow/status/poppinss/utils/checks.yml?style=for-the-badge
+[gh-workflow-url]: https://github.com/poppinss/utils/actions/workflows/checks.yml 'Github action'
 [typescript-image]: https://img.shields.io/badge/Typescript-294E80.svg?style=for-the-badge&logo=typescript
 [typescript-url]: "typescript"
 [npm-image]: https://img.shields.io/npm/v/@poppinss/utils.svg?style=for-the-badge&logo=npm
