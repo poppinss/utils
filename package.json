@@ -6,6 +6,9 @@
   "type": "module",
   "files": [
     "build",
+    "!build/tests",
+    "!build/test_helpers",
+    "!build/bin",
     "lodash"
   ],
   "exports": {
@@ -30,7 +33,8 @@
     "quick:test": "node --loader=ts-node/esm bin/test.ts",
     "clean": "del-cli build",
     "typecheck": "tsc --noEmit",
-    "compile": "npm run lint && npm run clean && tsup-node",
+    "precompile": "npm run lint && npm run clean",
+    "compile": "tsup-node && tsc --emitDeclarationOnly --declaration",
     "build": "npm run compile && npm run build:lodash",
     "release": "np",
     "version": "npm run build",
@@ -136,7 +140,8 @@
     "outDir": "./build",
     "clean": true,
     "format": "esm",
-    "dts": true,
+    "dts": false,
+    "sourcemap": true,
     "target": "esnext"
   }
 }
