@@ -74,7 +74,7 @@
     "prettier": "^3.0.3",
     "ts-node": "^10.9.1",
     "tsup": "^7.1.0",
-    "typescript": "^5.2.2"
+    "typescript": "~5.2.2"
   },
   "dependencies": {
     "@lukeed/ms": "^2.0.1",
