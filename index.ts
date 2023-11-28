@@ -8,7 +8,7 @@
  */
 
 import { fileURLToPath } from 'node:url'
-import { dirname as pathDirname } from 'node:path'
+import { join as pathJoin, dirname as pathDirname } from 'node:path'
 
 export { base64 } from './src/base64.js'
 export { compose } from './src/compose.js'
@@ -39,4 +39,11 @@ export function getDirname(url: string | URL) {
  */
 export function getFilename(url: string | URL) {
   return fileURLToPath(url)
+}
+
+/**
+ * Joins the given URL or string with additional path segments.
+ */
+export function join(url: string | URL, ...str: string[]) {
+  return pathJoin(getDirname(url), ...str)
 }
