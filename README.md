@@ -644,6 +644,53 @@ import lodash from '@poppinss/utils/lodash'
 lodash.pick(collection, keys)
 ```
 
+### Assertion helpers
+The following assertion methods offers type-safe approach for writing conditionals and throwing error when the variable has unexpected values.
+
+#### assertExists(message?: string)
+Throws [AssertionError](https://nodejs.org/api/assert.html#new-assertassertionerroroptions) when the value is `false`, `null`, or `undefined`.
+
+```ts
+import { assertExists } from '@poppinss/utils/assert'
+
+const value = false as string | false
+assertExists(value)
+
+// value is string
+```
+
+#### assertNotNull(value: unknown, message?: string)
+Throws [AssertionError](https://nodejs.org/api/assert.html#new-assertassertionerroroptions) when the value is `null`.
+
+```ts
+import { assertNotNull } from '@poppinss/utils/assert'
+
+const value = null as string | null
+assertNotNull(value)
+
+// value is string
+```
+
+#### assertIsDefined(value: unknown, message?: string)
+Throws [AssertionError](https://nodejs.org/api/assert.html#new-assertassertionerroroptions) when the value is `undefined`.
+
+```ts
+import { assertIsDefined } from '@poppinss/utils/assert'
+
+const value = undefined as string | undefined
+assertIsDefined(value)
+
+// value is string
+```
+
+#### assertUnreachable(value: unknown)
+Throws [AssertionError](https://nodejs.org/api/assert.html#new-assertassertionerroroptions) when the method is invoked. In other words, this method always throws an exception.
+
+```ts
+import { assertUnreachable } from '@poppinss/utils/assert'
+assertUnreachable()
+```
+
 ### All other helpers
 
 The following helpers are exported from the package main module.
