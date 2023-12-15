@@ -51,6 +51,7 @@
   "license": "MIT",
   "devDependencies": {
     "@adonisjs/eslint-config": "^1.2.0",
+    "@adonisjs/logger": "^5.4.2-7",
     "@adonisjs/prettier-config": "^1.2.0",
     "@adonisjs/tsconfig": "^1.2.0",
     "@commitlint/cli": "^18.4.3",

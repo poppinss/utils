@@ -1144,6 +1144,79 @@ builder.add(key)
 builder.toObject() // get plain object
 ```
 
+#### Secret
+
+Creates a secret value that prevents itself from getting logged inside `console.log` statements, during JSON serialization, and string concatenation.
+
+To understand why you need a special `Secret` object, you need to understand the root of the problem. Let's start with an example.
+
+Given that you have a `Token` class that generates an opaque token for a user and persists its hash inside the database. The plain token (aka raw value) is shared with the user and it should only be visible once (for security reasons). Here is a dummy implementation of the same.
+
+```ts
+class Token {
+  generate() {
+    return {
+      value: 'opaque_raw_token',
+      hash: 'hash_of_raw_token_inside_db',
+    }
+  }
+}
+
+const token = new Token().generate()
+return response.send(token)
+```
+
+At the same time, you want to drop a log statement inside your application that you can later use to debug the flow of the application, and this is how you log the token.
+
+```ts
+const token = new Token().generate()
+
+logger.log('token generated %O', token)
+// token generated {"value":"opaque_raw_token","hash":"hash_of_raw_token_inside_db"}
+
+return response.send(token)
+```
+
+BOOM! You have weakened the security of your app. Now, anyone monitoring the logs can grab raw token values from the log and use them to perform the actions on behalf of the user.
+
+Now, to prevent this from happening, you **should work with a branded data type**. Our [old friend PHP has it](https://www.php.net/manual/en/class.sensitiveparametervalue.php), so we need it as well.
+
+This is what exactly the `Secret` utility class does for you. Create values that prevent themselves from leaking inside logs or during JSON serialization.
+
+```ts
+import { Secret } from '@poppinss/utils'
+
+class Token {
+  generate() {
+    return {
+      // THIS LINE 👇
+      value: new Secret('opaque_raw_token'),
+      hash: 'hash_of_raw_token_inside_db',
+    }
+  }
+}
+
+const token = new Token().generate()
+
+logger.log('token generated %O', token)
+// AND THIS LOG 👇
+// token generated {"value":"[redacted]","hash":"hash_of_raw_token_inside_db"}
+
+return response.send(token)
+```
+
+**Need the original value back?**
+You can call the `release` method to get the secret value back. Again, the idea is not to prevent your code from accessing the raw value. It's to stop the logging and serialization layer from reading it.
+
+```ts
+const secret = new Secret('opaque_raw_token')
+const rawValue = secret.release()
+
+rawValue === opaque_raw_token // true
+```
+
+> Shoutout to [https://transcend.io/blog/keep-sensitive-values-out-of-your-logs-with-types](transcend.io's article) to helping me design the API. In fact, I have ripped their implementation for my personal use.
+
 #### dirname/filename
 
 ES modules does not have magic variables `__filename` and `__dirname`. You can use these helpers to get the current directory and filenames as follows.

@@ -10,6 +10,7 @@
 import { fileURLToPath } from 'node:url'
 import { join as pathJoin, dirname as pathDirname } from 'node:path'
 
+export { Secret } from './src/secret.js'
 export { base64 } from './src/base64.js'
 export { compose } from './src/compose.js'
 export { importDefault } from './src/import_default.js'
