@@ -7,16 +7,16 @@
  * file that was distributed with this source code.
  */
 
-import { join } from 'node:path'
 import { test } from '@japa/runner'
+import { join } from 'node:path'
 import { ensureDir, remove, outputFile } from 'fs-extra'
 
-import { getDirname } from '../index.js'
+import { joinToURL } from '../index.js'
 import { slash } from '../src/slash.js'
 import { fsReadAll } from '../src/fs_read_all.js'
 import { normalize } from '../test_helpers/index.js'
 
-const BASE_PATH = join(getDirname(import.meta.url), 'app')
+const BASE_PATH = joinToURL(import.meta.url, 'app')
 
 test.group('FS read all | relative paths', (group) => {
   group.each.setup(async () => {

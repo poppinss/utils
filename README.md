@@ -940,7 +940,7 @@ const files = await fsReadAll(dir, options)
 await Promise.all(
   files.map((file) => {
     if (file.endsWith('.json')) {
-      return import(file, { assert: { type: 'json' } })
+      return import(file, { with: { type: 'json' } })
     }
 
     return import(file)
@@ -1106,6 +1106,21 @@ import { getDirname, getFilename } from '@poppinss/utils'
 
 const dirname = getDirname(import.meta.url)
 const filename = getFilename(import.meta.url)
+```
+
+#### joinToURL
+Similar to the Node.js `path.join`, but instead expects the first parameter to be a URL instance or a string with the `file:///` protocol.
+
+The return value is an absolute file system path without the `file:///` protocol.
+
+```ts
+import { joinToURL } from '@poppinss/utils'
+
+// With URL as a string
+const APP_PATH = joinToURL(import.meta.url, 'app')
+
+// With URL instance
+const APP_PATH = joinToURL(new URL('./', import.meta.url), 'app')
 ```
 
 [gh-workflow-image]: https://img.shields.io/github/actions/workflow/status/poppinss/utils/checks.yml?style=for-the-badge

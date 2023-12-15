@@ -42,8 +42,9 @@ export function getFilename(url: string | URL) {
 }
 
 /**
- * Joins the given URL or string with additional path segments.
+ * Join paths to a URL instance or a URL string. The return
+ * value will be a file path without the `file:///` protocol.
  */
-export function join(url: string | URL, ...str: string[]) {
+export function joinToURL(url: string | URL, ...str: string[]) {
   return pathJoin(getDirname(url), ...str)
 }

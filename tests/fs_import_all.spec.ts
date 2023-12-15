@@ -11,10 +11,10 @@ import { join } from 'node:path'
 import { test } from '@japa/runner'
 import { ensureDir, remove, outputFile } from 'fs-extra'
 
-import { getDirname } from '../index.js'
+import { joinToURL } from '../index.js'
 import { fsImportAll } from '../src/fs_import_all.js'
 
-const BASE_PATH = join(getDirname(import.meta.url), 'app')
+const BASE_PATH = joinToURL(import.meta.url, 'app')
 
 test.group('importAll', (group) => {
   group.tap((t) => t.skip(import.meta.url.endsWith('.js'), 'Need ts-node'))
