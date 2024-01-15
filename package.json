@@ -15,7 +15,8 @@
     ".": "./build/index.js",
     "./lodash": {
       "types": "./lodash/lodash.types.d.ts",
-      "node": "./build/lodash/main.cjs"
+      "node": "./build/lodash/main.cjs",
+      "default": "./build/lodash/main.cjs"
     },
     "./assert": "./build/src/assert.js",
     "./string": "./build/src/string/main.js",
