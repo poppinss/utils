@@ -102,6 +102,7 @@ export function createError<T extends any[] = never>(
 
     constructor(args: T, options?: ErrorOptions) {
       super(format(message, ...(args || [])), options)
+      this.name = 'Exception'
     }
   }
 }

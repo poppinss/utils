@@ -169,4 +169,16 @@ test.group('Exception', () => {
       assert.match(error.stack.split('\n')[1], new RegExp(import.meta.url))
     }
   })
+
+  test('provide name to exception class created using "createError" method', ({ assert }) => {
+    assert.plan(2)
+    const E_USER_NOT_FOUND = createError('Unable to find user', 'E_USER_NOT_FOUND')
+
+    try {
+      throw new E_USER_NOT_FOUND()
+    } catch (error) {
+      assert.equal(error.name, 'Exception')
+      assert.equal(String(error), 'Exception [E_USER_NOT_FOUND]: Unable to find user')
+    }
+  })
 })
