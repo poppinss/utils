@@ -41,4 +41,5 @@ export type NormalizeConstructor<T extends Constructor> = {
   new (...args: any[]): InstanceType<T>
 } & Omit<T, 'constructor'>
 
-export type Opaque<T, K> = T & { [' __opaque__']: K }
+declare const opaqueProp: unique symbol
+export type Opaque<T, K> = T & { [opaqueProp]: K }
