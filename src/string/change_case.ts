@@ -13,7 +13,7 @@ import * as changeCase from 'case-anything'
 const NO_CASE_SPLIT_REGEXP = [/([a-z0-9])([A-Z])/g, /([A-Z])([A-Z][a-z])/g]
 
 // Remove all non-word characters.
-const NO_CASE_STRIP_REGEXP = /[^A-Z0-9]+/gi
+const NO_CASE_STRIP_REGEXP = /[^-'a-zA-ZÀ-ÖØ-öø-ÿ0-9]+/gi
 
 const SMALL_WORDS =
   /\b(?:an?d?|a[st]|because|but|by|en|for|i[fn]|neither|nor|o[fnr]|only|over|per|so|some|tha[tn]|the|to|up|upon|vs?\.?|versus|via|when|with|without|yet)\b/i
