@@ -22,7 +22,10 @@
     "./string": "./build/src/string/main.js",
     "./string_builder": "./build/src/string_builder.js",
     "./json": "./build/src/json/main.js",
-    "./types": "./build/src/types.js"
+    "./types": "./build/src/types.js",
+    "./exceptions": "./build/exceptions/src/exceptions/index.js",
+    "./exception": "./build/src/exception.js",
+    "./slash": "./build/src/slash.js"
   },
   "engines": {
     "node": ">=18.16.0"
@@ -35,7 +38,7 @@
     "clean": "del-cli build",
     "typecheck": "tsc --noEmit",
     "precompile": "npm run lint && npm run clean",
-    "compile": "tsup-node && tsc --emitDeclarationOnly --declaration",
+    "compile": "tsup-node && tsc --declaration",
     "build": "npm run compile && npm run build:lodash",
     "release": "np",
     "version": "npm run build",
