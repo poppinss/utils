@@ -13,7 +13,7 @@ const REDACTED = '[redacted]'
  * Define a Secret value that hides itself from the logs or the console
  * statements.
  *
- * The idea is to prevent accedential leaking of sensitive information.
+ * The idea is to prevent accidental leaking of sensitive information.
  * Idea borrowed from.
  * https://transcend.io/blog/keep-sensitive-values-out-of-your-logs-with-types
  */
