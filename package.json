@@ -31,25 +31,17 @@
     "pretest": "npm run lint",
     "test": "npm run build:lodash && c8 npm run quick:test",
     "build:lodash": "lodash include=\"pick,omit,has,get,set,unset,mergeWith,merge,size,clone,cloneDeep,toPath\" --production && move-file ./lodash.custom.min.js build/lodash/main.cjs",
-    "quick:test": "node --import=ts-node-maintained/register/esm bin/test.ts",
-    "clean": "del-cli build",
-    "typecheck": "tsc --noEmit",
-    "precompile": "npm run lint && npm run clean",
-    "compile": "tsup-node && tsc --emitDeclarationOnly --declaration",
-    "build": "npm run compile && npm run build:lodash",
-    "release": "np",
-    "version": "npm run build",
-    "prepublishOnly": "npm run build",
     "lint": "eslint",
     "format": "prettier --write .",
-    "sync-labels": "github-label-sync --labels .github/labels.json poppinss/utils"
+    "typecheck": "tsc --noEmit",
+    "precompile": "npm run lint",
+    "compile": "tsup-node && tsc --emitDeclarationOnly --declaration",
+    "build": "npm run compile && npm run build:lodash",
+    "version": "npm run build",
+    "prepublishOnly": "npm run build",
+    "release": "release-it",
+    "quick:test": "node --import=ts-node-maintained/register/esm bin/test.ts"
   },
-  "keywords": [
-    "toolkit",
-    "utilities"
-  ],
-  "author": "virk,poppinss",
-  "license": "MIT",
   "devDependencies": {
     "@adonisjs/eslint-config": "^2.0.0-beta.6",
     "@adonisjs/logger": "^6.0.3",
@@ -58,6 +50,7 @@
     "@japa/assert": "^3.0.0",
     "@japa/expect-type": "^2.0.2",
     "@japa/runner": "^3.1.4",
+    "@release-it/conventional-changelog": "^8.0.2",
     "@swc/core": "^1.7.26",
     "@types/fs-extra": "^11.0.4",
     "@types/node": "^22.5.5",
@@ -68,6 +61,7 @@
     "lodash-cli": "^4.17.5",
     "move-file-cli": "^3.0.0",
     "prettier": "^3.3.3",
+    "release-it": "^17.6.0",
     "ts-node-maintained": "^10.9.4",
     "tsup": "^8.2.4",
     "typescript": "^5.6.2"
@@ -86,6 +80,7 @@
     "slugify": "^1.6.6",
     "truncatise": "^0.0.8"
   },
+  "homepage": "https://github.com/poppinss/utils#readme",
   "repository": {
     "type": "git",
     "url": "git+https://github.com/poppinss/utils.git"
@@ -93,17 +88,14 @@
   "bugs": {
     "url": "https://github.com/poppinss/utils/issues"
   },
-  "homepage": "https://github.com/poppinss/utils#readme",
-  "c8": {
-    "reporter": [
-      "text",
-      "html"
-    ],
-    "exclude": [
-      "**/build/lodash/**",
-      "tests/**",
-      "test_helpers/**"
-    ]
+  "keywords": [
+    "toolkit",
+    "utilities"
+  ],
+  "author": "virk,poppinss",
+  "license": "MIT",
+  "publishConfig": {
+    "provenance": true
   },
   "tsup": {
     "entry": [
@@ -120,6 +112,41 @@
     "dts": false,
     "sourcemap": true,
     "target": "esnext"
+  },
+  "release-it": {
+    "git": {
+      "requireCleanWorkingDir": true,
+      "requireUpstream": true,
+      "commitMessage": "chore(release): ${version}",
+      "tagAnnotation": "v${version}",
+      "push": true,
+      "tagName": "v${version}"
+    },
+    "github": {
+      "release": true
+    },
+    "npm": {
+      "publish": true,
+      "skipChecks": true
+    },
+    "plugins": {
+      "@release-it/conventional-changelog": {
+        "preset": {
+          "name": "angular"
+        }
+      }
+    }
+  },
+  "c8": {
+    "reporter": [
+      "text",
+      "html"
+    ],
+    "exclude": [
+      "**/build/lodash/**",
+      "tests/**",
+      "test_helpers/**"
+    ]
   },
   "prettier": "@adonisjs/prettier-config"
 }
