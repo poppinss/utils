@@ -69,7 +69,7 @@ import lodash from '@poppinss/utils/lodash'
 import assert from '@poppinss/utils/assert'
 
 // main module
-import { base64, Exception, fsReadAll } from '@poppinss/utils'
+import { base64, fsReadAll } from '@poppinss/utils'
 
 // types sub-module
 import { ReadAllFilesOptions } from '@poppinss/utils/types'
@@ -645,9 +645,11 @@ lodash.pick(collection, keys)
 ```
 
 ### Assertion helpers
+
 The following assertion methods offers type-safe approach for writing conditionals and throwing error when the variable has unexpected values.
 
 #### assertExists(message?: string)
+
 Throws [AssertionError](https://nodejs.org/api/assert.html#new-assertassertionerroroptions) when the value is `false`, `null`, or `undefined`.
 
 ```ts
@@ -660,6 +662,7 @@ assertExists(value)
 ```
 
 #### assertNotNull(value: unknown, message?: string)
+
 Throws [AssertionError](https://nodejs.org/api/assert.html#new-assertassertionerroroptions) when the value is `null`.
 
 ```ts
@@ -672,6 +675,7 @@ assertNotNull(value)
 ```
 
 #### assertIsDefined(value: unknown, message?: string)
+
 Throws [AssertionError](https://nodejs.org/api/assert.html#new-assertassertionerroroptions) when the value is `undefined`.
 
 ```ts
@@ -684,6 +688,7 @@ assertIsDefined(value)
 ```
 
 #### assertUnreachable(value: unknown)
+
 Throws [AssertionError](https://nodejs.org/api/assert.html#new-assertassertionerroroptions) when the method is invoked. In other words, this method always throws an exception.
 
 ```ts
@@ -829,7 +834,7 @@ defineStaticProperty(UserModel, 'columns', {
 A custom exception class with support for defining the error status, error code, and help description. This class aims to standardize exceptions within your projects.
 
 ```ts
-import { Exception } from '@poppinss/utils'
+import { Exception } from '@poppinss/utils/exception'
 
 class ResourceNotFound extends Exception {
   static code = 'E_RESOURCE_NOT_FOUND'
@@ -848,7 +853,7 @@ constructor that accepts an array of values to use for interpolation.
 The interpolation of error message is performed using the `util.format` message.
 
 ```ts
-import { createError } from '@poppinss/utils'
+import { createError } from '@poppinss/utils/exception'
 const E_RESOURCE_NOT_FOUND = createError(
   'Unable to find resource with id %d',
   'E_RESOURCE_NOT_FOUND'
@@ -1051,7 +1056,7 @@ if (safeEqual(trustedValue, userInput)) {
 Convert OS-specific file paths to Unix file paths. The method is exported directly from the [slash](https://npm.im/slash) package.
 
 ```ts
-import { slash } from '@poppinss/utils'
+import { slash } from '@poppinss/utils/slash'
 slash('foo\\bar') // foo/bar
 ```
 
@@ -1229,6 +1234,7 @@ const filename = getFilename(import.meta.url)
 ```
 
 #### joinToURL
+
 Similar to the Node.js `path.join`, but instead expects the first parameter to be a URL instance or a string with the `file:///` protocol.
 
 The return value is an absolute file system path without the `file:///` protocol.
