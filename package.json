@@ -31,7 +31,7 @@
     "pretest": "npm run lint",
     "test": "npm run build:lodash && c8 npm run quick:test",
     "build:lodash": "lodash include=\"pick,omit,has,get,set,unset,mergeWith,merge,size,clone,cloneDeep,toPath\" --production && move-file ./lodash.custom.min.js build/lodash/main.cjs",
-    "quick:test": "node --loader=ts-node/esm bin/test.ts",
+    "quick:test": "node --import=ts-node-maintained/register/esm bin/test.ts",
     "clean": "del-cli build",
     "typecheck": "tsc --noEmit",
     "precompile": "npm run lint && npm run clean",
@@ -40,7 +40,7 @@
     "release": "np",
     "version": "npm run build",
     "prepublishOnly": "npm run build",
-    "lint": "eslint . --ext=.ts",
+    "lint": "eslint",
     "format": "prettier --write .",
     "sync-labels": "github-label-sync --labels .github/labels.json poppinss/utils"
   },
@@ -51,42 +51,36 @@
   "author": "virk,poppinss",
   "license": "MIT",
   "devDependencies": {
-    "@adonisjs/eslint-config": "^1.3.0",
-    "@adonisjs/logger": "^5.4.2-7",
-    "@adonisjs/prettier-config": "^1.3.0",
-    "@adonisjs/tsconfig": "^1.3.0",
-    "@commitlint/cli": "^19.2.2",
-    "@commitlint/config-conventional": "^19.2.2",
+    "@adonisjs/eslint-config": "^2.0.0-beta.6",
+    "@adonisjs/logger": "^6.0.3",
+    "@adonisjs/prettier-config": "^1.4.0",
+    "@adonisjs/tsconfig": "^1.4.0",
     "@japa/assert": "^3.0.0",
     "@japa/expect-type": "^2.0.2",
     "@japa/runner": "^3.1.4",
-    "@swc/core": "^1.4.14",
+    "@swc/core": "^1.7.26",
     "@types/fs-extra": "^11.0.4",
-    "@types/node": "^20.12.7",
-    "c8": "^9.1.0",
-    "del-cli": "^5.1.0",
-    "eslint": "^8.57.0",
+    "@types/node": "^22.5.5",
+    "c8": "^10.1.2",
+    "eslint": "^9.10.0",
     "fs-extra": "^11.2.0",
-    "github-label-sync": "^2.3.1",
-    "husky": "^9.0.11",
     "lodash": "^4.17.21",
     "lodash-cli": "^4.17.5",
     "move-file-cli": "^3.0.0",
-    "np": "^10.0.3",
-    "prettier": "^3.2.5",
-    "ts-node": "^10.9.2",
-    "tsup": "^8.0.2",
-    "typescript": "^5.4.5"
+    "prettier": "^3.3.3",
+    "ts-node-maintained": "^10.9.4",
+    "tsup": "^8.2.4",
+    "typescript": "^5.6.2"
   },
   "dependencies": {
     "@lukeed/ms": "^2.0.2",
     "@types/bytes": "^3.1.4",
     "@types/pluralize": "^0.0.33",
     "bytes": "^3.1.2",
-    "case-anything": "^2.1.13",
+    "case-anything": "^3.1.0",
     "flattie": "^1.1.1",
     "pluralize": "^8.0.0",
-    "safe-stable-stringify": "^2.4.3",
+    "safe-stable-stringify": "^2.5.0",
     "secure-json-parse": "^2.7.0",
     "slash": "^5.1.0",
     "slugify": "^1.6.6",
@@ -111,25 +105,6 @@
       "test_helpers/**"
     ]
   },
-  "commitlint": {
-    "extends": [
-      "@commitlint/config-conventional"
-    ]
-  },
-  "publishConfig": {
-    "access": "public",
-    "tag": "latest"
-  },
-  "np": {
-    "message": "chore(release): %s",
-    "tag": "latest",
-    "branch": "main",
-    "anyBranch": false
-  },
-  "eslintConfig": {
-    "extends": "@adonisjs/eslint-config/package"
-  },
-  "prettier": "@adonisjs/prettier-config",
   "tsup": {
     "entry": [
       "./index.ts",
@@ -145,5 +120,6 @@
     "dts": false,
     "sourcemap": true,
     "target": "esnext"
-  }
+  },
+  "prettier": "@adonisjs/prettier-config"
 }

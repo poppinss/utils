@@ -44,7 +44,7 @@ async function importFile(
    */
   const exportedValue =
     fileExtension === '.json'
-      ? await import(fileURL, { assert: { type: 'json' } })
+      ? await import(fileURL, { with: { type: 'json' } })
       : await import(fileURL)
 
   lodash.set(
