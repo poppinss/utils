@@ -23,7 +23,7 @@
     "./string_builder": "./build/src/string_builder.js",
     "./json": "./build/src/json/main.js",
     "./types": "./build/src/types.js",
-    "./exceptions": "./build/exceptions/src/exceptions/index.js",
+    "./exceptions": "./build/src/exceptions/main.js",
     "./exception": "./build/src/exception.js",
     "./slash": "./build/src/slash.js"
   },
