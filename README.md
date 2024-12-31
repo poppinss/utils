@@ -1053,7 +1053,7 @@ if (safeEqual(trustedValue, userInput)) {
 
 #### slash
 
-Convert OS-specific file paths to Unix file paths. The method is exported directly from the [slash](https://npm.im/slash) package.
+Convert OS-specific file paths to Unix file paths. Credits [https://github.com/sindresorhus/slash](https://github.com/sindresorhus/slash)
 
 ```ts
 import { slash } from '@poppinss/utils/slash'

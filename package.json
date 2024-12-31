@@ -75,8 +75,7 @@
     "@poppinss/string": "^1.1.0",
     "flattie": "^1.1.1",
     "safe-stable-stringify": "^2.5.0",
-    "secure-json-parse": "^3.0.1",
-    "slash": "^5.1.0"
+    "secure-json-parse": "^3.0.1"
   },
   "homepage": "https://github.com/poppinss/utils#readme",
   "repository": {
