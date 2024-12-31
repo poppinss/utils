@@ -70,21 +70,13 @@
     "typescript": "^5.7.2"
   },
   "dependencies": {
-    "@lukeed/ms": "^2.0.2",
     "@poppinss/exception": "^1.2.0",
     "@poppinss/object-builder": "^1.1.0",
     "@poppinss/string": "^1.1.0",
-    "@types/bytes": "^3.1.5",
-    "@types/pluralize": "^0.0.33",
-    "bytes": "^3.1.2",
-    "case-anything": "^3.1.0",
     "flattie": "^1.1.1",
-    "pluralize": "^8.0.0",
     "safe-stable-stringify": "^2.5.0",
     "secure-json-parse": "^3.0.1",
-    "slash": "^5.1.0",
-    "slugify": "^1.6.6",
-    "truncatise": "^0.0.8"
+    "slash": "^5.1.0"
   },
   "homepage": "https://github.com/poppinss/utils#readme",
   "repository": {
