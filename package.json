@@ -72,6 +72,7 @@
   "dependencies": {
     "@lukeed/ms": "^2.0.2",
     "@poppinss/exception": "^1.2.0",
+    "@poppinss/object-builder": "^1.1.0",
     "@poppinss/string": "^1.1.0",
     "@types/bytes": "^3.1.5",
     "@types/pluralize": "^0.0.33",
