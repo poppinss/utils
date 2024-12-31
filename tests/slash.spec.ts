@@ -8,7 +8,7 @@
  */
 
 import { test } from '@japa/runner'
-import slash from '../src/slash.js'
+import { slash } from '../src/slash.js'
 
 test('convert backwards-slash paths to forward slash paths', ({ assert }) => {
   assert.equal(slash('c:/aaaa\\bbbb'), 'c:/aaaa/bbbb')
