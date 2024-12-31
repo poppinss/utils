@@ -7,4 +7,5 @@
  * file that was distributed with this source code.
  */
 
-export * from '@poppinss/string'
+import string from '@poppinss/string'
+export default string
