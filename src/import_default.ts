@@ -7,7 +7,7 @@
  * file that was distributed with this source code.
  */
 
-import { RuntimeException } from './exceptions/runtime_exception.js'
+import { RuntimeException } from './exceptions/main.js'
 
 /**
  * Dynamically import a module and ensure it has a default export

@@ -7,5 +7,4 @@
  * file that was distributed with this source code.
  */
 
-export * from './invalid_arguments_exception.js'
-export * from './runtime_exception.js'
+export { InvalidArgumentsException, RuntimeException } from '@poppinss/exception'

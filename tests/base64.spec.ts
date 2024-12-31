@@ -39,6 +39,13 @@ test.group('Base 64 | encode', () => {
     assert.equal(base64.urlEncode(value), base64UrlEncodedString)
     assert.equal(base64.encode(value), base64String)
   })
+
+  test('encode ArrayBuffer', ({ assert }) => {
+    const value = new ArrayBuffer(10)
+
+    assert.equal(base64.urlEncode(value), 'AAAAAAAAAAAAAA')
+    assert.equal(base64.encode(value), 'AAAAAAAAAAAAAA==')
+  })
 })
 
 test.group('Base 64 | decode', () => {
