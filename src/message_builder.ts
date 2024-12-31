@@ -8,7 +8,7 @@
  */
 
 import json from './json/main.js'
-import milliseconds from './string/milliseconds.js'
+import string from '@poppinss/string'
 
 /**
  * Message builder exposes an API to "JSON.stringify" values by
@@ -22,7 +22,7 @@ export class MessageBuilder {
       return undefined
     }
 
-    const expiryMs = milliseconds.parse(expiresIn)
+    const expiryMs = string.milliseconds.parse(expiresIn)
     return new Date(Date.now() + expiryMs)
   }
 

@@ -8,7 +8,7 @@
  */
 
 import { test } from '@japa/runner'
-import string from '../src/string/main.js'
+import string from '@poppinss/string'
 import { MessageBuilder } from '../src/message_builder.js'
 
 test.group('MessageBuilder | build', () => {

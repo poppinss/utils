@@ -15,12 +15,20 @@ class Base64 {
   /**
    * Base64 encode Buffer or string
    */
-  encode(arrayBuffer: ArrayBuffer | SharedArrayBuffer): string
+  encode(arrayBuffer: ArrayBuffer | Buffer<ArrayBuffer> | SharedArrayBuffer): string
   encode(data: string, encoding?: BufferEncoding): string
-  encode(data: ArrayBuffer | SharedArrayBuffer | string, encoding?: BufferEncoding): string {
+  encode(
+    data: ArrayBuffer | Buffer<ArrayBuffer> | SharedArrayBuffer | string,
+    encoding?: BufferEncoding
+  ): string {
     if (typeof data === 'string') {
       return Buffer.from(data, encoding).toString('base64')
     }
+
+    if (Buffer.isBuffer(data)) {
+      return data.toString('base64')
+    }
+
     return Buffer.from(data).toString('base64')
   }
 
@@ -53,9 +61,12 @@ class Base64 {
   /**
    * Base64 encode Buffer or string to be URL safe. (RFC 4648)
    */
-  urlEncode(arrayBuffer: ArrayBuffer | SharedArrayBuffer): string
+  urlEncode(arrayBuffer: ArrayBuffer | Buffer<ArrayBuffer> | SharedArrayBuffer): string
   urlEncode(data: string, encoding?: BufferEncoding): string
-  urlEncode(data: ArrayBuffer | SharedArrayBuffer | string, encoding?: BufferEncoding): string {
+  urlEncode(
+    data: ArrayBuffer | Buffer<ArrayBuffer> | SharedArrayBuffer | string,
+    encoding?: BufferEncoding
+  ): string {
     const encoded = typeof data === 'string' ? this.encode(data, encoding) : this.encode(data)
     return encoded.replace(/\+/g, '-').replace(/\//g, '_').replace(/\=/g, '')
   }
