@@ -95,9 +95,10 @@
     "toolkit",
     "utilities"
   ],
-  "author": "virk,poppinss",
+  "author": "Harminder Virk <virk@adonisjs.com>",
   "license": "MIT",
   "publishConfig": {
+    "access": "public",
     "provenance": true
   },
   "tsup": {
