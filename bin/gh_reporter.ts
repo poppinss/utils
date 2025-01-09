@@ -80,7 +80,7 @@ export class GhReporter extends BaseReporter {
           command: 'error',
           properties: {
             file: relative(process.cwd(), mainFrame.fileName!),
-            title: error.title,
+            // title: error.title,
             line: String(mainFrame.lineNumber!),
             column: String(mainFrame.columnNumber!),
           },
