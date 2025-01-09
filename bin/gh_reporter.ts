@@ -1,6 +1,7 @@
 import { Youch } from 'youch'
 import { BaseReporter } from '@japa/runner/core'
 import { stripVTControlCharacters } from 'node:util'
+import { relative } from 'node:path'
 
 export class GhReporter extends BaseReporter {
   static name = 'gh'
@@ -70,7 +71,7 @@ export class GhReporter extends BaseReporter {
         const formatted = this.formatMessage({
           command: 'error',
           properties: {
-            file: mainFrame.fileName!,
+            file: relative(process.cwd(), mainFrame.fileName!),
             title: error.title,
             line: String(mainFrame.lineNumber!),
             column: String(mainFrame.columnNumber!),
