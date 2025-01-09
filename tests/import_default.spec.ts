@@ -43,8 +43,8 @@ test.group('Import default', () => {
     }, './foo.ts')
 
     expectTypeOf(value).toMatchTypeOf<{ foo: string }>()
-    assert.notDeepEqual(value, {
-      foo: 'bar',
+    assert.deepEqual(value, {
+      foo: 'baz',
     })
   })
 })
