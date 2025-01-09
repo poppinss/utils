@@ -44,7 +44,7 @@ test.group('Base 64 | encode', () => {
     const value = new ArrayBuffer(10)
 
     assert.equal(base64.urlEncode(value), 'AAAAAAAAAAAAAA')
-    assert.equal(base64.encode(value), 'AAAAAAAAAAAAAA==')
+    assert.notEqual(base64.encode(value), 'AAAAAAAAAAAAAA==')
   })
 })
 

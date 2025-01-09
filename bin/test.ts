@@ -1,6 +1,7 @@
 import { assert } from '@japa/assert'
 import { expectTypeOf } from '@japa/expect-type'
 import { processCLIArgs, configure, run } from '@japa/runner'
+import { GhReporter } from './gh_reporter.js'
 
 /*
 |--------------------------------------------------------------------------
@@ -19,6 +20,15 @@ processCLIArgs(process.argv.slice(2)),
   configure({
     files: ['tests/**/*.spec.(ts|js)'],
     plugins: [assert(), expectTypeOf()],
+    reporters: {
+      activated: [GhReporter.name],
+      list: [
+        {
+          name: GhReporter.name,
+          handler: (...args) => new GhReporter().boot(...args),
+        },
+      ],
+    },
   })
 
 /*
