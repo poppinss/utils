@@ -23,7 +23,7 @@ const binaryData = unescape(
 test.group('Base 64 | encode', () => {
   test('encode binary data', ({ assert }) => {
     assert.equal(base64.urlEncode(binaryData, 'binary'), base64UrlEncodedString)
-    assert.equal(base64.encode(binaryData, 'binary'), base64String)
+    assert.strictEqual(base64.encode(binaryData, 'binary'), base64String)
   })
 
   test('encode hex value', ({ assert }) => {
