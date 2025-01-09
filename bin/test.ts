@@ -21,7 +21,7 @@ processCLIArgs(process.argv.slice(2)),
     files: ['tests/**/*.spec.(ts|js)'],
     plugins: [assert(), expectTypeOf()],
     reporters: {
-      activated: [GhReporter.name],
+      activated: ['spec', GhReporter.name],
       list: [
         {
           name: GhReporter.name,
