@@ -61,7 +61,7 @@ export class GhReporter extends BaseReporter {
 
     for (let error of errorsList) {
       const youch = new Youch()
-      const parsedError = await youch.toJSON(error)
+      const parsedError = await youch.toJSON(error.error)
       const mainFrame = parsedError.frames.find((frame) => {
         return frame.type === 'app'
       })
