@@ -68,6 +68,14 @@ export class GhReporter extends BaseReporter {
       })
 
       if (mainFrame) {
+        console.log({
+          properties: {
+            file: relative(process.cwd(), mainFrame.fileName!),
+            title: error.title,
+            line: String(mainFrame.lineNumber!),
+            column: String(mainFrame.columnNumber!),
+          },
+        })
         const formatted = this.formatMessage({
           command: 'error',
           properties: {
