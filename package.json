@@ -32,7 +32,7 @@
   },
   "scripts": {
     "pretest": "npm run lint",
-    "test": "npm run build:lodash && c8 npm run quick:test",
+    "test": "npm run build:lodash && npm run quick:test",
     "build:lodash": "lodash include=\"pick,omit,has,get,set,unset,mergeWith,merge,size,clone,cloneDeep,toPath\" --production && move-file ./lodash.custom.min.js build/lodash/main.cjs",
     "lint": "eslint",
     "format": "prettier --write .",
