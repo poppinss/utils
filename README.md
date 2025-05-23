@@ -339,7 +339,7 @@ class User extends compose(
 
 If you use class inheritance alongside static properties, you will either share properties by reference or define them directly on the parent class.
 
-**Redefining a property**
+**Redefining a property**\
 In the following example, we re-define the `static columns` member on the `UserModel` class.
 
 ```ts
@@ -352,7 +352,7 @@ class UserModel extends AppModel {
 }
 ```
 
-**Sharing by reference**
+**Sharing by reference**\
 In the following example, we are share the `static columns` between the `AppModel` and the `UserModel` classes. However, mutating the property via the `UserModel` will also impact the `AppModel` (not something we want).
 
 ```ts
