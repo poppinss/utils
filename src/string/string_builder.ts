@@ -7,7 +7,5 @@
  * file that was distributed with this source code.
  */
 
-import string from '@poppinss/string/builder'
-
-export * from '@poppinss/string/builder'
-export default string
+import StringBuilder from '@poppinss/string/builder'
+export default StringBuilder
