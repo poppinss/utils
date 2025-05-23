@@ -83,4 +83,12 @@ test.group('Base 64 | decode', () => {
     assert.equal(base64.urlDecode(Buffer.from('hello world'), 'utf-8'), 'hello world')
     assert.equal(base64.decode(Buffer.from('hello world'), 'utf-8'), 'hello world')
   })
+
+  test('encode decode with emojis', ({ assert }) => {
+    assert.equal(base64.decode(base64.encode('hello⛳❤️🧀')), 'hello⛳❤️🧀')
+    assert.equal(base64.urlDecode(base64.urlEncode('hello⛳❤️🧀')), 'hello⛳❤️🧀')
+
+    assert.equal(base64.decode(base64.encode('_hello⛳❤️🧀✅')), '_hello⛳❤️🧀✅')
+    assert.equal(base64.urlDecode(base64.urlEncode('_hello⛳❤️🧀✅')), '_hello⛳❤️🧀✅')
+  })
 })
