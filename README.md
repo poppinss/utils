@@ -40,9 +40,7 @@ Even though I do not care much about package size (most of my work is consumed o
 
 Here's the last checked install size of this package.
 
-<a href="https://pkg-size.dev/@poppinss/utils@next">
-  <img src="https://pkg-size.dev/badge/install/319382" title="Install size for @poppinss/utils">
-</a>
+<a href="https://pkg-size.dev/@poppinss/utils@next"><img src="https://pkg-size.dev/badge/install/370120" title="Install size for @poppinss/utils"></a>
 
 ## Installation
 

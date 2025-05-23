@@ -7,4 +7,9 @@
  * file that was distributed with this source code.
  */
 
-export * from '@poppinss/exception'
+export {
+  RuntimeException,
+  InvalidArgumentsException,
+  Exception,
+  createError,
+} from '@poppinss/exception'

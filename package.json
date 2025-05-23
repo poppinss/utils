@@ -7,7 +7,6 @@
   "files": [
     "build",
     "!build/tests",
-    "!build/test_helpers",
     "!build/bin",
     "lodash"
   ],
@@ -98,14 +97,14 @@
   "tsup": {
     "entry": [
       "./index.ts",
-      "./src/assert.ts",
-      "./src/string/main.ts",
-      "./src/string/string_builder.ts",
-      "./src/json/main.ts",
-      "./src/types.ts",
-      "./src/slash.ts",
-      "./src/exception.ts",
-      "./src/exceptions/main.ts"
+      "./modules/fs/main.ts",
+      "./modules/json/main.ts",
+      "./modules/string/main.ts",
+      "./modules/string/string_builder.ts",
+      "./modules/assert.ts",
+      "./modules/base64.ts",
+      "./modules/exception.ts",
+      "./modules/types.ts"
     ],
     "outDir": "./build",
     "clean": true,
