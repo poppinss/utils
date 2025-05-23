@@ -8,15 +8,13 @@
  */
 
 import lodash from '@poppinss/utils/lodash'
-
-type Constructor = new (...args: any[]) => any
-type AbstractConstructor = abstract new (...args: any[]) => any
+import type { AbstractConstructor, Constructor } from '@poppinss/types'
 
 /**
  * Define static properties on a class with inheritance in play.
  */
 export function defineStaticProperty<
-  T extends Constructor | AbstractConstructor,
+  T extends Constructor<any> | AbstractConstructor<any>,
   Prop extends keyof T,
 >(
   self: T,

@@ -9,7 +9,7 @@
 
 import { test } from '@japa/runner'
 import { compose } from '../src/compose.js'
-import { NormalizeConstructor } from '../src/types.js'
+import { NormalizeConstructor } from '@poppinss/types'
 
 test.group('compose', () => {
   test('apply multiple mixins to a given base class', async ({ assert, expectTypeOf }) => {

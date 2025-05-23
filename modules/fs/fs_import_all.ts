@@ -12,8 +12,14 @@ import lodash from '@poppinss/utils/lodash'
 import { extname, relative, sep } from 'node:path'
 
 import { fsReadAll } from './fs_read_all.js'
-import { ImportAllFilesOptions } from './types.js'
-import { isScriptFile } from './is_script_file.js'
+import { isScriptFile } from '../../src/is_script_file.js'
+
+export type ImportAllFilesOptions = {
+  ignoreMissingRoot?: boolean
+  filter?: (filePath: string, index: number) => boolean
+  sort?: (current: string, next: string) => number
+  transformKeys?: (keys: string[]) => string[]
+}
 
 /**
  * Import the file and update the values collection with the default

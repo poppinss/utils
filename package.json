@@ -18,13 +18,14 @@
       "node": "./build/lodash/main.cjs",
       "default": "./build/lodash/main.cjs"
     },
-    "./assert": "./build/src/assert.js",
-    "./string": "./build/src/string/main.js",
-    "./string_builder": "./build/src/string/string_builder.js",
-    "./json": "./build/src/json/main.js",
-    "./types": "./build/src/types.js",
-    "./exception": "./build/src/exception.js",
-    "./slash": "./build/src/slash.js"
+    "./fs": "./build/modules/fs/main.js",
+    "./json": "./build/modules/json/main.js",
+    "./string": "./build/modules/string/main.js",
+    "./string_builder": "./build/modules/string/string_builder.js",
+    "./assert": "./build/modules/assert.js",
+    "./base64": "./build/modules/base64.js",
+    "./exception": "./build/modules/exception.js",
+    "./types": "./build/modules/types.js"
   },
   "engines": {
     "node": ">=24.0.0"
@@ -70,7 +71,8 @@
   "dependencies": {
     "@poppinss/exception": "^1.2.1",
     "@poppinss/object-builder": "^1.1.0",
-    "@poppinss/string": "^1.5.0",
+    "@poppinss/string": "^1.6.0",
+    "@poppinss/types": "^1.1.0",
     "flattie": "^1.1.1",
     "safe-stable-stringify": "^2.5.0",
     "secure-json-parse": "^4.0.0"

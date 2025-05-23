@@ -7,62 +7,17 @@
  * file that was distributed with this source code.
  */
 
-import { join } from 'node:path'
+import string from '@poppinss/string'
+import { join, relative, sep } from 'node:path'
 import { readdir, stat } from 'node:fs/promises'
 import { fileURLToPath, pathToFileURL } from 'node:url'
+import { naturalSort } from '../../src/natural_sort.js'
 
-import { slash } from './slash.js'
-import { naturalSort } from './natural_sort.js'
-import { ReadAllFilesOptions } from './types.js'
-
-/**
- * Filter to remove dot files
- */
-function filterDotFiles(fileName: string) {
-  return fileName[0] !== '.'
-}
-
-/**
- * Read all files from the directory recursively
- */
-async function readFiles(
-  root: string,
-  files: string[],
-  options: ReadAllFilesOptions,
-  relativePath: string
-): Promise<void> {
-  const location = join(root, relativePath)
-  const stats = await stat(location)
-
-  if (stats.isDirectory()) {
-    let locationFiles = await readdir(location)
-
-    await Promise.all(
-      locationFiles.filter(filterDotFiles).map((file) => {
-        return readFiles(root, files, options, join(relativePath, file))
-      })
-    )
-
-    return
-  }
-
-  const pathType = options.pathType || 'relative'
-  switch (pathType) {
-    case 'relative':
-      files.push(relativePath)
-      break
-    case 'absolute':
-      files.push(location)
-      break
-    case 'unixRelative':
-      files.push(slash(relativePath))
-      break
-    case 'unixAbsolute':
-      files.push(slash(location))
-      break
-    case 'url':
-      files.push(pathToFileURL(location).href)
-  }
+export type ReadAllFilesOptions = {
+  ignoreMissingRoot?: boolean
+  filter?: (filePath: string, index: number) => boolean
+  sort?: (current: string, next: string) => number
+  pathType?: 'relative' | 'unixRelative' | 'absolute' | 'unixAbsolute' | 'url'
 }
 
 /**
@@ -88,7 +43,7 @@ export async function fsReadAll(
 ): Promise<string[]> {
   const normalizedLocation = typeof location === 'string' ? location : fileURLToPath(location)
   const normalizedOptions = Object.assign({ absolute: false, sort: naturalSort }, options)
-  const files: string[] = []
+  const pathType = normalizedOptions.pathType || 'relative'
 
   /**
    * Check to see if the root directory exists and ignore
@@ -104,7 +59,36 @@ export async function fsReadAll(
     throw error
   }
 
-  await readFiles(normalizedLocation, files, normalizedOptions, '')
+  const dirents = await readdir(normalizedLocation, { recursive: true, withFileTypes: true })
+  const files = dirents
+    .filter((dirent) => {
+      if (!dirent.isFile()) {
+        return false
+      }
+
+      if (
+        dirent.name.startsWith('.') ||
+        dirent.parentPath.split(sep).some((segment) => segment.startsWith('.'))
+      ) {
+        return false
+      }
+
+      return true
+    })
+    .map((file) => {
+      switch (pathType) {
+        case 'relative':
+          return join(relative(normalizedLocation, file.parentPath), file.name)
+        case 'absolute':
+          return join(file.parentPath, file.name)
+        case 'unixRelative':
+          return string.toUnixSlash(join(relative(normalizedLocation, file.parentPath), file.name))
+        case 'unixAbsolute':
+          return string.toUnixSlash(join(file.parentPath, file.name))
+        case 'url':
+          return pathToFileURL(join(file.parentPath, file.name)).href
+      }
+    })
 
   if (normalizedOptions.filter) {
     return files.filter(normalizedOptions.filter).sort(normalizedOptions.sort)

@@ -7,8 +7,8 @@
  * file that was distributed with this source code.
  */
 
-import json from './json/main.js'
 import string from '@poppinss/string'
+import { safeParse, safeStringify } from '../modules/json/main.js'
 
 /**
  * Message builder exposes an API to "JSON.stringify" values by
@@ -43,14 +43,14 @@ export class MessageBuilder {
    */
   build(message: any, expiresIn?: string | number, purpose?: string): string {
     const expiryDate = this.#getExpiryDate(expiresIn)
-    return json.safeStringify({ message, purpose, expiryDate })!
+    return safeStringify({ message, purpose, expiryDate })!
   }
 
   /**
    * Verifies the message for expiry and purpose.
    */
   verify<T extends any>(message: any, purpose?: string): null | T {
-    const parsed = json.safeParse(message)
+    const parsed = safeParse(message)
 
     /**
      * After JSON.parse we do not receive a valid object

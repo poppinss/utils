@@ -8,15 +8,12 @@
  */
 
 import { test } from '@japa/runner'
-import { join } from 'node:path'
+import string from '@poppinss/string'
+import { join, normalize } from 'node:path'
 import { ensureDir, remove, outputFile } from 'fs-extra'
+import { fsReadAll } from '../modules/fs/fs_read_all.js'
 
-import { joinToURL } from '../index.js'
-import { slash } from '../src/slash.js'
-import { fsReadAll } from '../src/fs_read_all.js'
-import { normalize } from '../test_helpers/index.js'
-
-const BASE_PATH = joinToURL(import.meta.url, 'app')
+const BASE_PATH = join(import.meta.dirname, 'app')
 
 test.group('FS read all | relative paths', (group) => {
   group.each.setup(async () => {
@@ -267,7 +264,7 @@ test.group('FS read all | absolute paths', (group) => {
     assert.deepEqual(
       files,
       ['app.ts', 'app/server.ts', 'config/config.js', 'config/main.json'].map(
-        (filePath) => `${slash(BASE_PATH)}/${filePath}`
+        (filePath) => `${string.toUnixSlash(BASE_PATH)}/${filePath}`
       )
     )
   })

@@ -1051,15 +1051,6 @@ if (safeEqual(trustedValue, userInput)) {
 }
 ```
 
-#### slash
-
-Convert OS-specific file paths to Unix file paths. Credits [https://github.com/sindresorhus/slash](https://github.com/sindresorhus/slash)
-
-```ts
-import { slash } from '@poppinss/utils/slash'
-slash('foo\\bar') // foo/bar
-```
-
 #### MessageBuilder
 
 Message builder is a convenience layer to stringify JavaScript values with an expiry date and a purpose. For example:

@@ -8,7 +8,8 @@
  */
 
 import { configure } from 'safe-stable-stringify'
-import { JSONReplacer } from '../types.js'
+
+export type JSONReplacer = (this: any, key: string, value: any) => any
 
 const stringify = configure({
   bigint: false,

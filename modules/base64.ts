@@ -98,4 +98,5 @@ class Base64 {
   }
 }
 
-export const base64 = new Base64()
+const base64 = new Base64()
+export default base64
