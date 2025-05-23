@@ -8,11 +8,11 @@
 
 My open-source projects (including AdonisJS) use many single-purpose utility packages from npm. Over the years, I have faced the following challenges when using these packages.
 
-Finding the perfect package for the use case takes a lot of time. The package should be well maintained, have good test coverage, and not accumulate debt by supporting some old versions of Node.js.
-Some packages are great, but they end up pulling a lot of unnecessary dependencies like [(requiring TypeScript as a prod dependency)](https://github.com/blakeembrey/change-case/issues/281)
-Sometimes, I use different packages for the same utility (because I cannot remember what I used last time in that other package). So I want to spend time once choosing the one I need and then bundle it inside `@poppinss/utils`.
-Some authors introduce breaking changes too often (not a criticism). Therefore, I prefer wrapping their packages with my external API only to absorb breaking changes in one place.
-The rest are some handwritten utilities that fit my needs.
+- Finding the perfect package for the use case takes a lot of time. The package should be well maintained, have good test coverage, and not accumulate debt by supporting some old versions of Node.js.
+- Some packages are great, but they end up pulling a lot of unnecessary dependencies like [(requiring TypeScript as a prod dependency)](https://github.com/blakeembrey/change-case/issues/281)
+- Sometimes, I use different packages for the same utility (because I cannot remember what I used last time in that other package). So I want to spend time once choosing the one I need and then bundle it inside `@poppinss/utils`.
+- Some authors introduce breaking changes too often (not a criticism). Therefore, I prefer wrapping their packages with my external API only to absorb breaking changes in one place.
+- The rest are some handwritten utilities that fit my needs.
 
 ## Re-exported packages
 
@@ -128,7 +128,7 @@ Get a recursive list of all files from a given directory. This method is similar
 - You can define how the output paths should be returned. The supported types are `relative`, `absolute`, `unixRelative`, `unixAbsolute`, and `url`.
 
 ```ts
-import { fsReadAll } from '@poppinss/utils'
+import { fsReadAll } from '@poppinss/utils/fs'
 
 const basePath = new URL('./config', import.meta.url)
 const files = await fsReadAll(basePath, { pathType: 'url' })
@@ -160,7 +160,7 @@ The `fsImportAll` method recursively imports all the JavaScript, TypeScript, and
 - Value is the exported values from the module. Only the default value is used if a module exports both the `default` and `named` values.
 
 ```ts
-import { fsImportAll } from '@poppinss/utils'
+import { fsImportAll } from '@poppinss/utils/fs'
 
 const configDir = new URL('./config', import.meta.url)
 const collection = await fsImportAll(configDir)
@@ -333,13 +333,14 @@ class User extends compose(
 ) {}
 ```
 
-#### defineStaticProperty
+## defineStaticProperty
 
-The `defineStaticProperty` method lets you define static properties with different reference strategies on a class.
+### PROBLEM STATEMENT
 
 If you use class inheritance alongside static properties, you will either share properties by reference or define them directly on the parent class.
 
-In the following example, we are not inheriting columns from the `AppModel`. Instead, we define a new set of columns on the `UserModel`.
+**Redefining a property**
+In the following example, we re-define the `static columns` member on the `UserModel` class.
 
 ```ts
 class AppModel {
@@ -351,7 +352,8 @@ class UserModel extends AppModel {
 }
 ```
 
-In the following example, we are inheriting `columns` from the `AppModel`. However, the mutations (array.push) from the `UserModel` will also reflect on the `AppModel`.
+**Sharing by reference**
+In the following example, we are share the `static columns` between the `AppModel` and the `UserModel` classes. However, mutating the property via the `UserModel` will also impact the `AppModel` (not something we want).
 
 ```ts
 class AppModel {
@@ -362,7 +364,9 @@ class UserModel extends AppModel {}
 UserModel.columns.push('username')
 ```
 
-The ideal behavior is to deep-clone the `columns` array and then push new values to it.
+### SOLUTION
+
+To solve the mutation side-effect, you must deep-clone the `columns` array from the parent class and re-define them on `UserModel` class.
 
 ```ts
 import lodash from '@poppinss/utils/lodash'
@@ -371,17 +375,23 @@ class AppModel {
   static columns = ['id']
 }
 
-const inheritedColumns = lodash.cloneDeep(AppModel.columns)
 class UserModel extends AppModel {
-  static columns = inheritedColumns.push('username')
+  static columns = lodash.cloneDeep(AppModel.columns)
 }
+
+UserModel.columns.push('username')
 ```
 
 The `defineStaticProperty` method abstracts the logic of cloning the values. Member values are only cloned when the same member is not defined as an `ownProperty`.
 
 ```ts
-class UserModel extends AppModel {}
+import { defineStaticProperty } from '@poppinss/utils'
 
+class AppModel {
+  static columns = ['id']
+}
+
+class UserModel extends AppModel {}
 defineStaticProperty(UserModel, 'columns', {
   strategy: 'inherit',
   initialValue: [],
@@ -445,7 +455,7 @@ flatten({
 // }
 ```
 
-#### isScriptFile
+## isScriptFile
 
 A filter to know if the file path ends with `.js`, `.json`, `.cjs`, `.mjs`, or `.ts`. In the case of `.ts` files, the `.d.ts` returns false.
 
@@ -607,7 +617,7 @@ logger.log('token generated %O', token)
 return response.send(token)
 ```
 
-**Need the original value back?**
+**Need the original value back?**\
 You can call the `release` method to regain the original value. The idea is not to prevent your code from accessing the raw value. It's to stop the logging and serialization layer from reading it.
 
 ```ts
