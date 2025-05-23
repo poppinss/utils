@@ -8,7 +8,7 @@
  */
 
 import { test } from '@japa/runner'
-import { assert, assertIsDefined, assertNotNull, assertUnreachable } from '../src/assert.js'
+import assert from '../src/assert.js'
 
 test.group('assert', () => {
   test('throw exception when value is falsy', ({ expectTypeOf }) => {
@@ -33,21 +33,21 @@ test.group('assert', () => {
 test.group('assertNotNull', () => {
   test('throw exception when value is null', ({ expectTypeOf }) => {
     const value = null as string | null
-    assertNotNull(value)
+    assert.notNull(value)
 
     expectTypeOf(value).toMatchTypeOf<string>()
   }).throws('unexpected null value')
 
   test('throw exception with custom message when value is null', ({ expectTypeOf }) => {
     const value = null as string | null
-    assertNotNull(value, 'Cannot be null')
+    assert.notNull(value, 'Cannot be null')
 
     expectTypeOf(value).toMatchTypeOf<string>()
   }).throws('Cannot be null')
 
   test('do not throw when value is not null', ({ expectTypeOf }) => {
     const value = undefined as string | undefined | null
-    assertNotNull(value)
+    assert.notNull(value)
     expectTypeOf(value).toMatchTypeOf<string | undefined>()
   })
 })
@@ -55,27 +55,27 @@ test.group('assertNotNull', () => {
 test.group('assertIsDefined', () => {
   test('throw exception when value is undefined', ({ expectTypeOf }) => {
     const value = undefined as string | undefined
-    assertIsDefined(value)
+    assert.isDefined(value)
 
     expectTypeOf(value).toMatchTypeOf<string>()
   }).throws('unexpected undefined value')
 
   test('throw exception with custom message when value is undefined', ({ expectTypeOf }) => {
     const value = undefined as string | undefined
-    assertIsDefined(value, 'Cannot be undefined')
+    assert.isDefined(value, 'Cannot be undefined')
 
     expectTypeOf(value).toMatchTypeOf<string>()
   }).throws('Cannot be undefined')
 
   test('do not throw when value is not undefined', ({ expectTypeOf }) => {
     const value = null as string | undefined | null
-    assertIsDefined(value)
+    assert.isDefined(value)
     expectTypeOf(value).toMatchTypeOf<string | null>()
   })
 })
 
 test.group('assertUnreachable', () => {
   test('throw exception when method is called', () => {
-    assertUnreachable()
+    assert.unreachable()
   }).throws('unreachable code executed: undefined')
 })

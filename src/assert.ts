@@ -13,8 +13,8 @@ import { AssertionError } from 'node:assert'
 /**
  * @alias "assertExists"
  */
-export function assert(value: unknown, message?: string): asserts value {
-  return assertExists(value, message)
+export default function assert(value: unknown, message?: string): asserts value {
+  return assert.exists(value, message)
 }
 
 /**
@@ -22,7 +22,7 @@ export function assert(value: unknown, message?: string): asserts value {
  *
  * Truthy value excludes, undefined, null, and false values.
  */
-export function assertExists(value: unknown, message?: string): asserts value {
+assert.exists = function assertExists(value: unknown, message?: string): asserts value {
   if (!value) {
     throw new AssertionError({ message: message ?? 'value is falsy' })
   }
@@ -31,14 +31,14 @@ export function assertExists(value: unknown, message?: string): asserts value {
 /**
  * Throws error when method is called
  */
-export function assertUnreachable(x?: never): never {
+assert.unreachable = function assertUnreachable(x?: never): never {
   throw new AssertionError({ message: `unreachable code executed: ${inspect(x)}` })
 }
 
 /**
  * Assert the value is not null.
  */
-export function assertNotNull<T>(
+assert.notNull = function assertNotNull<T>(
   value: T | null,
   message?: string
 ): asserts value is Exclude<T, null> {
@@ -50,7 +50,7 @@ export function assertNotNull<T>(
 /**
  * Assert the value is not undefined.
  */
-export function assertIsDefined<T>(
+assert.isDefined = function assertIsDefined<T>(
   value: T | undefined,
   message?: string
 ): asserts value is Exclude<T, undefined> {
