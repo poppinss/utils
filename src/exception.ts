@@ -7,4 +7,4 @@
  * file that was distributed with this source code.
  */
 
-export { Exception, createError } from '@poppinss/exception'
+export * from '@poppinss/exception'

@@ -25,7 +25,6 @@ export { importDefault } from './src/import_default.js'
 export { MessageBuilder } from './src/message_builder.js'
 export { Exception, createError } from './src/exception.js'
 export { defineStaticProperty } from './src/define_static_property.js'
-export { RuntimeException, InvalidArgumentsException } from './src/exceptions/main.js'
 
 /**
  * Get dirname for a given file path URL

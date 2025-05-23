@@ -23,7 +23,6 @@
     "./string_builder": "./build/src/string/string_builder.js",
     "./json": "./build/src/json/main.js",
     "./types": "./build/src/types.js",
-    "./exceptions": "./build/src/exceptions/main.js",
     "./exception": "./build/src/exception.js",
     "./slash": "./build/src/slash.js"
   },
@@ -43,7 +42,7 @@
     "version": "npm run build",
     "prepublishOnly": "npm run build",
     "release": "release-it",
-    "quick:test": "node --import=@swc-node/register/esm-register bin/test.ts"
+    "quick:test": "node --import=@poppinss/ts-exec bin/test.ts"
   },
   "devDependencies": {
     "@adonisjs/eslint-config": "^2.0.0",
@@ -55,7 +54,6 @@
     "@japa/runner": "^4.2.0",
     "@poppinss/ts-exec": "^1.1.5",
     "@release-it/conventional-changelog": "^10.0.1",
-    "@swc-node/register": "^1.10.10",
     "@types/fs-extra": "^11.0.4",
     "@types/node": "^22.15.21",
     "c8": "^10.1.3",
