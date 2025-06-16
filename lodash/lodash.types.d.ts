@@ -35,7 +35,25 @@ declare module '@poppinss/utils/lodash' {
     merge: (object: any, ...otherArgs: any[]) => any
     size: (collection: object | string | null | undefined) => number
     clone: <T>(value: T) => T
+    cloneWith: <T>(
+      value: T,
+      customizer: (
+        value: any,
+        key: number | string | undefined,
+        object: TObject | undefined,
+        stack: any
+      ) => T | undefined
+    ) => T
     cloneDeep: <T>(value: T) => T
+    cloneDeepWith: <T>(
+      value: T,
+      customizer: (
+        value: any,
+        key: number | string | undefined,
+        object: TObject | undefined,
+        stack: any
+      ) => T | undefined
+    ) => T
     toPath: (value: any) => string[]
   }
 
