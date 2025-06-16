@@ -633,7 +633,9 @@ Lodash is quite a big library, and we do not use all its helper methods. Therefo
 - merge
 - size
 - clone
+- cloneWith
 - cloneDeep
+- cloneDeepWith
 - toPath
 
 You can use the methods as follows.
