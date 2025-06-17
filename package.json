@@ -26,9 +26,6 @@
     "./exception": "./build/modules/exception.js",
     "./types": "./build/modules/types.js"
   },
-  "engines": {
-    "node": ">=24.0.0"
-  },
   "scripts": {
     "pretest": "npm run lint",
     "test": "npm run build:lodash && npm run quick:test",
