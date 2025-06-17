@@ -7,7 +7,7 @@
  * file that was distributed with this source code.
  */
 
-import { Constructor } from '@poppinss/types'
+import { type Constructor } from '@poppinss/types'
 
 interface UnaryFunction<T, R> {
   (source: T): R
