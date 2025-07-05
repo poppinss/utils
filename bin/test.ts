@@ -15,11 +15,12 @@ import { processCLIArgs, configure, run } from '@japa/runner'
 |
 | Please consult japa.dev/runner-config for the config docs.
 */
-processCLIArgs(process.argv.slice(2)),
-  configure({
-    files: ['tests/**/*.spec.(ts|js)'],
-    plugins: [assert(), expectTypeOf()],
-  })
+processCLIArgs(process.argv.slice(2))
+
+configure({
+  files: ['tests/**/*.spec.(ts|js)'],
+  plugins: [assert(), expectTypeOf()],
+})
 
 /*
 |--------------------------------------------------------------------------
