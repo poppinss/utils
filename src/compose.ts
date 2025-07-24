@@ -51,6 +51,7 @@ export function compose<T extends Constructor, A, B, C, D, E, F>(
   mixinB: UnaryFunction<A, B>,
   mixinC: UnaryFunction<B, C>,
   mixinD: UnaryFunction<C, D>,
+  mixinE: UnaryFunction<D, E>,
   mixinF: UnaryFunction<E, F>
 ): F
 export function compose<T extends Constructor, A, B, C, D, E, F, G>(
@@ -59,6 +60,7 @@ export function compose<T extends Constructor, A, B, C, D, E, F, G>(
   mixinB: UnaryFunction<A, B>,
   mixinC: UnaryFunction<B, C>,
   mixinD: UnaryFunction<C, D>,
+  mixinE: UnaryFunction<D, E>,
   mixinF: UnaryFunction<E, F>,
   mixinG: UnaryFunction<F, G>
 ): G
@@ -68,6 +70,7 @@ export function compose<T extends Constructor, A, B, C, D, E, F, G, H>(
   mixinB: UnaryFunction<A, B>,
   mixinC: UnaryFunction<B, C>,
   mixinD: UnaryFunction<C, D>,
+  mixinE: UnaryFunction<D, E>,
   mixinF: UnaryFunction<E, F>,
   mixinG: UnaryFunction<F, G>,
   mixinH: UnaryFunction<G, H>
@@ -78,6 +81,7 @@ export function compose<T extends Constructor, A, B, C, D, E, F, G, H, I>(
   mixinB: UnaryFunction<A, B>,
   mixinC: UnaryFunction<B, C>,
   mixinD: UnaryFunction<C, D>,
+  mixinE: UnaryFunction<D, E>,
   mixinF: UnaryFunction<E, F>,
   mixinG: UnaryFunction<F, G>,
   mixinH: UnaryFunction<G, H>,
