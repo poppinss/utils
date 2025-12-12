@@ -34,7 +34,7 @@
     "format": "prettier --write .",
     "typecheck": "tsc --noEmit",
     "precompile": "npm run lint",
-    "compile": "tsup-node && tsc --emitDeclarationOnly --declaration",
+    "compile": "tsdown && tsc --emitDeclarationOnly --declaration",
     "build": "npm run compile && npm run build:lodash",
     "version": "npm run build",
     "prepublishOnly": "npm run build",
@@ -61,7 +61,8 @@
     "move-file-cli": "^3.0.0",
     "prettier": "^3.7.4",
     "release-it": "^19.1.0",
-    "tsup": "^8.5.1",
+    "safe-stable-stringify": "^2.5.0",
+    "tsdown": "^0.17.3",
     "typescript": "^5.9.3"
   },
   "dependencies": {
@@ -70,7 +71,6 @@
     "@poppinss/string": "^1.7.1",
     "@poppinss/types": "^1.2.1",
     "flattie": "^1.1.1",
-    "safe-stable-stringify": "^2.5.0",
     "secure-json-parse": "^4.1.0"
   },
   "homepage": "https://github.com/poppinss/utils#readme",
@@ -91,7 +91,7 @@
     "access": "public",
     "provenance": true
   },
-  "tsup": {
+  "tsdown": {
     "entry": [
       "./index.ts",
       "./modules/fs/main.ts",
@@ -106,8 +106,11 @@
     "outDir": "./build",
     "clean": true,
     "format": "esm",
+    "minify": "dce-only",
+    "fixedExtension": false,
     "dts": false,
-    "sourcemap": false,
+    "treeshake": false,
+    "sourcemaps": false,
     "target": "esnext"
   },
   "release-it": {
