@@ -627,6 +627,123 @@ const rawValue = secret.release()
 rawValue === opaque_raw_token // true
 ```
 
+## ImportsBag
+
+The `ImportsBag` class helps you manage and deduplicate import statements when generating code. It automatically merges imports from the same source and generates properly formatted import statements.
+
+This is particularly useful when building code generators, AST transformers, or any tool that needs to collect and output import statements.
+
+```ts
+import { ImportsBag } from '@poppinss/utils'
+
+const bag = new ImportsBag()
+
+// Add named imports
+bag.add({
+  source: 'lodash',
+  namedImports: ['debounce'],
+})
+
+// Add more imports from the same source - they will be merged
+bag.add({
+  source: 'lodash',
+  namedImports: ['throttle', 'debounce'], // duplicate "debounce" will be removed
+})
+
+// Add default import with named imports
+bag.add({
+  source: 'react',
+  defaultImport: 'React',
+  namedImports: ['useState', 'useEffect'],
+})
+
+// Add type imports
+bag.add({
+  source: 'express',
+  typeImports: ['Request', 'Response'],
+})
+
+// Generate import statements
+console.log(bag.toString())
+// import { debounce, throttle } from 'lodash'
+// import React, { useState, useEffect } from 'react'
+// import type { Request, Response } from 'express'
+```
+
+### Import Types
+
+The `ImportsBag` supports three types of imports:
+
+- **Default imports**: `defaultImport: 'React'` generates `import React from 'react'`
+- **Named imports**: `namedImports: ['useState']` generates `import { useState } from 'react'`
+- **Type imports**: `typeImports: ['FC']` generates `import type { FC } from 'react'`
+
+You can combine default and named imports in a single statement, but type imports are always generated as separate statements.
+
+```ts
+bag.add({
+  source: 'react',
+  defaultImport: 'React',
+  namedImports: ['useState'],
+  typeImports: ['FC'],
+})
+
+console.log(bag.toString())
+// import React, { useState } from 'react'
+// import type { FC } from 'react'
+```
+
+### Deduplication
+
+The `ImportsBag` automatically deduplicates imports from the same source:
+
+- Named and type imports are deduplicated when calling `toArray()` or `toString()`
+- Default imports are replaced (the last one wins)
+- Imports are merged by source, so multiple `add()` calls for the same source will combine all imports
+
+```ts
+bag.add({ source: 'lodash', namedImports: ['debounce'] })
+bag.add({ source: 'lodash', namedImports: ['throttle'] })
+bag.add({ source: 'lodash', namedImports: ['debounce'] }) // duplicate
+
+console.log(bag.toString())
+// import { debounce, throttle } from 'lodash'
+```
+
+### Methods
+
+#### add(importInfo)
+
+Add an import to the bag. Returns `this` for method chaining.
+
+```ts
+bag
+  .add({ source: 'lodash', namedImports: ['debounce'] })
+  .add({ source: 'express', typeImports: ['Request'] })
+```
+
+#### toArray()
+
+Returns an array of deduplicated `ImportInfo` objects.
+
+```ts
+const imports = bag.toArray()
+// [
+//   { source: 'lodash', defaultImport: undefined, namedImports: ['debounce'], typeImports: undefined },
+//   { source: 'express', defaultImport: undefined, namedImports: undefined, typeImports: ['Request'] }
+// ]
+```
+
+#### toString()
+
+Generates formatted import statements as a string.
+
+```ts
+const code = bag.toString()
+// import { debounce } from 'lodash'
+// import type { Request } from 'express'
+```
+
 [gh-workflow-image]: https://img.shields.io/github/actions/workflow/status/poppinss/utils/checks.yml?style=for-the-badge
 [gh-workflow-url]: https://github.com/poppinss/utils/actions/workflows/checks.yml 'Github action'
 [typescript-image]: https://img.shields.io/badge/Typescript-294E80.svg?style=for-the-badge&logo=typescript
