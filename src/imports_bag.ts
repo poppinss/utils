@@ -10,6 +10,7 @@
 export type ImportInfo = {
   source: string
   defaultImport?: string
+  defaultTypeImport?: string
   namedImports?: string[]
   typeImports?: string[]
 }
@@ -44,9 +45,19 @@ export class ImportsBag {
       parts.push(`import ${importParts.join(', ')} from '${imp.source}'`)
     }
 
-    // Type imports are always separate
-    if (imp.typeImports && imp.typeImports.length > 0) {
-      parts.push(`import type { ${imp.typeImports.join(', ')} } from '${imp.source}'`)
+    // Handle default type import with or without type imports
+    if (imp.defaultTypeImport || (imp.typeImports && imp.typeImports.length > 0)) {
+      const typeImportParts: string[] = []
+
+      if (imp.defaultTypeImport) {
+        typeImportParts.push(imp.defaultTypeImport)
+      }
+
+      if (imp.typeImports && imp.typeImports.length > 0) {
+        typeImportParts.push(`{ ${imp.typeImports.join(', ')} }`)
+      }
+
+      parts.push(`import type ${typeImportParts.join(', ')} from '${imp.source}'`)
     }
 
     return parts.join('\n')
@@ -64,6 +75,13 @@ export class ImportsBag {
        */
       if (importInfo.defaultImport) {
         existing.defaultImport = importInfo.defaultImport
+      }
+
+      /**
+       * Set default type import (replaces existing if present)
+       */
+      if (importInfo.defaultTypeImport) {
+        existing.defaultTypeImport = importInfo.defaultTypeImport
       }
 
       /**
@@ -89,6 +107,7 @@ export class ImportsBag {
       this.#imports.set(importInfo.source, {
         source: importInfo.source,
         defaultImport: importInfo.defaultImport,
+        defaultTypeImport: importInfo.defaultTypeImport,
         namedImports: importInfo.namedImports ? [...importInfo.namedImports] : undefined,
         typeImports: importInfo.typeImports ? [...importInfo.typeImports] : undefined,
       })
@@ -104,6 +123,7 @@ export class ImportsBag {
     return Array.from(this.#imports.values()).map((imp) => ({
       source: imp.source,
       defaultImport: imp.defaultImport,
+      defaultTypeImport: imp.defaultTypeImport,
       namedImports: imp.namedImports ? [...new Set(imp.namedImports)] : undefined,
       typeImports: imp.typeImports ? [...new Set(imp.typeImports)] : undefined,
     }))
