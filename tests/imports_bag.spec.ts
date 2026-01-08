@@ -20,6 +20,7 @@ test.group('ImportsBag | add', () => {
     assert.deepEqual(imports[0], {
       source: 'lodash',
       defaultImport: undefined,
+      defaultTypeImport: undefined,
       namedImports: ['debounce'],
       typeImports: undefined,
     })
@@ -34,6 +35,7 @@ test.group('ImportsBag | add', () => {
     assert.deepEqual(imports[0], {
       source: 'express',
       defaultImport: undefined,
+      defaultTypeImport: undefined,
       namedImports: undefined,
       typeImports: ['Request'],
     })
@@ -52,6 +54,7 @@ test.group('ImportsBag | add', () => {
     assert.deepEqual(imports[0], {
       source: 'express',
       defaultImport: undefined,
+      defaultTypeImport: undefined,
       namedImports: ['Router'],
       typeImports: ['Request', 'Response'],
     })
@@ -66,6 +69,7 @@ test.group('ImportsBag | add', () => {
     assert.deepEqual(imports[0], {
       source: 'react',
       defaultImport: 'React',
+      defaultTypeImport: undefined,
       namedImports: undefined,
       typeImports: undefined,
     })
@@ -84,6 +88,7 @@ test.group('ImportsBag | add', () => {
     assert.deepEqual(imports[0], {
       source: 'react',
       defaultImport: 'React',
+      defaultTypeImport: undefined,
       namedImports: ['useState', 'useEffect'],
       typeImports: undefined,
     })
@@ -102,6 +107,7 @@ test.group('ImportsBag | add', () => {
     assert.deepEqual(imports[0], {
       source: 'react',
       defaultImport: 'React',
+      defaultTypeImport: undefined,
       namedImports: undefined,
       typeImports: ['FC', 'PropsWithChildren'],
     })
@@ -121,8 +127,43 @@ test.group('ImportsBag | add', () => {
     assert.deepEqual(imports[0], {
       source: 'react',
       defaultImport: 'React',
+      defaultTypeImport: undefined,
       namedImports: ['useState'],
       typeImports: ['FC'],
+    })
+  })
+
+  test('add a single default type import', ({ assert }) => {
+    const bag = new ImportsBag()
+    bag.add({ source: 'fastify', defaultTypeImport: 'Fastify' })
+
+    const imports = bag.toArray()
+    assert.lengthOf(imports, 1)
+    assert.deepEqual(imports[0], {
+      source: 'fastify',
+      defaultImport: undefined,
+      defaultTypeImport: 'Fastify',
+      namedImports: undefined,
+      typeImports: undefined,
+    })
+  })
+
+  test('add default type import with type imports', ({ assert }) => {
+    const bag = new ImportsBag()
+    bag.add({
+      source: 'fastify',
+      defaultTypeImport: 'Fastify',
+      typeImports: ['FastifyRequest', 'FastifyReply'],
+    })
+
+    const imports = bag.toArray()
+    assert.lengthOf(imports, 1)
+    assert.deepEqual(imports[0], {
+      source: 'fastify',
+      defaultImport: undefined,
+      defaultTypeImport: 'Fastify',
+      namedImports: undefined,
+      typeImports: ['FastifyRequest', 'FastifyReply'],
     })
   })
 
@@ -197,6 +238,7 @@ test.group('ImportsBag | deduplication', () => {
     assert.deepEqual(imports[0], {
       source: 'express',
       defaultImport: undefined,
+      defaultTypeImport: undefined,
       namedImports: ['Router'],
       typeImports: ['Request'],
     })
@@ -212,6 +254,7 @@ test.group('ImportsBag | deduplication', () => {
     assert.deepEqual(imports[0], {
       source: 'express',
       defaultImport: undefined,
+      defaultTypeImport: undefined,
       namedImports: ['Router'],
       typeImports: ['Request'],
     })
@@ -237,8 +280,35 @@ test.group('ImportsBag | deduplication', () => {
     assert.deepEqual(imports[0], {
       source: 'react',
       defaultImport: 'React',
+      defaultTypeImport: undefined,
       namedImports: ['useState'],
       typeImports: undefined,
+    })
+  })
+
+  test('replace default type import when adding to existing source', ({ assert }) => {
+    const bag = new ImportsBag()
+    bag.add({ source: 'fastify', defaultTypeImport: 'Fastify' })
+    bag.add({ source: 'fastify', defaultTypeImport: 'F' })
+
+    const imports = bag.toArray()
+    assert.lengthOf(imports, 1)
+    assert.equal(imports[0].defaultTypeImport, 'F')
+  })
+
+  test('add default type import to existing source with type imports', ({ assert }) => {
+    const bag = new ImportsBag()
+    bag.add({ source: 'fastify', typeImports: ['FastifyRequest'] })
+    bag.add({ source: 'fastify', defaultTypeImport: 'Fastify' })
+
+    const imports = bag.toArray()
+    assert.lengthOf(imports, 1)
+    assert.deepEqual(imports[0], {
+      source: 'fastify',
+      defaultImport: undefined,
+      defaultTypeImport: 'Fastify',
+      namedImports: undefined,
+      typeImports: ['FastifyRequest'],
     })
   })
 })
@@ -378,5 +448,26 @@ test.group('ImportsBag | toString', () => {
     ].join('\n')
 
     assert.equal(bag.toString(), expected)
+  })
+
+  test('generate import statement for default type import', ({ assert }) => {
+    const bag = new ImportsBag()
+    bag.add({ source: 'fastify', defaultTypeImport: 'Fastify' })
+
+    assert.equal(bag.toString(), "import type Fastify from 'fastify'")
+  })
+
+  test('generate import statement for default type import with type imports', ({ assert }) => {
+    const bag = new ImportsBag()
+    bag.add({
+      source: 'fastify',
+      defaultTypeImport: 'Fastify',
+      typeImports: ['FastifyRequest', 'FastifyReply'],
+    })
+
+    assert.equal(
+      bag.toString(),
+      "import type Fastify, { FastifyRequest, FastifyReply } from 'fastify'"
+    )
   })
 })
