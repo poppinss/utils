@@ -627,6 +627,52 @@ const rawValue = secret.release()
 rawValue === opaque_raw_token // true
 ```
 
+## AI Agent Detection
+
+Detect if your code is running inside an AI coding assistant. This is useful for adjusting application behavior when running under AI agents (e.g., disabling prompts, adjusting logging, or enabling special debugging modes).
+
+### detectAIAgent
+
+Returns the name of the detected AI agent or `null` if none is detected.
+
+```ts
+import { detectAIAgent } from '@poppinss/utils'
+
+const agent = detectAIAgent()
+
+if (agent === 'claude') {
+  console.log('Running in Claude Code')
+} else if (agent === 'copilot') {
+  console.log('Running in GitHub Copilot')
+}
+```
+
+**Supported agents:**
+
+| Agent           | Environment Variable(s)                                      | Return Value |
+| --------------- | ------------------------------------------------------------ | ------------ |
+| Claude Code     | `CLAUDECODE='1'`                                             | `'claude'`   |
+| Gemini          | `GEMINI_CLI='1'`                                             | `'gemini'`   |
+| GitHub Copilot  | `GITHUB_COPILOT_CLI_MODE='1'`                                | `'copilot'`  |
+| Windsurf        | `WINDSURF_SESSION='1'` or `TERM_PROGRAM='windsurf'`          | `'windsurf'` |
+| Codex           | `CODEX_CLI='1'` or `CODEX_SANDBOX='1'`                       | `'codex'`    |
+| OpenCode        | `OPENCODE='1'`                                               | `'opencode'` |
+| Cursor          | `CURSOR_AGENT='1'`                                           | `'cursor'`   |
+
+### isRunningInAIAgent
+
+Returns `true` if the code is running inside any AI coding agent.
+
+```ts
+import { isRunningInAIAgent } from '@poppinss/utils'
+
+if (isRunningInAIAgent()) {
+  // Disable interactive prompts
+  // Enable verbose logging
+  // Skip waiting for user input
+}
+```
+
 ## ImportsBag
 
 The `ImportsBag` class helps you manage and deduplicate import statements when generating code. It automatically merges imports from the same source and generates properly formatted import statements.
