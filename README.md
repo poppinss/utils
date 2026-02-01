@@ -95,7 +95,9 @@ Lodash is quite a big library, and we do not use all its helper methods. Therefo
 > **Why not use something else**: All other helpers I have used are not as accurate or well implemented as lodash.
 
 - pick
+- pickBy
 - omit
+- omitBy
 - has
 - get
 - set

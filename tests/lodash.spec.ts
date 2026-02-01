@@ -17,10 +17,32 @@ test.group('Lodash', () => {
     })
   })
 
+  test('pickBy method', ({ assert }) => {
+    assert.deepEqual(
+      lodash.pickBy({ username: 'virk', email: 'virk@adonisjs.com', age: 22 }, (value) => {
+        return typeof value === 'string' && !value.includes('@')
+      }),
+      {
+        username: 'virk',
+      }
+    )
+  })
+
   test('omit method', ({ assert }) => {
     assert.deepEqual(lodash.omit({ username: 'virk', email: 'virk@adonisjs.com' }, ['username']), {
       email: 'virk@adonisjs.com',
     })
+  })
+
+  test('omitBy method', ({ assert }) => {
+    assert.deepEqual(
+      lodash.omitBy({ username: 'virk', email: 'virk@adonisjs.com', age: 22 }, (value) => {
+        return typeof value !== 'string' || !value.includes('@')
+      }),
+      {
+        email: 'virk@adonisjs.com',
+      }
+    )
   })
 
   test('has method', ({ assert }) => {

@@ -7,8 +7,14 @@
  * file that was distributed with this source code.
  */
 
+type PartialShallow<T> = {
+  [P in keyof T]?: T[P] extends object ? object : T[P]
+}
 type PropertyName = string | number | symbol
 type PropertyNames = PropertyName | ReadonlyArray<PropertyName>
+type ValueKeyIterateeTypeGuard<T, S extends T> = (value: T, key: string) => value is S
+type IterateeShorthand<T> = PropertyName | [PropertyName, any] | PartialShallow<T>
+type ValueKeyIteratee<T> = ((value: T, key: string) => NotVoid) | IterateeShorthand<T>
 
 /**
  * Instead of using lodash as a dependency (which is around 4MB), we create a
@@ -23,10 +29,61 @@ type PropertyNames = PropertyName | ReadonlyArray<PropertyName>
 declare module '@poppinss/utils/lodash' {
   type LodashMethods = {
     pick: <T>(object: T | null | undefined, ...props: Array<PropertyNames>) => Partial<T>
+    pickBy<T, S extends T>(
+      object: Record<string, T> | null | undefined,
+      predicate: ValueKeyIterateeTypeGuard<T, S>
+    ): Record<string, S>
+    /**
+     * @see _.pickBy
+     */
+    pickBy<T, S extends T>(
+      object: Record<number, T> | null | undefined,
+      predicate: ValueKeyIterateeTypeGuard<T, S>
+    ): Record<number, S>
+    /**
+     * @see _.pickBy
+     */
+    pickBy<T>(
+      object: Record<string, T> | null | undefined,
+      predicate?: ValueKeyIteratee<T>
+    ): Record<string, T>
+    /**
+     * @see _.pickBy
+     */
+    pickBy<T>(
+      object: Record<number, T> | null | undefined,
+      predicate?: ValueKeyIteratee<T>
+    ): Record<number, T>
+    /**
+     * @see _.pickBy
+     */
+    pickBy<T extends object>(
+      object: T | null | undefined,
+      predicate?: ValueKeyIteratee<T[keyof T]>
+    ): PartialObject<T>
+
     omit: <T extends object>(
       object: T | null | undefined,
       ...paths: Array<PropertyNames>
     ) => Partial<T>
+    omitBy<T>(
+      object: Record<string, T> | null | undefined,
+      predicate?: ValueKeyIteratee<T>
+    ): Record<string, T>
+    /**
+     * @see _.omitBy
+     */
+    omitBy<T>(
+      object: Record<number, T> | null | undefined,
+      predicate?: ValueKeyIteratee<T>
+    ): Record<number, T>
+    /**
+     * @see _.omitBy
+     */
+    omitBy<T extends object>(
+      object: T | null | undefined,
+      predicate: ValueKeyIteratee<T[keyof T]>
+    ): PartialObject<T>
     has: <T>(object: T, path: PropertyNames) => boolean
     get: (object: any, path: PropertyNames, defaultValue?: any) => any
     set: (object: any, path: PropertyNames, value: any) => any
@@ -40,7 +97,7 @@ declare module '@poppinss/utils/lodash' {
       customizer: (
         value: any,
         key: number | string | undefined,
-        object: TObject | undefined,
+        object: T | undefined,
         stack: any
       ) => T | undefined
     ) => T
@@ -50,7 +107,7 @@ declare module '@poppinss/utils/lodash' {
       customizer: (
         value: any,
         key: number | string | undefined,
-        object: TObject | undefined,
+        object: T | undefined,
         stack: any
       ) => T | undefined
     ) => T
