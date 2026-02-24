@@ -103,6 +103,14 @@
       "./modules/exception.ts",
       "./modules/types.ts"
     ],
+    "external": [
+      "@poppinss/utils/lodash"
+    ],
+    "inlineOnly": false,
+    "noExternal": [
+      "secure-json-parse",
+      "safe-stable-stringify"
+    ],
     "outDir": "./build",
     "clean": true,
     "format": "esm",
