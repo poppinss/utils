@@ -66,10 +66,12 @@ export async function fsReadAll(
         return false
       }
 
-      if (
-        dirent.name.startsWith('.') ||
-        dirent.parentPath.split(sep).some((segment) => segment.startsWith('.'))
-      ) {
+      if (dirent.name.startsWith('.')) {
+        return false
+      }
+
+      const relativePath = relative(normalizedLocation, dirent.parentPath)
+      if (relativePath && relativePath.split(sep).some((segment) => segment.startsWith('.'))) {
         return false
       }
 

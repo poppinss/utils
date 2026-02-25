@@ -149,6 +149,20 @@ test.group('importAll', (group) => {
     })
   })
 
+  test('should not filter files when the root absolute path contains a dot directory', async ({
+    assert,
+  }) => {
+    const dotParentPath = join(BASE_PATH, '.hidden-parent', 'project', 'config')
+    await outputFile(join(dotParentPath, 'app.ts'), 'export default { loaded: true }')
+    await outputFile(join(dotParentPath, 'logger.ts'), 'export default { enabled: true }')
+
+    const collection = await fsImportAll(dotParentPath)
+    assert.deepEqual(collection, {
+      app: { loaded: true },
+      logger: { enabled: true },
+    })
+  })
+
   test('define key name for the file', async ({ assert }) => {
     await outputFile(join(BASE_PATH, 'foo/bar/main.json'), '{ "loaded": true }')
 

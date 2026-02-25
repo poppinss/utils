@@ -78,6 +78,18 @@ test.group('FS read all | relative paths', (group) => {
     )
   })
 
+  test('should not filter files when the root absolute path contains a dot directory', async ({
+    assert,
+  }) => {
+    const dotParentPath = join(BASE_PATH, '.hidden-parent', 'project', 'config')
+    await outputFile(join(dotParentPath, 'app.ts'), '')
+    await outputFile(join(dotParentPath, 'logger.ts'), '')
+
+    const files = await fsReadAll(dotParentPath)
+
+    assert.deepEqual(files, ['app.ts', 'logger.ts'].map(normalize))
+  })
+
   test('apply filter to ignore certain files', async ({ assert, expectTypeOf }) => {
     await outputFile(join(BASE_PATH, 'app.ts'), '')
     await outputFile(join(BASE_PATH, '.gitignore'), '')
