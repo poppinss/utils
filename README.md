@@ -457,6 +457,17 @@ flatten({
 // }
 ```
 
+## unique
+
+Return a new array with duplicate values removed while preserving the first occurrence order.
+
+```ts
+import { unique } from '@poppinss/utils'
+
+unique(['foo', 'bar', 'foo', 'baz'])
+// ['foo', 'bar', 'baz']
+```
+
 ## isScriptFile
 
 A filter to know if the file path ends with `.js`, `.json`, `.cjs`, `.mjs`, or `.ts`. In the case of `.ts` files, the `.d.ts` returns false.

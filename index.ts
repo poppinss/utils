@@ -10,6 +10,7 @@
 export { Secret } from './src/secret.js'
 export { compose } from './src/compose.js'
 export { flatten } from './src/flatten.js'
+export { unique } from './src/unique.js'
 export { safeEqual } from './src/safe_equal.js'
 export { naturalSort } from './src/natural_sort.js'
 export { isScriptFile } from './src/is_script_file.js'
