@@ -7,6 +7,8 @@
  * file that was distributed with this source code.
  */
 
+import { unique } from './unique.js'
+
 export type ImportInfo = {
   source: string
   defaultImport?: string
@@ -124,8 +126,8 @@ export class ImportsBag {
       source: imp.source,
       defaultImport: imp.defaultImport,
       defaultTypeImport: imp.defaultTypeImport,
-      namedImports: imp.namedImports ? [...new Set(imp.namedImports)] : undefined,
-      typeImports: imp.typeImports ? [...new Set(imp.typeImports)] : undefined,
+      namedImports: imp.namedImports ? unique(imp.namedImports) : undefined,
+      typeImports: imp.typeImports ? unique(imp.typeImports) : undefined,
     }))
   }
 
