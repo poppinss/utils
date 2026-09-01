@@ -24,6 +24,7 @@
     "./assert": "./build/modules/assert.js",
     "./base64": "./build/modules/base64.js",
     "./exception": "./build/modules/exception.js",
+    "./number": "./build/modules/number.js",
     "./types": "./build/modules/types.js"
   },
   "scripts": {
@@ -101,6 +102,7 @@
       "./modules/assert.ts",
       "./modules/base64.ts",
       "./modules/exception.ts",
+      "./modules/number.ts",
       "./modules/types.ts"
     ],
     "external": [
