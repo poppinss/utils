@@ -556,6 +556,32 @@ const values = ['1_foo_bar', '12_foo_bar'].sort(naturalSort)
 // Default sorting: ['1_foo_bar', '12_foo_bar']
 ```
 
+## getGitWorktree
+
+Returns information about the linked Git worktree containing the current working directory. The method returns `null` when called from the primary worktree, outside a Git repository, or when Git is unavailable.
+
+```ts
+import { getGitWorktree } from '@poppinss/utils'
+
+const worktree = await getGitWorktree()
+
+if (worktree) {
+  console.log(worktree)
+  // {
+  //   name: 'feature-auth',
+  //   slug: 'feature-auth',
+  //   hash: '8d31cbe490f2',
+  //   path: '/projects/worktrees/feature-auth'
+  // }
+}
+```
+
+You may pass a different directory as the first argument. The `slug` is URL-safe, and the `hash` contains the first twelve characters of a SHA-256 hash generated from the canonical worktree path.
+
+```ts
+await getGitWorktree('/projects/worktrees/feature-auth/server')
+```
+
 ## safeEqual
 
 Check if two buffer or string values are the same. This method does not leak any timing information and prevents [timing attack](https://javascript.plainenglish.io/what-are-timing-attacks-and-how-to-prevent-them-using-nodejs-158cc7e2d70c).
