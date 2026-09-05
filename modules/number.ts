@@ -8,6 +8,19 @@
  */
 
 /**
+ * Coerce an unknown value to a finite number without allowing numeric
+ * conversion errors to escape.
+ */
+function toFiniteNumber(value: unknown): number | null {
+  try {
+    const numericValue = typeof value === 'number' ? value : Number(value)
+    return Number.isFinite(numericValue) ? numericValue : null
+  } catch {
+    return null
+  }
+}
+
+/**
  * Collection of number helpers to clamp and parse numeric values.
  *
  * @example
@@ -74,8 +87,7 @@ const number = {
    * number.toFinite('abc', 10)                // 10
    */
   toFinite(value: unknown, fallback = 0): number {
-    const n = typeof value === 'number' ? value : Number(value)
-    return Number.isFinite(n) ? n : fallback
+    return toFiniteNumber(value) ?? fallback
   },
 
   /**
@@ -97,8 +109,7 @@ const number = {
       return null
     }
 
-    const n = typeof value === 'number' ? value : Number(value)
-    return Number.isFinite(n) ? n : null
+    return toFiniteNumber(value)
   },
 }
 

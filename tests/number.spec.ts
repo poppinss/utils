@@ -34,6 +34,8 @@ test.group('Number helpers', () => {
     assert.equal(number.toFinite(Number.NEGATIVE_INFINITY, 3), 3)
     assert.equal(number.toFinite('abc', 10), 10)
     assert.equal(number.toFinite(undefined), 0)
+    assert.equal(number.toFinite(Symbol('value'), 10), 10)
+    assert.equal(number.toFinite(Object.create(null), 10), 10)
   })
 
   test('parse value into a finite number or null', ({ assert }) => {
@@ -45,5 +47,7 @@ test.group('Number helpers', () => {
     assert.isNull(number.parse(Number.NaN))
     assert.isNull(number.parse(Number.POSITIVE_INFINITY))
     assert.isNull(number.parse('abc'))
+    assert.isNull(number.parse(Symbol('value')))
+    assert.isNull(number.parse(Object.create(null)))
   })
 })

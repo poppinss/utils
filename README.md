@@ -119,6 +119,55 @@ import lodash from '@poppinss/utils/lodash'
 lodash.pick(collection, keys)
 ```
 
+## Number helpers
+
+The number helpers are available from the `@poppinss/utils/number` subpath.
+
+```ts
+import number from '@poppinss/utils/number'
+```
+
+### clamp
+
+Constrain a number to an inclusive range.
+
+```ts
+number.clamp(15, 0, 10) // 10
+number.clamp(-2, 0, 10) // 0
+number.clamp(5, 0, 10) // 5
+```
+
+### between
+
+Check whether a number is inside an inclusive range. You may specify the bounds in either order.
+
+```ts
+number.between(5, 0, 10) // true
+number.between(5, 10, 0) // true
+number.between(11, 0, 10) // false
+```
+
+### toFinite
+
+Convert a value to a finite number. The method returns `0` when conversion fails or produces a non-finite number. You may provide a different fallback as the second argument.
+
+```ts
+number.toFinite('42') // 42
+number.toFinite('invalid') // 0
+number.toFinite(Number.POSITIVE_INFINITY, 10) // 10
+```
+
+### parse
+
+Convert a value to a finite number without using a fallback. The method returns `null` for empty input, failed conversions, and non-finite numbers.
+
+```ts
+number.parse('42') // 42
+number.parse('') // null
+number.parse('invalid') // null
+number.parse(Number.POSITIVE_INFINITY) // null
+```
+
 ## FS helpers
 
 ### fsReadAll
