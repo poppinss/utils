@@ -313,6 +313,56 @@ base64.urlDecode('foo') // null
 base64.urlDecode('foo', true) // throws error
 ```
 
+## Number helpers
+
+### clamp
+
+Constrain a number to stay within the given bounds.
+
+```ts
+import number from '@poppinss/utils/number'
+
+number.clamp(15, 0, 10) // 10
+number.clamp(-2, 0, 10) // 0
+number.clamp(5, 0, 10) // 5
+```
+
+### between
+
+Check if a number is inside an inclusive range. The bounds may be passed in either order.
+
+```ts
+number.between(5, 0, 10) // true
+number.between(0, 0, 10) // true
+number.between(11, 0, 10) // false
+number.between(5, 10, 0) // true
+```
+
+### toFinite
+
+Convert a value to a finite number. By default, `0` is returned when the result is `NaN` or `Infinity`. However, you can pass a custom fallback as the second argument.
+
+```ts
+number.toFinite(5) // 5
+number.toFinite('42') // 42
+number.toFinite(Number.NaN) // 0
+number.toFinite(Number.POSITIVE_INFINITY) // 0
+number.toFinite('abc', 10) // 10
+```
+
+### parse
+
+Parse a value into a finite number. A `null` value is returned when the input is empty or the result is `NaN` or `Infinity`.
+
+```ts
+number.parse(5) // 5
+number.parse('42') // 42
+number.parse('') // null
+number.parse(null) // null
+number.parse(Number.NaN) // null
+number.parse(Number.POSITIVE_INFINITY) // null
+```
+
 ## compose
 
 The `compose` helper allows you to use TypeScript class mixins with a cleaner API. Following is an example of mixin usage without the compose helper.
