@@ -7,9 +7,13 @@
  * file that was distributed with this source code.
  */
 
+let collator: Intl.Collator | undefined
+
 /**
  * Perform natural sorting with "Array.sort()" method
  */
 export function naturalSort(current: string, next: string) {
-  return current.localeCompare(next, undefined, { numeric: true, sensitivity: 'base' })
+  // Create the collator only when natural sorting is used, not on package import.
+  collator ??= new Intl.Collator(undefined, { numeric: true, sensitivity: 'base' })
+  return collator.compare(current, next)
 }

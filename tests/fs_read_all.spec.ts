@@ -45,6 +45,17 @@ test.group('FS read all | relative paths', (group) => {
     assert.deepEqual(files, ['app.ts', 'config.js', 'main.json', 'server.ts'].map(normalize))
   })
 
+  test('naturally sort filenames and nested directories', async ({ assert }) => {
+    for (const file of ['item10.js', 'item2.js', 'nested10/item1.js', 'nested2/item1.js']) {
+      await outputFile(join(BASE_PATH, file), '')
+    }
+
+    assert.deepEqual(
+      await fsReadAll(BASE_PATH),
+      ['item2.js', 'item10.js', 'nested2/item1.js', 'nested10/item1.js'].map(normalize)
+    )
+  })
+
   test('recursively get a list of all files from a directory', async ({ assert, expectTypeOf }) => {
     await outputFile(join(BASE_PATH, 'app.ts'), '')
     await outputFile(join(BASE_PATH, 'app/server.ts'), '')
