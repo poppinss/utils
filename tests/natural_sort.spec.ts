@@ -8,7 +8,7 @@
  */
 
 import { test } from '@japa/runner'
-import { naturalSort } from '../src/natural_sort.js'
+import { createNaturalSort, naturalSort } from '../src/natural_sort.js'
 
 test.group('natural sort', () => {
   test('sort numbers naturally and preserve the order of equivalent strings', ({ assert }) => {
@@ -21,7 +21,7 @@ test.group('natural sort', () => {
     ])
   })
 
-  test('match localeCompare ordering for the default locale', ({ assert }) => {
+  test('match localeCompare ordering for the English locale', ({ assert }) => {
     const values = [
       '',
       'a',
@@ -47,7 +47,7 @@ test.group('natural sort', () => {
       ),
     ]
     const previous = (current: string, next: string) =>
-      current.localeCompare(next, undefined, { numeric: true, sensitivity: 'base' })
+      current.localeCompare(next, 'en', { numeric: true, sensitivity: 'base' })
 
     for (const current of values) {
       for (const next of values) {
@@ -56,5 +56,15 @@ test.group('natural sort', () => {
     }
     assert.deepEqual([...values].sort(naturalSort), [...values].sort(previous))
     assert.deepEqual([...values].reverse().sort(naturalSort), [...values].reverse().sort(previous))
+  })
+
+  test('use English ordering by default', ({ assert }) => {
+    assert.deepEqual(['groups', 'children'].sort(naturalSort), ['children', 'groups'])
+  })
+
+  test('create a comparator with an explicit locale', ({ assert }) => {
+    const czechNaturalSort = createNaturalSort({ locale: 'cs' })
+
+    assert.deepEqual(['children', 'groups'].sort(czechNaturalSort), ['groups', 'children'])
   })
 })
