@@ -556,6 +556,16 @@ const values = ['1_foo_bar', '12_foo_bar'].sort(naturalSort)
 // Default sorting: ['1_foo_bar', '12_foo_bar']
 ```
 
+The default comparator uses the English locale. Use `createNaturalSort` to sort with a different locale.
+
+```ts
+import { createNaturalSort } from '@poppinss/utils'
+
+const naturalSort = createNaturalSort({ locale: 'cs' })
+const values = ['children', 'groups'].sort(naturalSort)
+// ['groups', 'children']
+```
+
 ## getGitWorktree
 
 Returns information about the linked Git worktree containing the current working directory. The method returns `null` when called from the primary worktree, outside a Git repository, or when Git is unavailable.

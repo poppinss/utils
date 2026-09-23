@@ -7,13 +7,19 @@
  * file that was distributed with this source code.
  */
 
-let collator: Intl.Collator | undefined
+/**
+ * Create a natural sort comparator for a specific locale
+ */
+export function createNaturalSort({ locale }: { locale: Intl.LocalesArgument }) {
+  let collator: Intl.Collator | undefined
+
+  return function naturalSort(current: string, next: string) {
+    collator ??= new Intl.Collator(locale, { numeric: true, sensitivity: 'base' })
+    return collator.compare(current, next)
+  }
+}
 
 /**
  * Perform natural sorting with "Array.sort()" method
  */
-export function naturalSort(current: string, next: string) {
-  // Create the collator only when natural sorting is used, not on package import.
-  collator ??= new Intl.Collator(undefined, { numeric: true, sensitivity: 'base' })
-  return collator.compare(current, next)
-}
+export const naturalSort = createNaturalSort({ locale: 'en' })
