@@ -51,6 +51,7 @@ function jsonStringifyReplacer(replacer?: JSONReplacer): JSONReplacer {
  * makes it take several milliseconds to reject a circular plain
  * object. Values with circular references are slower than before
  * on these versions until V8 fixes it.
+ * See https://issues.chromium.org/issues/572287937
  */
 export function safeStringify(
   value: any,
