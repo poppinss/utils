@@ -8,6 +8,7 @@
  */
 
 import { test } from '@japa/runner'
+import ts from 'typescript'
 import { ImportsBag } from '../src/imports_bag.js'
 
 test.group('ImportsBag | add', () => {
@@ -467,7 +468,72 @@ test.group('ImportsBag | toString', () => {
 
     assert.equal(
       bag.toString(),
-      "import type Fastify, { FastifyRequest, FastifyReply } from 'fastify'"
+      [
+        "import type Fastify from 'fastify'",
+        "import type { FastifyRequest, FastifyReply } from 'fastify'",
+      ].join('\n')
     )
+  })
+
+  test('compile combined and merged default and named type imports', ({ assert }) => {
+    const configurations = [
+      [{ source: 'fixture', defaultTypeImport: 'Fixture', typeImports: ['Request', 'Reply'] }],
+      [
+        { source: 'fixture', defaultTypeImport: 'Fixture' },
+        { source: 'fixture', typeImports: ['Request', 'Reply'] },
+      ],
+      [
+        { source: 'fixture', typeImports: ['Request', 'Reply'] },
+        { source: 'fixture', defaultTypeImport: 'Fixture' },
+      ],
+      [
+        { source: 'fixture', defaultImport: 'createFixture', namedImports: ['create'] },
+        { source: 'fixture', defaultTypeImport: 'Fixture', typeImports: [] },
+        { source: 'fixture', typeImports: ['Request as RequestAlias', 'Reply'] },
+        { source: 'fixture', typeImports: ['Request as RequestAlias'] },
+      ],
+    ]
+
+    for (const imports of configurations) {
+      const bag = new ImportsBag()
+      imports.forEach((importInfo) => bag.add(importInfo))
+
+      const source = ts.createSourceFile(
+        '/generated.ts',
+        bag.toString(),
+        ts.ScriptTarget.Latest,
+        true
+      )
+      const fixture = ts.createSourceFile(
+        '/fixture.d.ts',
+        `declare module 'fixture' {
+          export default class Fixture {}
+          export interface Request {}
+          export interface Reply {}
+          export function create(): void
+        }`,
+        ts.ScriptTarget.Latest,
+        true
+      )
+      const files = new Map([
+        [source.fileName, source],
+        [fixture.fileName, fixture],
+      ])
+      const options = { noEmit: true, noLib: true, types: [], module: ts.ModuleKind.ESNext }
+      const host = ts.createCompilerHost(options)
+      host.getSourceFile = (fileName) => files.get(fileName)
+      const program = ts.createProgram([...files.keys()], options, host)
+      const diagnostics = [
+        ...program.getSyntacticDiagnostics(source),
+        ...program.getSemanticDiagnostics(source),
+      ]
+
+      assert.isEmpty(
+        diagnostics.map((diagnostic) =>
+          ts.flattenDiagnosticMessageText(diagnostic.messageText, '\n')
+        ),
+        bag.toString()
+      )
+    }
   })
 })

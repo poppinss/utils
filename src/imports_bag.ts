@@ -47,19 +47,13 @@ export class ImportsBag {
       parts.push(`import ${importParts.join(', ')} from '${imp.source}'`)
     }
 
-    // Handle default type import with or without type imports
-    if (imp.defaultTypeImport || (imp.typeImports && imp.typeImports.length > 0)) {
-      const typeImportParts: string[] = []
+    // Type-only default and named imports must use separate declarations
+    if (imp.defaultTypeImport) {
+      parts.push(`import type ${imp.defaultTypeImport} from '${imp.source}'`)
+    }
 
-      if (imp.defaultTypeImport) {
-        typeImportParts.push(imp.defaultTypeImport)
-      }
-
-      if (imp.typeImports && imp.typeImports.length > 0) {
-        typeImportParts.push(`{ ${imp.typeImports.join(', ')} }`)
-      }
-
-      parts.push(`import type ${typeImportParts.join(', ')} from '${imp.source}'`)
+    if (imp.typeImports && imp.typeImports.length > 0) {
+      parts.push(`import type { ${imp.typeImports.join(', ')} } from '${imp.source}'`)
     }
 
     return parts.join('\n')
